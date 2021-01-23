@@ -15,6 +15,7 @@ npm install -g lerna dotenv-cli # if not installed
 lerna bootstrap
 # run server
 dotenv -e .env yarn start:api
+dotenv -e .env yarn start:dashboard
 ```
 ## Other docs
 
