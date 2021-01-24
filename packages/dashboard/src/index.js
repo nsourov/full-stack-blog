@@ -2,6 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import store from "./redux/store"
+import {userProfile} from "./redux/authentication/authReducer"
+
+if (localStorage.getItem("token")) {
+    store.dispatch(userProfile());
+  }
+
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

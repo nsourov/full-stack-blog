@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Table, Progress, Pagination, Tag } from 'antd';
+import { Row, Col, Table, Progress, Pagination, Tag, Skeleton } from 'antd';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
@@ -13,7 +13,7 @@ import {
 } from '../style';
 import { Dropdown } from '../../../components/dropdown/dropdown';
 
-const ProjectLists = () => {
+const ProjectLists = ({isLoading, posts}) => {
   const project = useSelector((state) => state.projects.data);
   const [state, setState] = useState({
     projects: project,
@@ -42,11 +42,11 @@ const ProjectLists = () => {
   const dataSource = [];
 
   if (projects.length)
-    projects.map((value) => {
-      const { id, title, status, category, percentage } = value;
+  posts.map((value) => {
+      const { id, title, status, category, published } = value;
       return dataSource.push({
         key: id,
-        project: (
+        title: (
           <ProjectListTitle>
             <Heading as="h4">
               <Link to={`/admin/project/projectDetails/${id}`}>{title}</Link>
@@ -55,46 +55,46 @@ const ProjectLists = () => {
             <p>{category}</p>
           </ProjectListTitle>
         ),
-        startDate: <span className="date-started">26 Dec 2019</span>,
+        createdDate: <span className="date-started">26 Dec 2019</span>,
         deadline: <span className="date-finished">18 Mar 2020</span>,
-        assigned: (
-          <ProjectListAssignees>
-            <ul>
-              <li>
-                <img src={require(`../../../static/img/users/1.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/2.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/3.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/4.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/5.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/6.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/7.png`)} alt="" />
-              </li>
-            </ul>
-          </ProjectListAssignees>
-        ),
-        status: <Tag className={status}>{status}</Tag>,
-        completion: (
-          <div className="project-list-progress">
-            <Progress
-              percent={status === 'complete' ? 100 : percentage}
-              strokeWidth={5}
-              className="progress-primary"
-            />
-            <p>12/15 Task Completed</p>
-          </div>
-        ),
+        // assigned: (
+        //   <ProjectListAssignees>
+        //     <ul>
+        //       <li>
+        //         <img src={require(`../../../static/img/users/1.png`)} alt="" />
+        //       </li>
+        //       <li>
+        //         <img src={require(`../../../static/img/users/2.png`)} alt="" />
+        //       </li>
+        //       <li>
+        //         <img src={require(`../../../static/img/users/3.png`)} alt="" />
+        //       </li>
+        //       <li>
+        //         <img src={require(`../../../static/img/users/4.png`)} alt="" />
+        //       </li>
+        //       <li>
+        //         <img src={require(`../../../static/img/users/5.png`)} alt="" />
+        //       </li>
+        //       <li>
+        //         <img src={require(`../../../static/img/users/6.png`)} alt="" />
+        //       </li>
+        //       <li>
+        //         <img src={require(`../../../static/img/users/7.png`)} alt="" />
+        //       </li>
+        //     </ul>
+        //   </ProjectListAssignees>
+        // ),
+        status: <Tag color={published ? "success" : "processing"}>{ published ? "published" : " unpublished"}</Tag>,
+        // completion: (
+        //   <div className="project-list-progress">
+        //     <Progress
+        //       percent={status === 'complete' ? 100 : percentage}
+        //       strokeWidth={5}
+        //       className="progress-primary"
+        //     />
+        //     <p>12/15 Task Completed</p>
+        //   </div>
+        // ),
         action: (
           <Dropdown
             className="wide-dropdwon"
@@ -116,38 +116,38 @@ const ProjectLists = () => {
 
   const columns = [
     {
-      title: 'Project',
-      dataIndex: 'project',
-      key: 'project',
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
     },
     {
-      title: 'Start Date',
-      dataIndex: 'startDate',
-      key: 'startDate',
+      title: 'Created Date',
+      dataIndex: 'createdDate',
+      key: 'createdDate',
     },
-    {
-      title: 'Deadline',
-      dataIndex: 'deadline',
-      key: 'deadline',
-    },
-    {
-      title: 'Assigned To',
-      dataIndex: 'assigned',
-      key: 'assigned',
-    },
+    // {
+    //   title: 'Deadline',
+    //   dataIndex: 'deadline',
+    //   key: 'deadline',
+    // },
+    // {
+    //   title: 'Assigned To',
+    //   dataIndex: 'assigned',
+    //   key: 'assigned',
+    // },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
     },
-    {
-      title: 'Completion',
-      dataIndex: 'completion',
-      key: 'completion',
-    },
+    // {
+    //   title: 'Completion',
+    //   dataIndex: 'completion',
+    //   key: 'completion',
+    // },
 
     {
-      title: '',
+      title: 'action',
       dataIndex: 'action',
       key: 'action',
     },
@@ -157,15 +157,30 @@ const ProjectLists = () => {
     <Row gutter={25}>
       <Col xs={24}>
         <Cards headless>
-          <ProjectList>
+
+        {isLoading && (
+          <>
+          
+          <Skeleton active />
+          <Skeleton active />
+          <Skeleton active />
+          
+          </>
+                    
+                  )}
+
+                  {!isLoading && (
+                    <ProjectList>
             <div className="table-responsive">
               <Table
                 pagination={false}
                 dataSource={dataSource}
-                columns={columns}
+                columns={columns }
               />
             </div>
           </ProjectList>
+                  )}
+          
         </Cards>
       </Col>
       <Col xs={24} className="pb-30">

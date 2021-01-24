@@ -11,11 +11,11 @@ import Auth from './routes/auth';
 import './static/css/style.css';
 import config from './config/config';
 import ProtectedRoute from './components/utilities/protectedRoute';
-
+import {UserRoute, UserPrivateRoute} from "./components/privateRoute/privateRoute"
 const { theme } = config;
 
 const ProviderConfig = () => {
-  const { isLoggedIn, topMenu, darkMode } = useSelector((state) => {
+  const { isLoggedIn, topMenu, darkMode } = useSelector(state => {
     return {
       darkMode: state.ChangeLayoutMode.data,
       topMenu: state.ChangeLayoutMode.topMenu,
@@ -37,17 +37,19 @@ const ProviderConfig = () => {
   return (
     <ConfigProvider direction="ltr">
       <ThemeProvider theme={{ ...theme, topMenu, darkMode }}>
-        <Router basename={process.env.PUBLIC_URL}>
-          {!isLoggedIn ? (
-            <Route path="/" component={Auth} />
+        <Router>
+        <UserRoute exact path="/" component={Auth} />
+        <UserPrivateRoute path="/admin" component={Admin} />
+          {/* {!isLoggedIn ? (
+            
           ) : (
-            <ProtectedRoute path="/admin" component={Admin} />
-          )}
-          {isLoggedIn &&
+        
+          )} */}
+          {/* {isLoggedIn &&
             (path === process.env.PUBLIC_URL ||
               path === `${process.env.PUBLIC_URL}/`) && (
               <Redirect to="/admin" />
-            )}
+            )} */}
         </Router>
       </ThemeProvider>
     </ConfigProvider>

@@ -4,7 +4,7 @@ import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AuthWrapper } from './style';
-import { login } from '../../../../redux/authentication/actionCreator';
+import { login } from '../../../../redux/authentication/authReducer';
 import { Checkbox } from '../../../../components/checkbox/checkbox';
 import Heading from '../../../../components/heading/heading';
 import { auth0options } from '../../../../config/auth0';
@@ -13,21 +13,28 @@ const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 const SignIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const history = useHistory();
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.loading);
+  const { isLoading, errors } = useSelector(state => state.auth);
   const [form] = Form.useForm();
-  const [state, setState] = useState({
-    checked: null,
-  });
+  // const [state, setState] = useState({
+  //   checked: null,
+  // });
 
-  const handleSubmit = useCallback(() => {
-    dispatch(login());
-    history.push('/admin');
-  }, [history, dispatch]);
+  const handleSubmit = () => {
+    let data = {
+      email,
+      password,
+    };
+    dispatch(login(history, data));
+    // history.push('/admin');
+  };
 
-  const onChange = (checked) => {
-    setState({ ...state, checked });
+  const onChange = checked => {
+    // setState({ ...state, checked });
   };
 
   return (
@@ -45,16 +52,29 @@ const SignIn = () => {
           <Form.Item
             name="username"
             rules={[{ message: 'Please input your email!', required: true }]}
-            initialValue="name@example.com"
+            initialValue={email}
             label="Email Address"
+            onChange={e => {
+              console.log(e.target.value);
+              setEmail(e.target.value);
+            }}
+            validateStatus={errors.email ? 'error' : ''}
+            help={errors.email ? errors.email : ''}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="password"
-            initialValue="123456"
+            initialValue={password}
+            // onChange={e => setPassword(e.target.value)}
             label="Password"
             rules={[{ message: 'Please input your password!', required: true }]}
+            onChange={e => {
+              console.log(e.target.value);
+              setPassword(e.target.value);
+            }}
+            validateStatus={errors.password ? 'error' : ''}
+            help={errors.password ? errors.password : ''}
           >
             <Input.Password placeholder="Password" />
           </Form.Item>

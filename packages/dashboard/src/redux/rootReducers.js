@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import themeUsersReducer from './themeUsers/reducers';
 import { readMessageReducer } from './message/reducers';
 import { readNotificationReducer } from './notification/reducers';
-import authReducer from './authentication/reducers';
+// import authReducer from './authentication/reducers';
 import ChangeLayoutMode from './themeLayout/reducers';
 import { teamReducer } from './team/reducers';
 import { userReducer, userGroupReducer } from './users/reducers';
@@ -28,7 +28,9 @@ import Contact from './contact/reducers';
 import Profile from './profile/reducers';
 import Calender from './calendar/reducers';
 import FileManager from './fileManager/reducers';
-
+import authReducer from './authentication/authReducer';
+import infoReducer from './infoReducer/InfoReducer';
+import postReducer from "./postReducer/postReducer"
 const rootReducers = combineReducers({
   themeUsers: themeUsersReducer,
   headerSearchData: headerSearchReducer,
@@ -61,6 +63,8 @@ const rootReducers = combineReducers({
   Profile,
   Calender,
   FileManager,
+  info: infoReducer,
+  post:postReducer
 });
 
 export default rootReducers;

@@ -1,6 +1,6 @@
-import React, { lazy, useState, Suspense } from 'react';
+import React, { lazy, useState, Suspense, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, Spin, Select } from 'antd';
+import { Row, Col, Spin, Select,Skeleton  } from 'antd';
 import { Switch, NavLink, Route, Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
@@ -14,12 +14,14 @@ import {
 } from '../../redux/project/actionCreator';
 import { Main } from '../styled';
 import { PageHeader } from '../../components/page-headers/page-headers';
+import { getPosts } from '../../redux/postReducer/postReducer';
 
 const List = lazy(() => import('./overview/List'));
 
 const Project = ({ match }) => {
   const dispatch = useDispatch();
   const searchData = useSelector((state) => state.headerSearchData);
+  const {isLoading, posts} = useSelector((state) => state.post);
   const { path } = match;
   const [state, setState] = useState({
     notData: searchData,
@@ -37,6 +39,13 @@ const Project = ({ match }) => {
       notData: data,
     });
   };
+
+  console.log(posts)
+
+
+  useEffect(() => {
+    dispatch(getPosts())
+  }, [dispatch])
 
   const onSorting = (selectedItems) => {
     dispatch(sortingProjectByCategory(selectedItems));
@@ -94,7 +103,7 @@ const Project = ({ match }) => {
                         }
                       >
                         <Link onClick={() => onChangeCategory('all')} to="#">
-                          All
+                          published
                         </Link>
                       </li>
                       <li
@@ -111,7 +120,7 @@ const Project = ({ match }) => {
                           In Progress
                         </Link>
                       </li>
-                      <li
+                      {/* <li
                         className={
                           state.categoryActive === 'complete'
                             ? 'active'
@@ -146,7 +155,7 @@ const Project = ({ match }) => {
                         <Link onClick={() => onChangeCategory('early')} to="#">
                           Early
                         </Link>
-                      </li>
+                      </li> */}
                     </ul>
                   </nav>
                 </div>
@@ -192,7 +201,14 @@ const Project = ({ match }) => {
                   }
                 >
                   <Route path={path} component={List} exact />
-                  <Route path={`${path}/list`} component={List} />
+                  {/* <Route path={`${path}/list`} component={List} /> */}
+                  {/* {!isLoading && (
+                    <Skeleton active />
+                  )} */}
+                 
+                    <List isLoading={isLoading} posts={posts} />
+                  
+                  
                 </Suspense>
               </Switch>
             </div>

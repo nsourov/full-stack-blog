@@ -21,6 +21,7 @@ const Admin = () => {
           </div>
         }
       >
+        
         <Route path={`${path}`} component={Pages} />
         <Route path={`${path}`} component={Features} />
         <Route path={`${path}/post`} component={Posts} />

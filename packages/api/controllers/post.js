@@ -130,6 +130,7 @@ exports.getPublishedPosts = async (req, res) => {
 };
 
 exports.getUnPublishedPosts = async (req, res) => {
+  console.log(req.params.page)
   const page = req.params.page || 1;
   const limit = 10;
   const skip = page * limit - limit;
