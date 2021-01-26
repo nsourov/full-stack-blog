@@ -322,7 +322,7 @@ const Div = Styled.div`
                 .ant-menu-submenu{
                     span{
                         ${({ theme }) =>
-                          !theme.rtl ? 'padding-left' : 'padding-right'}: 20px;
+                          !theme.rtl ? 'padding-left' : 'padding-right'}: 30px;
                     }
                 }
                 .ant-menu-item{
