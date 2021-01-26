@@ -4,7 +4,7 @@ const postSlice = createSlice({
   name: 'post',
   initialState: {
     isLoading: true,
-    posts: {},
+    posts: [],
   },
 
   reducers: {
@@ -14,28 +14,21 @@ const postSlice = createSlice({
     setPosts(state, { payload }) {
       state.posts = payload;
     },
-
   },
 });
 
 const { setLoading, setPosts } = postSlice.actions;
 
-
 export const getPosts = () => async dispatch => {
-    try{
-        let result = await UserAxios.get("/posts/unpublished/page/1")
-        dispatch(setPosts(result.data.posts))
-        
-        dispatch(setLoading(false))
+  try {
+    let result = await UserAxios.get('/posts/unpublished/page/1');
+    dispatch(setPosts(result.data.posts));
 
-
-    }catch(err){
-        console.log(err.response.data)
-    }
-}
-
-
-
-
+    dispatch(setLoading(false));
+  } catch (err) {
+    console.log(err.response.data);
+    dispatch(setLoading(false));
+  }
+};
 
 export default postSlice.reducer;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Row, Col } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -7,58 +7,59 @@ import { Main } from '../styled';
 import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
 import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
 import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
-import { Form, Input, Button, Upload, Alert  } from 'antd';
+import { Form, Input, Button, Upload, Alert } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
-import UserAxios from "../../redux/Axios/UserAxios"
+import UserAxios from '../../redux/Axios/UserAxios';
+import Editor from '../../components/editor/Editor';
 const Editors = () => {
   const [form] = Form.useForm();
-  const [photo, setPhoto] = useState(null)
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [load, setLoad] = useState(false)
-  const [errors, setErrors] = useState({})
-  const [success, setSuccess] = useState(false)
+  const [photo, setPhoto] = useState(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [load, setLoad] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState(false);
 
   const onReset = () => {
     form.resetFields();
   };
   const handleSubmit = async () => {
     // let data = {
-    //   photo, 
+    //   photo,
     //   title,
     //   body: description
     // }
 
-    console.log(photo)
-    let formData = new FormData()
-    formData.append("title", title)
-    formData.append("body", description)
-    formData.append("photo", photo.originFileObj)
+    console.log(photo);
+    let formData = new FormData();
+    formData.append('title', title);
+    formData.append('body', description);
+    formData.append('photo', photo.originFileObj);
 
     try {
-      setLoad(true)
-      let result = await UserAxios.post("/posts", formData)
-      setErrors({})
-      setSuccess(true)
-      setLoad(false)
-      setTitle("")
-      setDescription("")
-      setPhoto(null)
-      onReset()
-    }catch(err) {
-      console.log(err.response.data)
-      setSuccess(false)
-      setErrors(err.response.data.errors)
-      setLoad(false)
+      setLoad(true);
+      let result = await UserAxios.post('/posts', formData);
+      setErrors({});
+      setSuccess(true);
+      setLoad(false);
+      setTitle('');
+      setDescription('');
+      setPhoto(null);
+      onReset();
+    } catch (err) {
+      console.log(err.response.data);
+      setSuccess(false);
+      setErrors(err.response.data.errors);
+      setLoad(false);
     }
     // dispatch(login(history, data));
     // history.push('/admin');
   };
 
-  const normFile = (e) => {
+  const normFile = e => {
     console.log('Upload event:', e);
-    
-    setPhoto(e.file)
+
+    setPhoto(e.file);
   };
 
   return (
@@ -78,12 +79,9 @@ const Editors = () => {
         ]}
       />
       <Main>
-       
-          <h2>Create Post </h2>
-          {success && (
-            <Alert message="Post add successfully" type="success" />
-          )}
-          <Form
+        <h2>Create Post </h2>
+        {success && <Alert message="Post add successfully" type="success" />}
+        <Form
           name="login"
           form={form}
           onFinish={handleSubmit}
@@ -93,18 +91,16 @@ const Editors = () => {
             Sign in to <span className="color-secondary">Admin</span>
           </Heading> */}
 
-
-<Form.Item
-        name="Image"
-        label="Image"
-        valuePropName="fileList"
-        getValueFromEvent={normFile}
-      >
-        <Upload name="logo" action="/upload.do" listType="picture">
-          <Button icon={<UploadOutlined />}>Click to upload</Button>
-        </Upload>
-      </Form.Item>
-
+          <Form.Item
+            name="Image"
+            label="Image"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+          >
+            <Upload name="logo" action="/upload.do" listType="picture">
+              <Button icon={<UploadOutlined />}>Click to upload</Button>
+            </Upload>
+          </Form.Item>
 
           <Form.Item
             name="Title"
@@ -118,26 +114,27 @@ const Editors = () => {
             }}
             validateStatus={errors.title ? 'error' : ''}
             help={errors.title ? errors.title : ''}
-            
           >
-            <Input placeholder="Title"/>
+            <Input placeholder="Title" />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="Description"
             value={description}
             onChange={e => setDescription(e.target.value)}
             label="Description"
-            rules={[{ message: 'Please input your description!', required: true }]}
-            // onChange={e => {
-            //   console.log(e.target.value);
-            //   setPassword(e.target.value);
-            // }}
-            // validateStatus={errors.password ? 'error' : ''}
-            // help={errors.password ? errors.password : ''}
+            rules={[
+              { message: 'Please input your description!', required: true },
+            ]}
           >
-            <Input.TextArea  placeholder="Description" />
-          </Form.Item>
-         
+            <Input.TextArea placeholder="Description" />
+          </Form.Item> */}
+
+          <Editor
+            onChange={e => {
+              setDescription(e);
+            }}
+          />
+
           <Form.Item>
             <Button
               className="btn-signin"
@@ -149,7 +146,6 @@ const Editors = () => {
             </Button>
           </Form.Item>
         </Form>
-
       </Main>
     </>
   );
