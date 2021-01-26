@@ -9,19 +9,6 @@
     "start:api": "lerna exec --stream --scope=@blog/api -- yarn start",
     "start:dashboard": "lerna exec --scope=@blog/dashboard -- yarn start"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint --fix"
-    ],
-    "*": [
-      "pretty-quick --staged"
-    ]
-  },
   "devDependencies": {
     "husky": "^4.2.5",
     "lerna": "^3.20.2",
