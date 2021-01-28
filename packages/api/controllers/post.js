@@ -4,7 +4,10 @@ const uuid = require('uuid');
 
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-const { validatePostInput, validateCommentInput } = require('../validations/post');
+const {
+  validatePostInput,
+  validateCommentInput,
+} = require('../validations/post');
 
 const multerOptions = {
   storage: multer.memoryStorage(),
@@ -14,7 +17,7 @@ const multerOptions = {
     if (isPhoto) {
       next(null, true);
     } else {
-      next({ message: 'That filetype isn\'t allowed!' }, false);
+      next({ message: "That filetype isn't allowed!" }, false);
     }
   },
 };
@@ -38,8 +41,14 @@ exports.resize = async (req, res, next) => {
 };
 
 exports.getPost = async (req, res) => {
-  const post = await Post.findOne({ slug: req.params.slug }).select(['-comments']).populate('category').exec();
-  if (!post) return res.status(400).json({ success: false, errors: { message: 'Post not found' } });
+  const post = await Post.findOne({ slug: req.params.slug })
+    .select(['-comments'])
+    .populate('category')
+    .exec();
+  if (!post)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'Post not found' } });
   return res.status(200).json({ success: true, post });
 };
 
@@ -49,7 +58,8 @@ exports.getPostPublishedComments = async (req, res) => {
   const skip = page * limit - limit;
 
   const args = { post: req.params.postId, published: true };
-  const commentsPromise = Comment.find(args).skip(skip)
+  const commentsPromise = Comment.find(args)
+    .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
 
@@ -77,7 +87,8 @@ exports.getPostUnPublishedComments = async (req, res) => {
   const skip = page * limit - limit;
 
   const args = { post: req.params.postId, published: false };
-  const commentsPromise = Comment.find(args).skip(skip)
+  const commentsPromise = Comment.find(args)
+    .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
 
@@ -104,7 +115,9 @@ exports.getPublishedPosts = async (req, res) => {
   const limit = 5;
   const skip = page * limit - limit;
 
-  const postsPromise = Post.find({ published: true }).select(['-comments']).populate('category')
+  const postsPromise = Post.find({ published: true })
+    .select(['-comments'])
+    .populate('category')
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -112,9 +125,9 @@ exports.getPublishedPosts = async (req, res) => {
   const countPromise = Post.count({ published: true });
 
   const [posts, count] = await Promise.all([postsPromise, countPromise]);
-  console.log(count)
+  console.log(count);
   const pages = Math.ceil(count / limit);
-  console.log(pages)
+  console.log(pages);
   if (!posts.length && skip) {
     return res
       .status(400)
@@ -131,12 +144,13 @@ exports.getPublishedPosts = async (req, res) => {
 };
 
 exports.getUnPublishedPosts = async (req, res) => {
- 
   const page = req.params.page || 1;
   const limit = 5;
   const skip = page * limit - limit;
 
-  const postsPromise = Post.find({ published: false }).select(['-comments']).populate('category')
+  const postsPromise = Post.find({ published: false })
+    .select(['-comments'])
+    .populate('category')
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -144,9 +158,9 @@ exports.getUnPublishedPosts = async (req, res) => {
   const countPromise = Post.count({ published: false });
 
   const [posts, count] = await Promise.all([postsPromise, countPromise]);
-  console.log(count)
+  console.log(count);
   const pages = Math.ceil(count / limit);
-  console.log(pages)
+  console.log(pages);
   if (!posts.length && skip) {
     return res
       .status(400)
@@ -173,7 +187,8 @@ exports.createPost = async (req, res) => {
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
-    image: req.body.image && `${process.env.SERVER_URL}/uploads/${req.body.image}`,
+    image:
+      req.body.image && `${process.env.SERVER_URL}/uploads/${req.body.image}`,
     user: req.user.id,
     category: req.body.categoryId,
   });
@@ -193,7 +208,8 @@ exports.createAndPublishPost = async (req, res) => {
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
-    image: req.body.image,
+    image:
+      req.body.image && `${process.env.SERVER_URL}/uploads/${req.body.image}`,
     user: req.user.id,
     published: true,
   });
@@ -217,9 +233,19 @@ exports.updatePost = async (req, res) => {
 
   const updatedPost = await Post.findOneAndUpdate(
     { slug: req.params.slug },
-    req.body,
-    { new: true, runValidators: true },
-  ).select(['-comments']).populate('category').exec();
+    {
+      ...req.body,
+      ...(req.body.image && {
+        image:
+          req.body.image &&
+          `${process.env.SERVER_URL}/uploads/${req.body.image}`,
+      }),
+    },
+    { new: true, runValidators: true }
+  )
+    .select(['-comments'])
+    .populate('category')
+    .exec();
   return res.status(200).json({ success: true, post: updatedPost });
 };
 
@@ -234,16 +260,24 @@ exports.publishPost = async (req, res) => {
   const updatedPost = await Post.findOneAndUpdate(
     { slug: req.params.slug },
     { published: true },
-    { new: true, runValidators: true },
-  ).select(['-comments']).populate('category').exec();
+    { new: true, runValidators: true }
+  )
+    .select(['-comments'])
+    .populate('category')
+    .exec();
   return res.status(200).json({ success: true, post: updatedPost });
 };
 
 exports.likePost = async (req, res) => {
   const post = await Post.findOne({ slug: req.params.slug });
-  if (!post) return res.status(400).json({ success: false, errors: { message: 'Post not found' } });
+  if (!post)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'Post not found' } });
 
-  const alreadyLiked = post.likes.filter((like) => like.user.toString() === req.user.id);
+  const alreadyLiked = post.likes.filter(
+    (like) => like.user.toString() === req.user.id
+  );
   if (alreadyLiked.length > 0) {
     // dislike
     // Get remove index
@@ -270,7 +304,10 @@ exports.addComment = async (req, res) => {
   }
 
   const post = await Post.findOne({ slug: req.params.slug });
-  if (!post) return res.status(400).json({ success: false, errors: { message: 'Post not found' } });
+  if (!post)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'Post not found' } });
   const newComment = new Comment({
     user: req.user.id,
     post: post.id,
@@ -285,7 +322,10 @@ exports.addComment = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
   const post = await Post.findOne({ slug: req.params.slug });
-  if (!post) return res.status(400).json({ success: false, errors: { message: 'Post not found' } });
+  if (!post)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'Post not found' } });
 
   await Comment.findByIdAndDelete(req.params.commentId);
   return res.status(200).json({ success: true });
@@ -300,12 +340,15 @@ exports.updateComment = async (req, res) => {
   }
 
   const post = await Post.findOne({ slug: req.params.slug });
-  if (!post) return res.status(400).json({ success: false, errors: { message: 'Post not found' } });
+  if (!post)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'Post not found' } });
 
   const comment = await Comment.findByIdAndUpdate(
     req.params.commentId,
     req.body,
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   );
   return res.status(200).json({ success: true, comment });
 };
