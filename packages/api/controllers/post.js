@@ -101,7 +101,7 @@ exports.getPostUnPublishedComments = async (req, res) => {
 
 exports.getPublishedPosts = async (req, res) => {
   const page = req.params.page || 1;
-  const limit = 10;
+  const limit = 5;
   const skip = page * limit - limit;
 
   const postsPromise = Post.find({ published: true }).select(['-comments']).populate('category')
@@ -109,11 +109,12 @@ exports.getPublishedPosts = async (req, res) => {
     .limit(limit)
     .sort({ created: 'desc' });
 
-  const countPromise = Post.count();
+  const countPromise = Post.count({ published: true });
 
   const [posts, count] = await Promise.all([postsPromise, countPromise]);
+  console.log(count)
   const pages = Math.ceil(count / limit);
-
+  console.log(pages)
   if (!posts.length && skip) {
     return res
       .status(400)
@@ -130,9 +131,9 @@ exports.getPublishedPosts = async (req, res) => {
 };
 
 exports.getUnPublishedPosts = async (req, res) => {
-  console.log(req.params.page)
+ 
   const page = req.params.page || 1;
-  const limit = 10;
+  const limit = 5;
   const skip = page * limit - limit;
 
   const postsPromise = Post.find({ published: false }).select(['-comments']).populate('category')
@@ -140,11 +141,12 @@ exports.getUnPublishedPosts = async (req, res) => {
     .limit(limit)
     .sort({ created: 'desc' });
 
-  const countPromise = Post.count();
+  const countPromise = Post.count({ published: false });
 
   const [posts, count] = await Promise.all([postsPromise, countPromise]);
+  console.log(count)
   const pages = Math.ceil(count / limit);
-
+  console.log(pages)
   if (!posts.length && skip) {
     return res
       .status(400)

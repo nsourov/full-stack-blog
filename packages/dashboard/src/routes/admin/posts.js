@@ -2,6 +2,7 @@ import React, { lazy } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 const Post = lazy(() => import('../../container/post/Project'));
+const PostDetails = lazy(() => import('../../container/post/PostDetails'));
 const ProjectDetails = lazy(() =>
   import('../../container/post/ProjectDetails')
 );
@@ -14,6 +15,7 @@ const ProjectRoutes = () => {
       <Route path={`${path}/projectDetails/:id`} component={ProjectDetails} />
       <Route path={`${path}/view`} component={Post} />
       <Route path={`${path}/create`} component={ProjectCreate} />
+      <Route path={`${path}/postDetails/:slug`} component={PostDetails} />
     </Switch>
   );
 };

@@ -15,19 +15,24 @@ import {
 import { Main } from '../styled';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { getPosts } from '../../redux/postReducer/postReducer';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const List = lazy(() => import('./overview/List'));
 
 const Project = ({ match }) => {
   const dispatch = useDispatch();
   const searchData = useSelector((state) => state.headerSearchData);
-  const {isLoading, posts} = useSelector((state) => state.post);
+  const {isLoading, posts, pages} = useSelector((state) => state.post);
   const { path } = match;
+
+  const history = useHistory()
   const [state, setState] = useState({
     notData: searchData,
     visible: false,
     categoryActive: 'all',
   });
+
+  const [postStatus, setPostStatus] = useState('published');
 
   const { notData, visible } = state;
   const handleSearch = (searchText) => {
@@ -44,9 +49,18 @@ const Project = ({ match }) => {
 
 
   useEffect(() => {
-    dispatch(getPosts())
-  }, [dispatch])
-
+    let data = {
+      postStatus
+    }
+    dispatch(getPosts(data))
+  }, [dispatch, postStatus])
+  const paginationChangeHandler = e => {
+    let data = {
+      postStatus,
+      page:e
+    }
+    dispatch(getPosts(data))
+  }
   const onSorting = (selectedItems) => {
     dispatch(sortingProjectByCategory(selectedItems));
   };
@@ -60,10 +74,12 @@ const Project = ({ match }) => {
   };
 
   const showModal = () => {
-    setState({
-      ...state,
-      visible: true,
-    });
+    // setState({
+    //   ...state,
+    //   visible: true,
+    // });
+
+    history.push("/admin/editor")
   };
 
   const onCancel = () => {
@@ -73,16 +89,21 @@ const Project = ({ match }) => {
     });
   };
 
+  let numbers = Array.from(
+    { length: pages },
+    (_, i) => i + 1
+  );
+  console.log(numbers)
   return (
     <>
       <ProjectHeader>
         <PageHeader
           ghost
-          title="Projects"
-          subTitle={<>12 Running Projects</>}
+          // title="Projects"
+          // subTitle={<>12 Running Projects</>}
           buttons={[
             <Button onClick={showModal} key="1" type="primary" size="default">
-              <FeatherIcon icon="plus" size={16} /> Create Projects
+              <FeatherIcon icon="plus" size={16} /> Create Post
             </Button>,
           ]}
         />
@@ -97,27 +118,27 @@ const Project = ({ match }) => {
                     <ul>
                       <li
                         className={
-                          state.categoryActive === 'all'
+                          postStatus === 'published'
                             ? 'active'
                             : 'deactivate'
                         }
                       >
-                        <Link onClick={() => onChangeCategory('all')} to="#">
-                          published
+                        <Link onClick={() => setPostStatus('published')} to="#">
+                          Published
                         </Link>
                       </li>
                       <li
                         className={
-                          state.categoryActive === 'progress'
+                          postStatus === 'unpublished'
                             ? 'active'
                             : 'deactivate'
                         }
                       >
                         <Link
-                          onClick={() => onChangeCategory('progress')}
+                          onClick={() => setPostStatus('unpublished')}
                           to="#"
                         >
-                          In Progress
+                          Unpublished
                         </Link>
                       </li>
                       {/* <li
@@ -163,11 +184,11 @@ const Project = ({ match }) => {
                   <AutoComplete
                     onSearch={handleSearch}
                     dataSource={notData}
-                    placeholder="Search projects"
+                    placeholder="Search post"
                     patterns
                   />
                 </div>
-                <div className="project-sort-group">
+                {/* <div className="project-sort-group">
                   <div className="sort-group">
                     <span>Sort By:</span>
                     <Select onChange={onSorting} defaultValue="category">
@@ -188,7 +209,7 @@ const Project = ({ match }) => {
                       </NavLink>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </ProjectSorting>
             <div>
@@ -206,7 +227,7 @@ const Project = ({ match }) => {
                     <Skeleton active />
                   )} */}
                  
-                    <List isLoading={isLoading} posts={posts} />
+                    <List isLoading={isLoading} posts={posts} pages={pages} paginationChangeHandler={(e) => paginationChangeHandler(e)} />
                   
                   
                 </Suspense>

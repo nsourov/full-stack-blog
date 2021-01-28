@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { PageHeader } from '../../components/page-headers/page-headers';
@@ -11,14 +11,35 @@ import { Form, Input, Button, Upload, Alert } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import UserAxios from '../../redux/Axios/UserAxios';
 import Editor from '../../components/editor/Editor';
+import { useParams } from 'react-router-dom';
 const Editors = () => {
   const [form] = Form.useForm();
   const [photo, setPhoto] = useState(null);
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [body, setBody] = useState('');
   const [load, setLoad] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+  const [successPublished, setSuccessPublished] = useState(false)
+  const [fetchLoad, setFetchLoad] = useState(false);
+  const [image, setImage] = useState(false);
+  const [post, setPost] = useState(false);
+  let params = useParams()
+  const fetchData = async () => {
+    let result = await UserAxios.get(`/posts/${params.slug}`);
+    let {post} = result.data
+    setTitle(post.title)
+    setBody(post.body)
+    setImage(post.image)
+    console.log(result)
+    setPost(post)
+    setFetchLoad(true)
+  }
+  useEffect(() => {
+   
+    fetchData()
+  }, [])
+
 
   const onReset = () => {
     form.resetFields();
@@ -26,21 +47,27 @@ const Editors = () => {
 
   const clearSuccess = () => {
     setSuccess(false)
+    setSuccessPublished(false)
   }
   const handlePublished = async () => {
     let formData = new FormData();
     formData.append('title', title);
-    formData.append('body', description);
+    formData.append('body', body);
     if(photo) {
       formData.append('photo', photo.originFileObj);
+    }
+
+    let data = {
+      title,
+      body
     }
   
 
     try {
       setLoad(true);
-      let result = await UserAxios.post('/posts/create-publish', formData);
+      let result = await UserAxios.put(`/posts/${params.slug}/publish`, data);
       setErrors({});
-      setSuccess(true);
+      setSuccessPublished(true);
       setLoad(false);
 
       setTimeout( clearSuccess, 3000)
@@ -61,15 +88,17 @@ const Editors = () => {
     console.log(photo);
     let formData = new FormData();
     formData.append('title', title);
-    formData.append('body', description);
+    formData.append('body', body);
     if(photo) {
       formData.append('photo', photo.originFileObj);
     }
   
-
+    let data = {
+      title, body
+    }
     try {
       setLoad(true);
-      let result = await UserAxios.post('/posts', formData);
+      let result = await UserAxios.put(`/posts/${params.slug}`, data);
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -95,6 +124,10 @@ const Editors = () => {
     setPhoto(e.file);
   };
 
+  if(!fetchLoad) {
+    return <h2>Loadinng</h2>
+  }
+
   return (
     <>
       {/* <PageHeader
@@ -112,8 +145,12 @@ const Editors = () => {
         ]}
       /> */}
       <Main style={{marginTop:'25px'}}>
-        <h2 className="mt4">Create Post </h2>
-        {success && <Alert message="Post add successfully" type="success" />}
+        <h2 className="mt4">Update Post </h2>
+        {success && <Alert message="Post updated successfully" type="success" />}
+        {/* successPublished */}
+        {successPublished && (
+          <Alert message="Post published successfully" type="success" />
+        )}
         <Form
           name="login"
           form={form}
@@ -135,10 +172,14 @@ const Editors = () => {
             </Upload>
           </Form.Item>
 
+          {image && (
+            <img src={image} alt="hello" />
+          )}
+
           <Form.Item
             name="Title"
             label="Title"
-            rules={[{ message: 'Please input your title!', required: true }]}
+            // rules={[{ message: 'Please input your title!', required: true }]}
             value={title}
             // label="Email Address"
             onChange={e => {
@@ -148,7 +189,7 @@ const Editors = () => {
             validateStatus={errors.title ? 'error' : ''}
             help={errors.title ? errors.title : ''}
           >
-            <Input placeholder="Title" />
+            <Input placeholder="Title"    defaultValue={title}/>
           </Form.Item>
           {/* <Form.Item
             name="Description"
@@ -164,9 +205,9 @@ const Editors = () => {
 
           <Editor
             onChange={e => {
-              setDescription(e);
+              setBody(e);
             }}
-            value={description}
+            value={body}
           />
 
           <Form.Item style={{marginTop:'25px'}}>
@@ -178,10 +219,10 @@ const Editors = () => {
               size="large"
               disabled={load}
             >
-              {load ? 'Loading...' : 'Create'}
+              {load ? 'Loading...' : 'Update'}
             </Button>
-
-            <Button
+            {!post.published && (
+              <Button
               className="btn-signin"
               htmlType="button"
               onClick={handlePublished}
@@ -192,6 +233,8 @@ const Editors = () => {
             >
               {load ? 'Loading...' : 'Published'}
             </Button>
+            )}
+            
           </Form.Item>
         </Form>
       </Main>

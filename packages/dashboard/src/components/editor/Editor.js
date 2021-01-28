@@ -51,7 +51,7 @@ const Editor = ({ onChange, onSend, defaultTag, replay, text }) => {
   return (
     <MailBox>
       <div className="body">
-        {!text && (
+        {/* {!text && (
           <div
             style={{
               display: 'flex',
@@ -75,21 +75,22 @@ const Editor = ({ onChange, onSend, defaultTag, replay, text }) => {
             </div>
             <span className="mail-cc">Cc</span>
           </div>
-        )}
+        )} */}
         <div className="group">
           <RichTextEditor
             placeholder="Type your message..."
             value={state.value}
             onChange={onChanges}
+            defaultValue={state.value}
           />
         </div>
       </div>
-      {!text && (
+      {/* {!text && (
         <div className="footer">
           <div className="left d-flex align-items-center">
-            {/* <Button size="default" type="primary" onClick={onSubmit} raised>
+             <Button size="default" type="primary" onClick={onSubmit} raised>
               Send
-            </Button> */}
+            </Button> 
             <Link to="#">
               <Upload {...props}>
                 <FeatherIcon icon="paperclip" size={16} />
@@ -105,7 +106,7 @@ const Editor = ({ onChange, onSend, defaultTag, replay, text }) => {
             </Link>
           </div>
         </div>
-      )}
+      )} */}
     </MailBox>
   );
 };

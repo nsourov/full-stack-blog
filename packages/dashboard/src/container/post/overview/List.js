@@ -13,7 +13,7 @@ import {
 } from '../style';
 import { Dropdown } from '../../../components/dropdown/dropdown';
 
-const ProjectLists = ({isLoading, posts}) => {
+const ProjectLists = ({isLoading, posts, pages, paginationChangeHandler}) => {
   const project = useSelector((state) => state.projects.data);
   const [state, setState] = useState({
     projects: project,
@@ -43,7 +43,8 @@ const ProjectLists = ({isLoading, posts}) => {
 
   if (projects.length)
   posts.map((value) => {
-      const { id, title, status, category, published } = value;
+      const { id, title, status, category, published, slug } = value;
+      console.log(value)
       return dataSource.push({
         key: id,
         title: (
@@ -100,8 +101,8 @@ const ProjectLists = ({isLoading, posts}) => {
             className="wide-dropdwon"
             content={
               <>
-                <Link to="#">View</Link>
-                <Link to="#">Edit</Link>
+                <Link to={`/admin/post/postDetails/${slug}`}>View</Link>
+                {/* <Link to="#">Edit</Link> */}
                 <Link to="#">Delete</Link>
               </>
             }
@@ -147,7 +148,7 @@ const ProjectLists = ({isLoading, posts}) => {
     // },
 
     {
-      title: 'action',
+      title: 'Action',
       dataIndex: 'action',
       key: 'action',
     },
@@ -187,12 +188,12 @@ const ProjectLists = ({isLoading, posts}) => {
         <ProjectPagination>
           {projects.length ? (
             <Pagination
-              onChange={onHandleChange}
-              showSizeChanger
+              onChange={paginationChangeHandler}
+              // showSizeChanger
               onShowSizeChange={onShowSizeChange}
               pageSize={10}
               defaultCurrent={1}
-              total={40}
+              total={10 * pages}
             />
           ) : null}
         </ProjectPagination>
