@@ -32,7 +32,7 @@ exports.resize = async (req, res, next) => {
   // now we resize
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, jimp.AUTO);
-  await photo.write(`./public/uploads/${req.body.photo}`);
+  await photo.write(`./public/uploads/${req.body.image}`);
   // once we have written the photo to our filesystem, keep going!
   next();
 };
@@ -173,7 +173,7 @@ exports.createPost = async (req, res) => {
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
-    image: req.body.image,
+    image: req.body.image && `${process.env.SERVER_URL}/uploads/${req.body.image}`,
     user: req.user.id,
     category: req.body.categoryId,
   });
