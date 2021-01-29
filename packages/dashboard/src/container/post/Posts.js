@@ -55,7 +55,7 @@ const Project = ({ match }) => {
     };
     dispatch(getPosts(data));
   }, [dispatch, postStatus]);
-  
+
   const paginationChangeHandler = (e) => {
     let data = {
       postStatus,
@@ -65,7 +65,7 @@ const Project = ({ match }) => {
   };
 
   const handleCreatePostRoute = () => {
-    history.push('/admin/editor');
+    history.push('/admin/post/create');
   };
 
   const onCancel = () => {
@@ -75,8 +75,6 @@ const Project = ({ match }) => {
     });
   };
 
-  let numbers = Array.from({ length: pages }, (_, i) => i + 1);
-  console.log(numbers);
   return (
     <>
       <ProjectHeader>
@@ -89,7 +87,7 @@ const Project = ({ match }) => {
               type='primary'
               size='default'
             >
-              <FeatherIcon icon='plus' size={16} /> Create Post
+              <FeatherIcon icon='plus' size={16} /> Add New Post
             </Button>,
           ]}
         />
