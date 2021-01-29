@@ -84,7 +84,6 @@ const Editors = () => {
             rules={[{ message: 'Please input your title!', required: true }]}
             value={title}
             onChange={(e) => {
-              console.log(e.target.value);
               setTitle(e.target.value);
             }}
             validateStatus={errors.title ? 'error' : ''}
@@ -106,7 +105,12 @@ const Editors = () => {
             valuePropName='fileList'
             getValueFromEvent={normFile}
           >
-            <Upload.Dragger name='logo' listType='picture'>
+            <Upload.Dragger
+              name='logo'
+              listType='picture-card'
+              accept='image/png, image/jpeg'
+              beforeUpload={() => false}
+            >
               <p className='ant-upload-drag-icon'>
                 <UploadOutlined />
               </p>

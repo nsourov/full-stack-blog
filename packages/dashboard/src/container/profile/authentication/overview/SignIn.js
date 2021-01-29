@@ -43,7 +43,6 @@ const SignIn = () => {
             rules={[{ message: 'Please input your email!', required: true }]}
             label="Email Address"
             onChange={e => {
-              console.log(e.target.value);
               setEmail(e.target.value);
             }}
             validateStatus={errors.email ? 'error' : ''}
@@ -56,7 +55,6 @@ const SignIn = () => {
             label="Password"
             rules={[{ message: 'Please input your password!', required: true }]}
             onChange={e => {
-              console.log(e.target.value);
               setPassword(e.target.value);
             }}
             validateStatus={errors.password ? 'error' : ''}

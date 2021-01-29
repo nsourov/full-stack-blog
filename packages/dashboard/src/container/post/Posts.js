@@ -4,7 +4,6 @@ import { Row, Col, Spin } from 'antd';
 import { Switch, Route, Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
-import CreateProject from './overview/CreateProject';
 import { ProjectHeader, ProjectSorting } from './style';
 import { AutoComplete } from '../../components/autoComplete/autoComplete';
 import { Button } from '../../components/buttons/buttons';
@@ -156,7 +155,6 @@ const Project = ({ match }) => {
             </div>
           </Col>
         </Row>
-        <CreateProject onCancel={onCancel} visible={visible} />
       </Main>
     </>
   );
