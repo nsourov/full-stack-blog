@@ -13,9 +13,9 @@ const ForgotPass = lazy(() =>
   import('../container/profile/authentication/overview/ForgotPassword')
 );
 
-// const NotFound = () => {
-//   return <Redirect to="/" />;
-// };
+const NotFound = () => {
+  return <Redirect to="/" />;
+};
 
 const FrontendRoutes = () => {
   return (
@@ -30,7 +30,7 @@ const FrontendRoutes = () => {
         <Route exact path="/forgotPassword" component={ForgotPass} />
         <Route exact path="/register" component={SignUp} />
         <Route exact path="/" component={Login} />
-        {/* <Route exact path="*" component={NotFound} /> */}
+        <Route exact path="*" component={NotFound} />
       </Suspense>
     </Switch>
   );

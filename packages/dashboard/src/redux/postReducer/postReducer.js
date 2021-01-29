@@ -36,4 +36,15 @@ export const getPosts = (data) => async dispatch => {
   }
 };
 
+export const deletePost = (slug) => async dispatch => {
+  try {
+    dispatch(setLoading(true));
+    await UserAxios.delete(`/posts/${slug}`);
+    dispatch(setLoading(false));
+  } catch (err) {
+    console.log(err.response.data);
+    dispatch(setLoading(false));
+  }
+};
+
 export default postSlice.reducer;

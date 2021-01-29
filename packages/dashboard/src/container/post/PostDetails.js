@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'antd';
-import FeatherIcon from 'feather-icons-react';
-import { PageHeader } from '../../components/page-headers/page-headers';
 import { Main } from '../styled';
-// import { Button } from '../../components/buttons/buttons';
-import { ShareButtonPageHeader } from '../../components/buttons/share-button/share-button';
-import { ExportButtonPageHeader } from '../../components/buttons/export-button/export-button';
-import { CalendarButtonPageHeader } from '../../components/buttons/calendar-button/calendar-button';
 import { Form, Input, Button, Upload, Alert } from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import UserAxios from '../../redux/Axios/UserAxios';
 import Editor from '../../components/editor/Editor';
 import { useParams } from 'react-router-dom';
@@ -125,7 +118,7 @@ const Editors = () => {
   };
 
   if(!fetchLoad) {
-    return <h2>Loadinng</h2>
+    return <h2>No post found!</h2>
   }
 
   return (
