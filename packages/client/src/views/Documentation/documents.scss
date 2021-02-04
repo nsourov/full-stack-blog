@@ -1,0 +1,43 @@
+body {
+  background-color: white !important;
+  .sidebar-wrapper {
+    h6 {
+      text-transform: capitalize;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    ul {
+      height: 90vh;
+      list-style: none;
+      padding-left: 1rem !important;
+      li {
+        padding: 0.325rem 0;
+        a {
+          display: block;
+          text-decoration: none;
+          font-size: 0.9375rem;
+          font-weight: 500;
+          color: #868e98;
+          transition: all 0.3s;
+          &:hover {
+            transition: all 0.3s;
+            color: #338d33;
+          }
+        }
+      }
+    }
+  }
+  .doc-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    &-heading {
+      padding: 1.5rem;
+      text-transform: capitalize;
+      border-bottom: 1px solid #ddd;
+    }
+    &-body {
+      padding: 1.5rem;
+    }
+  }
+}
