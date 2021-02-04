@@ -15,6 +15,7 @@ const BlogLanding = () => {
 
   const { page } = useParams();
 
+  console.log('🚀 ~ file: index.js ~ line 19 ~ BlogLanding ~ data', data);
   useEffect(() => {
     if (page !== undefined) {
       dispatch(fatchBlogs(page));
@@ -46,6 +47,7 @@ const BlogLanding = () => {
                 name={item.name || 'Arif'}
                 postDate={item.updatedAt}
                 comment={item.comment || 0}
+                slug={item.slug}
               />
             </div>
           ))}

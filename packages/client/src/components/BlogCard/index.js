@@ -13,12 +13,13 @@ const BlogCard = (props) => {
     name,
     postDate,
     comment,
+    slug,
   } = props;
 
   return (
     <>
       <div className="post-thumbnail">
-        <Link to="post.html">
+        <Link to={`/post/${slug}`}>
           <img src={thumbnail} alt="..." className="img-fluid" />
         </Link>
       </div>
@@ -29,7 +30,7 @@ const BlogCard = (props) => {
             <Link to="#">{category}</Link>
           </div>
         </div>
-        <Link to="/post">
+        <Link to={`/post/${slug}`}>
           <h3 className="h4">{title}</h3>
         </Link>
         <p className="text-muted">{description}</p>
