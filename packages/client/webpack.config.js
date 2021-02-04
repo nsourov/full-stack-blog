@@ -72,7 +72,7 @@ module.exports = {
         use: ['@svgr/webpack'],
       },
       {
-        test: /\.(eot|otf|ttf|woff|woff2)$/,
+        test: /\.(eot|otf|ttf|woff|woff2|svg)$/,
         loader: require.resolve('file-loader'),
         options: {
           name: 'static/media/[name].[hash:8].[ext]',
@@ -107,7 +107,7 @@ module.exports = {
       filename: 'assets/css/[name].[contenthash:8].css',
       chunkFilename: 'assets/css/[name].[contenthash:8].chunk.css',
     }),
-    new EnvironmentPlugin({ ...process['env'] }),
+    new EnvironmentPlugin({ ...process.env }),
   ],
   devtool: process.env.NODE_ENV === 'development' && 'inline-source-map',
   devServer: {
