@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getPublishedPost } from 'src/api';
+import { getPublishedPosts } from 'src/api';
 
 function startLoading(state) {
   state.loading = true;
@@ -47,7 +47,7 @@ export const fatchBlogs = (page) => async (dispatch) => {
   try {
     dispatch(getBlogsStart());
 
-    const { data } = await getPublishedPost(page);
+    const { data } = await getPublishedPosts(page);
 
     dispatch(getBlogsSuccess(data));
   } catch (error) {
