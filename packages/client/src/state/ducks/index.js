@@ -1,13 +1,13 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import blogLanding from './blogLanding';
+import blogs from './blogs';
 import postCategories from './postCategories';
 import postComment from './postComment';
 
 import ui from './ui';
 
 export default combineReducers({
-  ...blogLanding,
+  ...blogs,
   ...postCategories,
   ...postComment,
   ...ui,

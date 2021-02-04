@@ -43,10 +43,10 @@ const BlogCard = (props) => {
             </div>
           </Link>
           <div className="date">
-            <i className="icon-clock"></i> {postDate}
+            <i className="icon-clock" /> {postDate}
           </div>
           <div className="comments meta-last">
-            <i className="icon-comment"></i>
+            <i className="icon-comment" />
             {comment}
           </div>
         </div>
