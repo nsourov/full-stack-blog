@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getPublishedPosts } from 'src/api';
+import { getPublishedPosts, getPost } from 'src/api';
 
 function startLoading(state) {
   state.loading = true;
@@ -12,7 +12,7 @@ function loadingFailed(state, { payload }) {
 }
 
 const blogsSlice = createSlice({
-  name: 'blogLanding',
+  name: 'posts',
   initialState: {
     loading: false,
     error: null,
@@ -33,14 +33,43 @@ const blogsSlice = createSlice({
   },
 });
 
+const blogSlice = createSlice({
+  name: 'post',
+  initialState: {
+    loading: false,
+    error: null,
+    data: [],
+  },
+  reducers: {
+    getBlogStart: startLoading,
+
+    getBlogSuccess: (state, { payload }) => {
+      return {
+        loading: false,
+        error: null,
+        data: payload,
+      };
+    },
+
+    getBlogFailure: loadingFailed,
+  },
+});
+
 export const {
   getBlogsStart,
   getBlogsSuccess,
   getBlogsFailure,
 } = blogsSlice.actions;
 
+export const {
+  getBlogStart,
+  getBlogSuccess,
+  getBlogFailure,
+} = blogSlice.actions;
+
 export default {
   blogs: blogsSlice.reducer,
+  blog: blogSlice.reducer,
 };
 
 export const fatchBlogs = (page) => async (dispatch) => {
@@ -52,5 +81,17 @@ export const fatchBlogs = (page) => async (dispatch) => {
     dispatch(getBlogsSuccess(data));
   } catch (error) {
     dispatch(getBlogsFailure(error.toString()));
+  }
+};
+
+export const fatchBlog = (slug) => async (dispatch) => {
+  try {
+    dispatch(getBlogStart());
+
+    const { data } = await getPost(slug);
+
+    dispatch(getBlogSuccess(data));
+  } catch (error) {
+    dispatch(getBlogFailure(error.toString()));
   }
 };
