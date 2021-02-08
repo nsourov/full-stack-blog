@@ -1,40 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Pagination from 'react-js-pagination';
 
-const Pagination = () => {
+const Paginations = (props) => {
+  const { activePage, countPerPage, count, onChange } = props;
   return (
-    <nav aria-label="Page navigation example">
-      <ul className="pagination pagination-template d-flex justify-content-center">
-        <li className="page-item">
-          <Link to="#" className="page-link">
-            {' '}
-            <i className="fa fa-angle-left"></i>
-          </Link>
-        </li>
-        <li className="page-item">
-          <Link to="#" className="page-link active">
-            1
-          </Link>
-        </li>
-        <li className="page-item">
-          <Link to="#" className="page-link">
-            2
-          </Link>
-        </li>
-        <li className="page-item">
-          <Link to="#" className="page-link">
-            3
-          </Link>
-        </li>
-        <li className="page-item">
-          <Link to="#" className="page-link">
-            {' '}
-            <i className="fa fa-angle-right"></i>
-          </Link>
-        </li>
-      </ul>
+    <nav aria-label='Page navigation example'>
+      <Pagination
+        innerClass='pagination pagination-template d-flex justify-content-center'
+        activePage={activePage}
+        itemsCountPerPage={countPerPage}
+        totalItemsCount={count}
+        pageRangeDisplayed={5}
+        onChange={onChange}
+        linkClass='page-link'
+        itemClass='page-item'
+      />
     </nav>
   );
 };
 
-export default Pagination;
+export default Paginations;

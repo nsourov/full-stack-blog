@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactMarkdown from 'react-markdown';
 
 const BlogCard = (props) => {
   const {
@@ -30,10 +31,10 @@ const BlogCard = (props) => {
             <Link to='#'>{category}</Link>
           </div>
         </div>
-        <Link to={`/post/${slug}`}>
+        <Link className="d-block" to={`/post/${slug}`}>
           <h3 className='h4'>{title}</h3>
         </Link>
-        {description}
+        <ReactMarkdown allowDangerousHtml children={description} />
         <div className='post-footer d-flex align-items-center'>
           <Link to='#' className='author d-flex align-items-center flex-wrap'>
             <div className='avatar'>
