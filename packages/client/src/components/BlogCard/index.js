@@ -18,36 +18,36 @@ const BlogCard = (props) => {
 
   return (
     <>
-      <div className="post-thumbnail">
+      <div className='post-thumbnail'>
         <Link to={`/post/${slug}`}>
-          <img src={thumbnail} alt="..." className="img-fluid" />
+          <img src={thumbnail} alt='...' className='img-fluid' />
         </Link>
       </div>
-      <div className="post-details">
-        <div className="post-meta d-flex justify-content-between">
-          <div className="date meta-last">{date}</div>
-          <div className="category">
-            <Link to="#">{category}</Link>
+      <div className='post-details'>
+        <div className='post-meta d-flex justify-content-between'>
+          <div className='date meta-last'>{date}</div>
+          <div className='category'>
+            <Link to='#'>{category}</Link>
           </div>
         </div>
         <Link to={`/post/${slug}`}>
-          <h3 className="h4">{title}</h3>
+          <h3 className='h4'>{title}</h3>
         </Link>
-        <p className="text-muted">{description}</p>
-        <div className="post-footer d-flex align-items-center">
-          <Link to="#" className="author d-flex align-items-center flex-wrap">
-            <div className="avatar">
-              <img src={avatar} alt="..." className="img-fluid" />
+        {description}
+        <div className='post-footer d-flex align-items-center'>
+          <Link to='#' className='author d-flex align-items-center flex-wrap'>
+            <div className='avatar'>
+              <img src={avatar} alt='...' className='img-fluid' />
             </div>
-            <div className="title">
+            <div className='title'>
               <span>{name}</span>
             </div>
           </Link>
-          <div className="date">
-            <i className="icon-clock" /> {postDate}
+          <div className='date'>
+            <i className='icon-clock' /> {postDate}
           </div>
-          <div className="comments meta-last">
-            <i className="icon-comment" />
+          <div className='comments meta-last'>
+            <i className='icon-comment' />
             {comment}
           </div>
         </div>

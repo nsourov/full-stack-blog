@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 import { fatchBlogs } from '../../state/ducks/blogs';
 import BlogCard from '../../components/BlogCard';
@@ -39,8 +40,7 @@ const BlogLanding = () => {
                 category={item.category || 'Business'}
                 title={item.title}
                 description={
-                  item.description ||
-                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.'
+                  <ReactMarkdown allowDangerousHtml children={item.body} />
                 }
                 avatar={item.avatar || avatar1}
                 name={item.name || 'Arif'}
