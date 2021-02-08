@@ -23,3 +23,8 @@ export const me = (token) => {
     headers: { Authorization: token },
   });
 };
+
+// API to post login
+export const login = (data) => {
+  return axios.post(`${api}/auth/login`, data);
+};
