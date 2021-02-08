@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { logOutUser } from '../../state/ducks/authentication';
 
 const Header = () => {
   const [collapse, setCollapse] = useState(false);
   const [searchBox, setSearchBox] = useState(false);
 
+  const dispatch = useDispatch();
+
   const { data, isAuthenticated } = useSelector((store) => store.user);
-  console.log('data', data);
+
   return (
     <header className='header'>
       <nav className='navbar navbar-expand-lg'>
@@ -85,7 +89,7 @@ const Header = () => {
               </Link>
             </div>
             <ul className='langs navbar-text'>
-              {!isAuthenticated ? (
+              {!isAuthenticated && (
                 <>
                   <Link to='/signin' className='active btn btn-outline-primary'>
                     sign in
@@ -95,7 +99,17 @@ const Header = () => {
                     sign up
                   </Link>{' '}
                 </>
-              ) : data.role === 'editor' ? (
+              )}
+              {isAuthenticated && (
+                <a
+                  href='#'
+                  onClick={() => dispatch(logOutUser())}
+                  className='btn btn-link'
+                >
+                  Log Out
+                </a>
+              )}
+              {isAuthenticated && data.role === 'editor' && (
                 <a
                   target='_blank'
                   href='http://localhost:3000/'
@@ -103,7 +117,9 @@ const Header = () => {
                 >
                   Dashboard
                 </a>
-              ) : (
+              )}
+
+              {isAuthenticated && data.role === 'visitor' && (
                 <a href='#' className='btn btn-success'>
                   Request Editor
                 </a>
