@@ -20,10 +20,14 @@ const authSlice = createSlice({
         return { isAuthenticated: false, data: {} };
       }
     },
+    logOutUser: () => {
+      localStorage.removeItem('jwtToken');
+      return { isAuthenticated: false, data: {} };
+    },
   },
 });
 
-export const { setCurrentUser } = authSlice.actions;
+export const { setCurrentUser, logOutUser } = authSlice.actions;
 
 export default {
   user: authSlice.reducer,

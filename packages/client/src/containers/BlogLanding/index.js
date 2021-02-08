@@ -15,7 +15,6 @@ const BlogLanding = () => {
 
   const { page } = useParams();
 
-  console.log('🚀 ~ file: index.js ~ line 19 ~ BlogLanding ~ data', data);
   useEffect(() => {
     if (page !== undefined) {
       dispatch(fatchBlogs(page));
@@ -29,11 +28,11 @@ const BlogLanding = () => {
   }
 
   return (
-    <div className="container">
-      <div className="row">
+    <div className='container'>
+      <div className='row'>
         {Array.isArray(data.posts) &&
           data.posts.map((item) => (
-            <div className="post col-xl-6" key={item._id}>
+            <div className='post col-xl-6' key={item._id}>
               <BlogCard
                 thumbnail={item.thumbnail || thumbnail1}
                 date={item.createdAt}

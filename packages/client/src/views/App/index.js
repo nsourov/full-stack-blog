@@ -1,5 +1,6 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import '../../assets/css/style.css';
 import '../../assets/css/components/style.default.css';
@@ -10,11 +11,39 @@ import withTitle from '../../components/TitleComponent';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+import { me } from '../../api';
+import { setCurrentUser, logOutUser } from '../../state/ducks/authentication';
+
 // Pages
 const Pages = lazy(() => import('../Pages'));
 
 const App = () => {
-  document.body.setAttribute('data-theme', 'dark');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        if (!localStorage.jwtToken) {
+          return;
+        }
+        const res = await me(localStorage.jwtToken);
+        const user = res?.data;
+        if (user) {
+          dispatch(setCurrentUser({ token: localStorage.jwtToken }));
+          return;
+        }
+
+        dispatch(logOutUser());
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (localStorage.jwtToken) {
+      checkAuth();
+    }
+  }, [dispatch]);
+
   return (
     <Router>
       <Header />
