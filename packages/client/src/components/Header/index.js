@@ -73,11 +73,6 @@ const Header = () => {
                   Blog
                 </NavLink>
               </li>
-              <li className='nav-item'>
-                <NavLink exact to='/post' className='nav-link '>
-                  Post
-                </NavLink>
-              </li>
             </ul>
             <div className='navbar-text'>
               <Link

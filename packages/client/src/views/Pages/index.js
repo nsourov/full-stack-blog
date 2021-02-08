@@ -33,18 +33,6 @@ const Pages = () => {
 
             <Route
               exact
-              path="/page/:page?"
-              render={(props) =>
-                withTitle({
-                  component: Blog,
-                  title: 'blog',
-                  ...props,
-                })
-              }
-            />
-
-            <Route
-              exact
               path="/post/:slug"
               render={(props) =>
                 withTitle({
