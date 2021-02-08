@@ -1,7 +1,7 @@
 import React from 'react';
 
-import BlogLanding from 'src/containers/BlogLanding';
-import Pagination from 'src/components/Pagination';
+import BlogLanding from '../../containers/BlogLanding';
+import Pagination from '../../components/Pagination';
 
 const Blog = () => {
   return (

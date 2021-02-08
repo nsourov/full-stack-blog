@@ -1,7 +1,7 @@
 import React from 'react';
 
-import WidgetSearch from 'src/components/WidgetSearch';
-import PostCategories from 'src/containers/PostCategories';
+import WidgetSearch from '../../components/WidgetSearch';
+import PostCategories from '../../containers/PostCategories';
 
 const Sidebar = () => {
   return (

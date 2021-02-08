@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { fatchBlogs } from 'src/state/ducks/blogs';
-import BlogCard from 'src/components/BlogCard';
+import { fatchBlogs } from '../../state/ducks/blogs';
+import BlogCard from '../../components/BlogCard';
 
-import thumbnail1 from 'src/assets/img/blog-post-1.jpg';
-import avatar1 from 'src/assets/img/avatar-1.jpg';
+import thumbnail1 from '../../assets/img/blog-post-1.jpg';
+import avatar1 from '../../assets/img/avatar-1.jpg';
 
 const BlogLanding = () => {
   const { data, loading } = useSelector((store) => store.blogs);

@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fatchBlog } from 'src/state/ducks/blogs';
-import blog3 from 'src/assets/img/blog-post-3.jpg';
+import { fatchBlog } from '../../state/ducks/blogs';
+import blog3 from '../../assets/img/blog-post-3.jpg';
 
-import PostComments from 'src/containers/PostComments';
+import PostComments from '../../containers/PostComments';
 import PostTags from './PostTags';
 import PostNavs from './PostNavs';
 import AddComment from './AddComment';

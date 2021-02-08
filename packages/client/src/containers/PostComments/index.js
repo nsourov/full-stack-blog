@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import PostComment from 'src/components/PostComment';
+import PostComment from '../../components/PostComment';
 
 const PostComments = () => {
   const postComments = useSelector((store) => store.postComments);

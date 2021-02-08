@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import avatars from 'src/assets/img/avatar-1.jpg';
+import avatars from '../../../assets/img/avatar-1.jpg';
 
 const PostFooter = (props) => {
   const { comment, updatedAt, name, avatar } = props;

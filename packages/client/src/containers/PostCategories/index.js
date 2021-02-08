@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import PostCategory from 'src/components/PostCategory';
+import PostCategory from '../../components/PostCategory';
 
 const PostCategories = () => {
   const postCategories = useSelector((store) => store.postCategories);

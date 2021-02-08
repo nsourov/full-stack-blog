@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import avatar from 'src/assets/img/avatar-1.jpg';
+import avatar from '../../assets/img/avatar-1.jpg';
 
 const postCommentData = [
   {

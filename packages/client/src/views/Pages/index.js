@@ -2,8 +2,8 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { Container, Row } from 'reactstrap';
 
-import Fallback from 'src/components/Fallback';
-import withTitle from 'src/components/TitleComponent';
+import Fallback from '../../components/Fallback';
+import withTitle from '../../components/TitleComponent';
 import Sidebar from '../Sidebar';
 
 const Blog = lazy(() => import('../Blog'));
