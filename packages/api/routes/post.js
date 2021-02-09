@@ -14,6 +14,7 @@ const {
 
 // Post Routes
 router.get('/published/page/:page', postController.getPublishedPosts);
+router.get('/search/:searchString/page/:page', postController.getSearchPosts);
 router.get(
   '/unpublished/page/:page',
   passport.authenticate('jwt', { session: false }),

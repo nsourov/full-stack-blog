@@ -28,7 +28,7 @@ const BlogCard = (props) => {
         <div className='post-meta d-flex justify-content-between'>
           <div className='date meta-last'>{date}</div>
           <div className='category'>
-            <Link to='#'>{category}</Link>
+            <Link to='#'>{category.name}</Link>
           </div>
         </div>
         <Link className="d-block" to={`/post/${slug}`}>

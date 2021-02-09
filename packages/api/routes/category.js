@@ -8,7 +8,7 @@ const categoryController = require('../controllers/category');
 const { isAdmin } = require('../middlewares');
 
 // Category Routes
-router.get('/page/:page', categoryController.getCategories);
+router.get('/', categoryController.getCategories);
 
 router.get('/:slug', categoryController.getCategory);
 
