@@ -64,8 +64,7 @@ const Editors = () => {
   };
 
   const normFile = (e) => {
-    console.log('Upload event:', e);
-    setPhoto(e.file);
+    setPhoto(e.fileList[0]);
   };
 
   return (

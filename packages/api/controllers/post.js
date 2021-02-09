@@ -125,9 +125,7 @@ exports.getPublishedPosts = async (req, res) => {
   const countPromise = Post.count({ published: true });
 
   const [posts, count] = await Promise.all([postsPromise, countPromise]);
-  console.log(count);
   const pages = Math.ceil(count / limit);
-  console.log(pages);
   if (!posts.length && skip) {
     return res
       .status(400)
@@ -158,9 +156,8 @@ exports.getUnPublishedPosts = async (req, res) => {
   const countPromise = Post.count({ published: false });
 
   const [posts, count] = await Promise.all([postsPromise, countPromise]);
-  console.log(count);
   const pages = Math.ceil(count / limit);
-  console.log(pages);
+
   if (!posts.length && skip) {
     return res
       .status(400)

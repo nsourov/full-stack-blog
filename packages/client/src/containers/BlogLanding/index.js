@@ -12,7 +12,7 @@ const BlogLanding = (props) => {
     data.posts.map((item) => (
       <div className='post col-xl-6' key={item._id}>
         <BlogCard
-          thumbnail={item.thumbnail || thumbnail1}
+          thumbnail={item.image || thumbnail1}
           date={item.createdAt}
           category={item.category || 'Business'}
           title={item.title}

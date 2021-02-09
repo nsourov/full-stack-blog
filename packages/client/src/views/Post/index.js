@@ -38,7 +38,7 @@ const Post = () => {
         {post && (
           <div className="post-single">
             <div className="post-thumbnail">
-              <img src={blog3} alt="..." className="img-fluid" />
+              <img src={post.image || blog3} alt="..." className="img-fluid" />
             </div>
             <div className="post-details">
               <PostMeta />
