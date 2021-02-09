@@ -44,6 +44,7 @@ exports.getPost = async (req, res) => {
   const post = await Post.findOne({ slug: req.params.slug })
     .select(['-comments'])
     .populate('category')
+    .populate('user', { password: 0, role: 0 })
     .exec();
   if (!post)
     return res
@@ -110,6 +111,45 @@ exports.getPostUnPublishedComments = async (req, res) => {
   });
 };
 
+exports.getSearchPosts = async (req, res) => {
+  const page = req.params.page || 1;
+  const searchString = req.params.searchString || '';
+  const limit = 10;
+  const skip = page * limit - limit;
+
+  const postsPromise = Post.find({
+    published: true,
+    $text: { $search: searchString },
+  })
+    .select(['-comments'])
+    .populate('category')
+    .populate('user', { password: 0, role: 0 })
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: 'desc' });
+
+  const countPromise = Post.count({
+    published: true,
+    $text: { $search: searchString },
+  });
+
+  const [posts, count] = await Promise.all([postsPromise, countPromise]);
+  const pages = Math.ceil(count / limit);
+  if (!posts.length && skip) {
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: "Page doesn't exist" } });
+  }
+
+  return res.status(200).json({
+    success: true,
+    posts,
+    page,
+    pages,
+    count,
+  });
+};
+
 exports.getPublishedPosts = async (req, res) => {
   const page = req.params.page || 1;
   const limit = 5;
@@ -118,6 +158,7 @@ exports.getPublishedPosts = async (req, res) => {
   const postsPromise = Post.find({ published: true })
     .select(['-comments'])
     .populate('category')
+    .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -149,6 +190,7 @@ exports.getUnPublishedPosts = async (req, res) => {
   const postsPromise = Post.find({ published: false })
     .select(['-comments'])
     .populate('category')
+    .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -242,6 +284,7 @@ exports.updatePost = async (req, res) => {
   )
     .select(['-comments'])
     .populate('category')
+    .populate('user', { password: 0, role: 0 })
     .exec();
   return res.status(200).json({ success: true, post: updatedPost });
 };
@@ -261,6 +304,7 @@ exports.publishPost = async (req, res) => {
   )
     .select(['-comments'])
     .populate('category')
+    .populate('user', { password: 0, role: 0 })
     .exec();
   return res.status(200).json({ success: true, post: updatedPost });
 };

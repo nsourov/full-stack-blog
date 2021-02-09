@@ -6,8 +6,6 @@ import { fatchBlog } from '../../state/ducks/blogs';
 import blog3 from '../../assets/img/blog-post-3.jpg';
 
 import PostComments from '../../containers/PostComments';
-import PostTags from './PostTags';
-import PostNavs from './PostNavs';
 import AddComment from './AddComment';
 import PostBody from './PostBody';
 import PostFooter from './PostFooter';
@@ -56,8 +54,6 @@ const Post = () => {
                 comment={post.comment || 0}
               />
               <PostBody body={post.body} />
-              <PostTags />
-              <PostNavs />
               <PostComments />
               <AddComment />
             </div>

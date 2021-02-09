@@ -3,44 +3,47 @@ const slug = require('slugs');
 
 const { Schema } = mongoose;
 
-const PostSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  body: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  image: String,
-  slug: String,
-  published: {
-    type: Boolean,
-    default: false,
-  },
-  likes: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    },
-  ],
-  comments: [
-    {
+const PostSchema = new Schema(
+  {
+    user: {
       type: Schema.Types.ObjectId,
-      ref: 'Comment',
+      ref: 'User',
     },
-  ],
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category',
+    body: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    image: String,
+    slug: String,
+    published: {
+      type: Boolean,
+      default: false,
+    },
+    likes: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+    },
   },
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 PostSchema.pre('save', async function (next) {
   if (!this.isModified('title')) {
@@ -56,5 +59,7 @@ PostSchema.pre('save', async function (next) {
   }
   next();
 });
+
+PostSchema.index({ name: 'text', title: 'text' });
 
 module.exports = mongoose.model('Post', PostSchema);
