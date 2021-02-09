@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = 'http://localhost:4000';
+const api = process.env.REACT_APP_API_URL;
 
 // API to get posts
 export const getPublishedPosts = (page) => {
