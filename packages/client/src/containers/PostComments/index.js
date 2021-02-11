@@ -6,10 +6,7 @@ import PostComment from '../../components/PostComment';
 
 const PostComments = ({ postId }) => {
   const [page, setPage] = useState(1);
-  const {
-    data,
-    loading,
-  } = useSelector((state) => state.comments);
+  const { data, loading } = useSelector((state) => state.comments);
   const postComments = useSelector((store) => store.postComments);
 
   const dispatch = useDispatch();
@@ -19,26 +16,26 @@ const PostComments = ({ postId }) => {
   }, [dispatch, page, postId]);
 
   if (loading) {
-    return 'Loading'
+    return 'Loading';
   }
 
-  console.log('object',data);
+  console.log('object', data);
   return (
     <div className='post-comments'>
       <header>
         <h3 className='h6'>
           Post Comments
-          <span className='no-of-comments'>({postComments.length})</span>
+          <span className='no-of-comments'>({data.count})</span>
         </h3>
       </header>
-      {Array.isArray(postComments) &&
-        postComments.map((comment) => (
+      {Array.isArray(data.comments) &&
+        data.comments.map((comment) => (
           <PostComment
-            key={comment.id}
-            avatar={comment.avatar}
-            name={comment.name}
-            date={comment.date}
-            description={comment.description}
+            key={comment._id}
+            avatar={comment.user.avatar}
+            name={comment.user.name}
+            date={comment.updatedAt}
+            description={comment.body}
           />
         ))}
     </div>

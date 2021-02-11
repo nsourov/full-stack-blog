@@ -60,6 +60,7 @@ exports.getPostPublishedComments = async (req, res) => {
 
   const args = { post: req.params.postId, published: true };
   const commentsPromise = Comment.find(args)
+    .populate('user',{password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -89,6 +90,7 @@ exports.getPostUnPublishedComments = async (req, res) => {
 
   const args = { post: req.params.postId, published: false };
   const commentsPromise = Comment.find(args)
+    .populate('user',{password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
