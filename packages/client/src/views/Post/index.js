@@ -34,7 +34,6 @@ const Post = () => {
   if (loading) {
     return 'Loading...';
   }
-
   return (
     <main className='post blog-post col-lg-8'>
       <div className='container'>
@@ -59,7 +58,7 @@ const Post = () => {
                 comment={post.comment || 0}
               />
               <PostBody body={post.body} />
-              <PostComments />
+              <PostComments postId={post._id} />
               <AddComment />
             </div>
           </div>
