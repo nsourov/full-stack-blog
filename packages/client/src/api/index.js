@@ -18,8 +18,10 @@ export const getPostComments = (postId, page) => {
 };
 
 // API to create comments
-export const createComment = (slug, body) => {
-  return axios.post(`${api}/posts/${slug}/comment`, body);
+export const createComment = (slug, body, token) => {
+  return axios.post(`${api}/posts/${slug}/comment`, body, {
+    headers: { Authorization: token },
+  });
 };
 
 // Api to post register

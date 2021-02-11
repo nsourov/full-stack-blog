@@ -10,7 +10,7 @@ const AddComment = ({ slug }) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const onsubmit = async (e) => {
     try {
-      const { data } = await createComment(slug,e);
+      const { data } = await createComment(slug,e,localStorage.jwtToken);
       console.log('🚀 ~ file: index.js ~ line 14 ~ onsubmit ~ data', data)
       reset();
     } catch (error) {
