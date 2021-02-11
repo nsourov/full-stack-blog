@@ -24,7 +24,7 @@ const Blog = () => {
   return (
     <main className='posts-listing col-lg-8'>
       <div className='container-fluid'>
-        <div className='row'>
+        <div className='row justify-content-cent'>
           {!loading ? <BlogLanding data={data} /> : 'Loading ...'}
 
           <div className='col-md-12'>
