@@ -69,13 +69,7 @@ const Header = () => {
               collapse ? 'collapse show' : 'collapse'
             }`}
           >
-            <ul className='navbar-nav ml-auto'>
-              <li className='nav-item'>
-                <NavLink exact to='/' className='nav-link '>
-                  Blog
-                </NavLink>
-              </li>
-            </ul>
+            <ul className='navbar-nav ml-auto' />
             <div className='navbar-text'>
               <Link
                 onClick={() => setSearchBox(!searchBox)}
@@ -89,11 +83,11 @@ const Header = () => {
               {!isAuthenticated && (
                 <>
                   <Link to='/signin' className='active btn btn-outline-primary'>
-                    sign in
+                    Sign In
                   </Link>
                   <span> </span>
-                  <Link className='btn btn-outline-primary' to='/signup'>
-                    sign up
+                  <Link className='btn btn-outline-light' to='/signup'>
+                    Sign Up
                   </Link>{' '}
                 </>
               )}
