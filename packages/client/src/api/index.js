@@ -31,6 +31,13 @@ export const updateComment = (slug, commentId, body, token) => {
   });
 };
 
+// API to delete comments
+export const deleteComment = (slug, commentId, token) => {
+  return axios.delete(`${api}/posts/${slug}/comment/${commentId}`, {
+    headers: { Authorization: token },
+  });
+};
+
 // Api to post register
 export const registerVisitor = (data) => {
   return axios.post(`${api}/auth/register`, data);

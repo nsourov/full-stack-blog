@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux';
 import { Button } from 'reactstrap';
 import { useForm } from 'react-hook-form';
 
-import { updateComment } from '../../api';
+import { updateComment, deleteComment } from '../../api';
 import dateFormat from '../../utils/dateFormat';
 import dummiAvatar from '../../assets/img/avatar-1.jpg';
 
 const PostComment = (props) => {
   const [edit, setEdit] = useState(false);
-  const { avatar, name, date, description, userId, slug } = props;
+  const { avatar, name, date, description, userId, slug, commentId } = props;
 
   const {
     isAuthenticated,
@@ -23,9 +23,17 @@ const PostComment = (props) => {
 
   const onsubmit = async (e) => {
     try {
-      await updateComment(slug, userId, e, localStorage.jwtToken);
+      await updateComment(slug, commentId, e, localStorage.jwtToken);
       reset();
       setEdit(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onDelete = async (e) => {
+    try {
+      await deleteComment(slug, commentId, localStorage.jwtToken);
     } catch (error) {
       console.log(error);
     }
@@ -58,7 +66,7 @@ const PostComment = (props) => {
               <i className='fa fa-edit'></i>
             </Button>
 
-            <Button color='link' className='text-danger'>
+            <Button onClick={onDelete} color='link' className='text-danger'>
               <i className='fa fa-trash'></i>
             </Button>
           </>
@@ -74,11 +82,7 @@ const PostComment = (props) => {
               })}
               className='form-control w-50'
             />
-            <Button
-              className='mt-1'
-              color='success'
-              // onClick={() => setEdit(false)}
-            >
+            <Button className='mt-1' color='success'>
               Save
             </Button>
           </form>

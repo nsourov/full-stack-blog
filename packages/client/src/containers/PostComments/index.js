@@ -31,6 +31,7 @@ const PostComments = ({ postId, slug }) => {
         data.comments.map((comment) => (
           <PostComment
             key={comment._id}
+            commentId={comment._id}
             userId={comment.user._id}
             avatar={comment.user.avatar}
             name={comment.user.name}
