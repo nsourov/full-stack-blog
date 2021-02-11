@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { logOutUser } from '../../state/ducks/authentication';
 
+import logo from '../../assets/img/logo.png';
+
 const Header = () => {
   const [collapse, setCollapse] = useState(false);
   const [searchBox, setSearchBox] = useState(false);
@@ -42,7 +44,7 @@ const Header = () => {
         <div className='container'>
           <div className='navbar-header d-flex align-items-center justify-content-between'>
             <Link to='/' className='navbar-brand'>
-              Bootstrap Blog
+              <img src={logo} alt='logo' />
             </Link>
 
             <button

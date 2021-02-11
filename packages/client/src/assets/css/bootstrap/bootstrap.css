@@ -4448,12 +4448,15 @@ input[type='button'].btn-block {
 
 .navbar-brand {
   display: inline-block;
-  padding-top: 0.3125rem;
-  padding-bottom: 0.3125rem;
+  padding-top: 0;
+  padding-bottom: 0;
   margin-right: 1rem;
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
+}
+.navbar-brand img {
+  max-height: 40px;
 }
 
 .navbar-brand:hover,
