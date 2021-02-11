@@ -17,6 +17,11 @@ export const getPostComments = (postId, page) => {
   return axios.get(`${api}/posts/${postId}/comments/published/page/${page}`);
 };
 
+// API to create comments
+export const createComment = (slug, body) => {
+  return axios.post(`${api}/posts/${slug}/comment`, body);
+};
+
 // Api to post register
 export const registerVisitor = (data) => {
   return axios.post(`${api}/auth/register`, data);
