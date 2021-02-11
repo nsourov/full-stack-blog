@@ -4,10 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fatchComments } from '../../state/ducks/blogs';
 import PostComment from '../../components/PostComment';
 
-const PostComments = ({ postId }) => {
+const PostComments = ({ postId, slug }) => {
   const [page, setPage] = useState(1);
   const { data, loading } = useSelector((state) => state.comments);
-  const postComments = useSelector((store) => store.postComments);
 
   const dispatch = useDispatch();
 
@@ -19,7 +18,7 @@ const PostComments = ({ postId }) => {
     return 'Loading';
   }
 
-  console.log('object', data);
+  console.log('data', data);
   return (
     <div className='post-comments'>
       <header>
@@ -32,10 +31,12 @@ const PostComments = ({ postId }) => {
         data.comments.map((comment) => (
           <PostComment
             key={comment._id}
+            userId={comment.user._id}
             avatar={comment.user.avatar}
             name={comment.user.name}
             date={comment.updatedAt}
             description={comment.body}
+            slug={slug}
           />
         ))}
     </div>

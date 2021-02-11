@@ -58,7 +58,7 @@ const Post = () => {
                 comment={post.comment || 0}
               />
               <PostBody body={post.body} />
-              <PostComments postId={post._id} />
+              <PostComments postId={post._id} slug={post.slug} />
               <AddComment slug={post.slug} />
             </div>
           </div>

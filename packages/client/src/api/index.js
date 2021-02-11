@@ -24,6 +24,13 @@ export const createComment = (slug, body, token) => {
   });
 };
 
+// API to update comments
+export const updateComment = (slug, commentId, body, token) => {
+  return axios.put(`${api}/posts/${slug}/comment/${commentId}`, body, {
+    headers: { Authorization: token },
+  });
+};
+
 // Api to post register
 export const registerVisitor = (data) => {
   return axios.post(`${api}/auth/register`, data);
