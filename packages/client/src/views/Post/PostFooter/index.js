@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import dateFormat from '../../../utils/dateFormat';
 
 import avatars from '../../../assets/img/avatar-1.jpg';
 
@@ -17,7 +18,7 @@ const PostFooter = (props) => {
       </Link>
       <div className="d-flex align-items-center flex-wrap">
         <div className="date">
-          <i className="icon-clock" /> {updatedAt}
+          <i className="icon-clock" /> {dateFormat(updatedAt)}
         </div>
 
         <div className="comments meta-last">

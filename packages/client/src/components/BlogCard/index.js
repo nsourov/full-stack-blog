@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import dateFormat from '../../utils/dateFormat';
 
 const BlogCard = (props) => {
   const {
@@ -26,12 +27,12 @@ const BlogCard = (props) => {
       </div>
       <div className='post-details'>
         <div className='post-meta d-flex justify-content-between'>
-          <div className='date meta-last'>{date}</div>
+          <div className='date meta-last'>{dateFormat(date)}</div>
           <div className='category'>
             <Link to='#'>{category.name}</Link>
           </div>
         </div>
-        <Link className="d-block" to={`/post/${slug}`}>
+        <Link className='d-block' to={`/post/${slug}`}>
           <h3 className='h4'>{title}</h3>
         </Link>
         <ReactMarkdown allowDangerousHtml children={description} />
@@ -45,7 +46,7 @@ const BlogCard = (props) => {
             </div>
           </Link>
           <div className='date'>
-            <i className='icon-clock' /> {postDate}
+            <i className='icon-clock' /> {dateFormat(postDate)}
           </div>
           <div className='comments meta-last'>
             <i className='icon-comment' />
