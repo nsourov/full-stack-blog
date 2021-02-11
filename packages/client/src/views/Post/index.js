@@ -25,25 +25,30 @@ const Post = () => {
     dispatch(fatchBlog(slug));
   }, [dispatch, slug]);
 
+  useEffect(() => {
+    if (post) {
+      document.title = post.title;
+    }
+  }, [post]);
+
   if (loading) {
     return 'Loading...';
   }
-  console.log('post', post);
 
   return (
-    <main className="post blog-post col-lg-8">
-      <div className="container">
+    <main className='post blog-post col-lg-8'>
+      <div className='container'>
         {post && (
-          <div className="post-single">
-            <div className="post-thumbnail">
-              <img src={post.image || blog3} alt="..." className="img-fluid" />
+          <div className='post-single'>
+            <div className='post-thumbnail'>
+              <img src={post.image || blog3} alt='...' className='img-fluid' />
             </div>
-            <div className="post-details">
+            <div className='post-details'>
               <PostMeta />
               <h1>
                 {post.title}
-                <Link to="#">
-                  <i className="fa fa-bookmark-o" />
+                <Link to='#'>
+                  <i className='fa fa-bookmark-o' />
                 </Link>
               </h1>
 

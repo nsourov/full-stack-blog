@@ -25,7 +25,7 @@ const Pages = () => {
               render={(props) =>
                 withTitle({
                   component: Blog,
-                  title: 'blog',
+                  title: 'Bruch Blog',
                   ...props,
                 })
               }
