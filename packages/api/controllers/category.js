@@ -1,36 +1,32 @@
 const Category = require('../models/category');
+const Post = require('../models/post');
 const { validateCategoryInput } = require('../validations/category');
 
 exports.getCategory = async (req, res) => {
   const category = await Category.findOne({ slug: req.params.slug }).exec();
-  if (!category) return res.status(400).json({ success: false, errors: { message: 'Category not found' } });
+  if (!category)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'Category not found' } });
   return res.status(200).json({ success: true, category });
 };
 
 exports.getCategories = async (req, res) => {
-  const page = req.params.page || 1;
-  const limit = 10;
-  const skip = page * limit - limit;
+  const categories = await Category.find().sort({ createdAt: 'desc' });
 
-  const categoryPromise = Category.find().skip(skip)
-    .limit(limit)
-    .sort({ created: 'desc' });
-
-  const countPromise = Category.count();
-
-  const [categories, count] = await Promise.all([categoryPromise, countPromise]);
-  const pages = Math.ceil(count / limit);
-  if (!categories.length && skip) {
+  if (!categories.length) {
     return res
       .status(400)
       .json({ success: false, errors: { message: "Page doesn't exist" } });
   }
+  const withCount = [];
+  for (const category of categories) {
+    const count = await Post.count({ category: category.id }).exec();
+    withCount.push({...JSON.parse(JSON.stringify(category)), postCount: count});
+  }
   return res.status(200).json({
     success: true,
-    categories,
-    page,
-    pages,
-    count,
+    categories: withCount,
   });
 };
 
@@ -67,7 +63,9 @@ exports.updateCategory = async (req, res) => {
   const updatedCategory = await Category.findOneAndUpdate(
     { slug: req.params.slug },
     req.body,
-    { new: true, runValidators: true },
-  ).select(['-comments']).exec();
+    { new: true, runValidators: true }
+  )
+    .select(['-comments'])
+    .exec();
   return res.status(200).json({ success: true, post: updatedCategory });
 };
