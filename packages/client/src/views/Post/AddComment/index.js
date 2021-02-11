@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { createComment } from '../../../api';
 
 const AddComment = ({ slug }) => {
+  const [loading, setLoading] = useState(false);
   const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
 
   const { register, handleSubmit, errors, reset } = useForm();
   const onsubmit = async (e) => {
     try {
-      const { data } = await createComment(slug,e,localStorage.jwtToken);
-      console.log('🚀 ~ file: index.js ~ line 14 ~ onsubmit ~ data', data)
+      setLoading(true);
+      await createComment(slug, e, localStorage.jwtToken);
       reset();
+      setTimeout(() => setLoading(false), 100);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -41,7 +44,12 @@ const AddComment = ({ slug }) => {
               )}
             </div>
             <div className='form-group col-md-12'>
-              <button type='submit' className='btn btn-secondary'>
+              <button
+                disabled={loading}
+                type='submit'
+                className='btn btn-secondary'
+              >
+                {loading && <i className='fa fa-spinner fa-pulse fa-fw'></i>}
                 Submit Comment
               </button>
             </div>
