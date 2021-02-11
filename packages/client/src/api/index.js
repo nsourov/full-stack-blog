@@ -28,3 +28,9 @@ export const me = (token) => {
 export const login = (data) => {
   return axios.post(`${api}/auth/login`, data);
 };
+
+
+// API to request to editor
+export const requestEditor = () => {
+  return axios.post(`${api}/requests`,);
+};

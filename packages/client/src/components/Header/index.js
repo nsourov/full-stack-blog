@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { logOutUser } from '../../state/ducks/authentication';
+import RequestEditor from './RequestEditor';
 
 import logo from '../../assets/img/logo.png';
 
@@ -111,9 +112,7 @@ const Header = () => {
               )}
 
               {isAuthenticated && data.role === 'visitor' && (
-                <a href='#' className='btn btn-success'>
-                  Request Editor
-                </a>
+                <RequestEditor data={data} isAuthenticated={isAuthenticated} />
               )}
             </ul>
           </div>
