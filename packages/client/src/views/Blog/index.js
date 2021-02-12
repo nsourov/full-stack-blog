@@ -25,7 +25,7 @@ const Blog = () => {
     <main className='posts-listing col-lg-8'>
       <div className='container-fluid'>
         <div className='row justify-content-center'>
-          {!loading ? <BlogLanding data={data} /> : 'Loading ...'}
+          <BlogLanding data={data} loading={loading} />
 
           <div className='col-md-12'>
             <Pagination

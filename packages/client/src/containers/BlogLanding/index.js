@@ -1,14 +1,27 @@
 import React from 'react';
 
-import BlogCard from '../../components/BlogCard';
+import BlogCard, { Fallback } from '../../components/BlogCard';
 
 import thumbnail1 from '../../assets/img/blog-post-1.jpg';
 import avatar1 from '../../assets/img/avatar-1.jpg';
 
 const BlogLanding = (props) => {
-  const { data } = props;
+  const { data, loading } = props;
 
-  return Array.isArray(data.posts) ? (
+  if (loading) {
+    return (
+      <>
+        <div className='post col-lg-10 col-md-12'>
+          <Fallback />
+        </div>
+        <div className='post col-lg-10 col-md-12'>
+          <Fallback />
+        </div>
+      </>
+    );
+  }
+
+  return data?.posts ? (
     data.posts.map((item) => (
       <div className='post col-lg-10 col-md-12' key={item._id}>
         <BlogCard

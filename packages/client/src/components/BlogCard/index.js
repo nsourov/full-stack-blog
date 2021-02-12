@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import dateFormat from '../../utils/dateFormat';
+import Skeleton from '../../components/Skeleton';
 
 const BlogCard = (props) => {
   const {
@@ -66,6 +67,23 @@ BlogCard.propTypes = {
   name: PropTypes.string,
   postDate: PropTypes.string,
   comment: PropTypes.number,
+};
+
+export const Fallback = () => {
+  return (
+    <>
+      <div className='post-thumbnail'>
+        <Skeleton width='100%' height={200} bottom={10} />
+      </div>
+      <div className='post-details'>
+        <h3 className='h4'>
+          <Skeleton width='60%' height={10} />
+        </h3>
+        <Skeleton width='50%' height={10} />
+        <Skeleton width='45%' height={10} />
+      </div>
+    </>
+  );
 };
 
 export default BlogCard;
