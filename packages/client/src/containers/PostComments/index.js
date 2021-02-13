@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { fatchComments } from '../../state/ducks/blogs';
 import PostComment from '../../components/PostComment';
+import Pagination from '../../components/Pagination'
 
 const PostComments = ({ postId, slug }) => {
   const [page, setPage] = useState(1);
@@ -17,8 +18,8 @@ const PostComments = ({ postId, slug }) => {
   if (loading) {
     return 'Loading';
   }
+  console.log(data);
 
-  console.log('data', data);
   return (
     <div className='post-comments'>
       <header>
@@ -40,6 +41,12 @@ const PostComments = ({ postId, slug }) => {
             slug={slug}
           />
         ))}
+      {
+       !loading && data.count > 10 &&  <Pagination activePage={page}
+        countPerPage={10}
+        count={data.count}
+        onChange={(pageNumber) => setPage(pageNumber)} />
+      }
     </div>
   );
 };

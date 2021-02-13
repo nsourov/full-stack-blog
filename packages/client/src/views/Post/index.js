@@ -34,6 +34,7 @@ const Post = () => {
   if (loading) {
     return 'Loading...';
   }
+
   return (
     <main className='post blog-post col-lg-8'>
       <div className='container'>

@@ -25,7 +25,7 @@ const Blog = () => {
       <div className='container-fluid'>
         <div className='row justify-content-center'>
           <BlogLanding data={data} loading={loading} />
-          {!loading && data.count >= 5 && (
+          {!loading && data.count > 5 && (
             <div className='col-md-12'>
               <Pagination
                 activePage={page}
