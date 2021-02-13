@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, Redirect } from 'react-router-dom';
 import { Col } from 'reactstrap';
@@ -8,6 +8,7 @@ import { login } from '../../api';
 import { setCurrentUser } from '../../state/ducks/authentication';
 
 const SignIn = () => {
+  const [loading, setLoading] = useState(false);
   const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
 
   const dispatch = useDispatch();
@@ -17,13 +18,16 @@ const SignIn = () => {
 
   const onsubmit = async (e) => {
     try {
+      setLoading(true);
       const {
         data: { token },
       } = await login(e);
       dispatch(setCurrentUser({ token }));
+      setLoading(false);
       history.push('/');
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -80,8 +84,10 @@ const SignIn = () => {
         </div>
         <button
           type='submit'
+          disabled={loading}
           className='text-capitalize btn btn-outline-primary'
         >
+          {loading && <i className='fa fa-spinner fa-pulse fa-fw'></i>}
           sign in
         </button>
       </form>
