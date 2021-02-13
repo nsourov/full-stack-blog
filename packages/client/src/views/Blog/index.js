@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import BlogLanding from '../../containers/BlogLanding';
 import Pagination from '../../components/Pagination';
 import { fatchBlogs } from '../../state/ducks/blogs';
-import BlogCard from '../../components/BlogCard';
 
 const Blog = () => {
   const [page, setPage] = useState(1);
@@ -26,15 +25,16 @@ const Blog = () => {
       <div className='container-fluid'>
         <div className='row justify-content-center'>
           <BlogLanding data={data} loading={loading} />
-
-          <div className='col-md-12'>
-            <Pagination
-              activePage={page}
-              countPerPage={5}
-              count={data.count}
-              onChange={handlePageChange}
-            />
-          </div>
+          {!loading && data.count >= 5 && (
+            <div className='col-md-12'>
+              <Pagination
+                activePage={page}
+                countPerPage={5}
+                count={data.count}
+                onChange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
       </div>
     </main>

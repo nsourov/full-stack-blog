@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { stripHtml } from 'string-strip-html';
+
 import ReactMarkdown from 'react-markdown';
 import dateFormat from '../../utils/dateFormat';
 import Skeleton from '../../components/Skeleton';
@@ -19,6 +21,15 @@ const BlogCard = (props) => {
     slug,
   } = props;
 
+  const body = stripHtml(description, {
+    stripTogetherWithTheirContents: [
+      'script', // default
+      'style', // default
+      'xml', // default
+      'pre', // <-- custom-added
+    ],
+  }).result;
+
   return (
     <>
       <div className='post-thumbnail'>
@@ -36,7 +47,7 @@ const BlogCard = (props) => {
         <Link className='d-block' to={`/post/${slug}`}>
           <h3 className='h4'>{title}</h3>
         </Link>
-        <ReactMarkdown allowDangerousHtml children={description} />
+        <p>{body}</p>
         <div className='post-footer d-flex align-items-center'>
           <Link to='#' className='author d-flex align-items-center flex-wrap'>
             <div className='avatar'>

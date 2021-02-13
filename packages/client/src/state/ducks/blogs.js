@@ -14,7 +14,7 @@ function loadingFailed(state, { payload }) {
 const blogsSlice = createSlice({
   name: 'posts',
   initialState: {
-    loading: false,
+    loading: true,
     error: null,
     data: [],
   },
@@ -36,7 +36,7 @@ const blogsSlice = createSlice({
 const blogSlice = createSlice({
   name: 'post',
   initialState: {
-    loading: false,
+    loading: true,
     error: null,
     data: [],
   },
@@ -58,7 +58,7 @@ const blogSlice = createSlice({
 const commentsSlice = createSlice({
   name: 'comments',
   initialState: {
-    loading: false,
+    loading: true,
     error: null,
     data: [],
   },

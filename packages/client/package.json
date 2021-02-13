@@ -27,6 +27,7 @@
     "react-scrollspy": "^3.4.3",
     "reactstrap": "^8.9.0",
     "redux-toolkit": "^1.1.2",
+    "string-strip-html": "^8.2.1",
     "styled-components": "^4.4.1"
   },
   "homepage": "/",
