@@ -59,3 +59,8 @@ export const login = (data) => {
 export const requestEditor = () => {
   return axios.post(`${api}/requests`);
 };
+
+// API to get posts
+export const getCategories = () => {
+  return axios.get(`${api}/categories`);
+};
