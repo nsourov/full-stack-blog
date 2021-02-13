@@ -23,7 +23,7 @@ const BlogLanding = (props) => {
 
   return data?.posts ? (
     data.posts.map((item) => (
-      <div className='post col-lg-10 col-md-12' key={item._id}>
+      <div className='post post-list col-lg-10 col-md-12' key={item._id}>
         <BlogCard
           thumbnail={item.image || thumbnail1}
           date={item.createdAt}

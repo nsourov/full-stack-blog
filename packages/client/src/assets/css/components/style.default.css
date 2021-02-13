@@ -831,6 +831,13 @@ section.latest-posts header {
   color: #777;
   font-size: 0.95em;
 }
+.post.post-list p:not(.lead) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
 
 .post a {
   text-decoration: none;
@@ -1170,7 +1177,7 @@ main.posts-listing .post {
   box-shadow: 0 5px 30px rgb(49 70 89 / 10%);
 }
 
-main.posts-listing .post .post-details{
+main.posts-listing .post .post-details {
   padding: 15px;
 }
 
@@ -2667,7 +2674,6 @@ a.text-dark:focus,
 a.text-dark:hover {
   color: #1d2124 !important;
 }
-
 
 /* Skeleton */
 .skeleton {
