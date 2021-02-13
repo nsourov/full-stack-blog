@@ -9,6 +9,7 @@ import { setCurrentUser } from '../../state/ducks/authentication';
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState({});
   const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
 
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const SignIn = () => {
       history.push('/');
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      setApiError(error.response.data.errors);
       setLoading(false);
     }
   };
@@ -61,6 +62,9 @@ const SignIn = () => {
           {errors.email && errors.email.type === 'required' && (
             <span className='text-danger'>Please enter your email</span>
           )}
+          {apiError?.email && (
+            <span className='text-danger'>{apiError?.email}</span>
+          )}
         </div>
         <div className='mb-3'>
           <label htmlFor='signInPassword' className='form-label'>
@@ -70,8 +74,6 @@ const SignIn = () => {
             name='password'
             ref={register({
               required: true,
-              min: 4,
-              maxLength: 12,
             })}
             type='password'
             className='form-control'
@@ -80,6 +82,9 @@ const SignIn = () => {
           />
           {errors.password && errors.password.type === 'required' && (
             <span className='text-danger'>Please enter your password</span>
+          )}
+          {apiError?.password && (
+            <span className='text-danger'>{apiError?.password}</span>
           )}
         </div>
         <button
