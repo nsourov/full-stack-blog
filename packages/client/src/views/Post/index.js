@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
+import Skeleton from '../../components/Skeleton';
 import { fatchBlog } from '../../state/ducks/blogs';
 import blog3 from '../../assets/img/blog-post-3.jpg';
 
@@ -31,14 +32,10 @@ const Post = () => {
     }
   }, [post]);
 
-  if (loading) {
-    return 'Loading...';
-  }
-
   return (
     <main className='post blog-post col-lg-8'>
       <div className='container'>
-        {post && (
+        {!loading ? (
           <div className='post-single'>
             <div className='post-thumbnail'>
               <img src={post.image || blog3} alt='...' className='img-fluid' />
@@ -61,6 +58,19 @@ const Post = () => {
               <PostBody body={post.body} />
               <PostComments postId={post._id} slug={post.slug} />
               <AddComment slug={post.slug} />
+            </div>
+          </div>
+        ) : (
+          <div className='post-single'>
+            <div className='post-thumbnail'>
+              <Skeleton width='100%' height={200} bottom={10} />
+            </div>
+            <div className='post-details'>
+              <h3 className='h4'>
+                <Skeleton width='60%' height={10} />
+              </h3>
+              <Skeleton width='50%' height={10} />
+              <Skeleton width='45%' height={10} />
             </div>
           </div>
         )}
