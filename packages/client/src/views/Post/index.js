@@ -33,8 +33,8 @@ const Post = () => {
   }, [post]);
 
   return (
-    <main className='post blog-post col-lg-8'>
-      <div className='container'>
+    <main className='post blog-post'>
+      <div className='container-fluid'>
         {!loading ? (
           <div className='post-single'>
             <div className='post-thumbnail'>

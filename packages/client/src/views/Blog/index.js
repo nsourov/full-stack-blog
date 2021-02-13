@@ -21,7 +21,7 @@ const Blog = () => {
   }, [dispatch]);
 
   return (
-    <main className='posts-listing col-lg-8'>
+    <main className='posts-listing'>
       <div className='container-fluid'>
         <div className='row justify-content-center'>
           <BlogLanding data={data} loading={loading} />
