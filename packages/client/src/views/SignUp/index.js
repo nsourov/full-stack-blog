@@ -9,6 +9,7 @@ import { setCurrentUser } from '../../state/ducks/authentication';
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState({});
   const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
 
   const dispath = useDispatch();
@@ -17,12 +18,17 @@ const SignUp = () => {
 
   const onsubmit = async (e) => {
     try {
+      if (e.password !== e.confirmPassword) {
+        setApiError({ confirmPassword: 'Passwords must match' });
+        return;
+      }
+
       setLoading(true);
       const createVisitor = {
         name: e.fullname,
         email: e.email,
         password: e.password,
-        confirmPassword: e.password,
+        confirmPassword: e.confirmPassword,
       };
 
       let {
@@ -33,7 +39,7 @@ const SignUp = () => {
       reset();
       setLoading(false);
     } catch (error) {
-      console.log(error.response.data);
+      setApiError(error.response.data.errors);
       setLoading(false);
     }
   };
@@ -70,6 +76,9 @@ const SignUp = () => {
           {errors.fullname && errors.fullname.type === 'required' && (
             <span className='text-danger'>Please enter your full name</span>
           )}
+          {apiError?.name && (
+            <span className='text-danger'>{apiError.name}</span>
+          )}
         </div>
         <div className='mb-3'>
           <label htmlFor='signUpEmail' className='form-label'>
@@ -88,6 +97,9 @@ const SignUp = () => {
           {errors.email && errors.email.type === 'required' && (
             <span className='text-danger'>Please enter your email</span>
           )}
+          {apiError?.email && (
+            <span className='text-danger'>{apiError.email}</span>
+          )}
         </div>
         <div className='mb-3'>
           <label htmlFor='signUpPassword' className='form-label'>
@@ -97,8 +109,6 @@ const SignUp = () => {
             name='password'
             ref={register({
               required: true,
-              min: 4,
-              maxLength: 12,
             })}
             type='password'
             className='form-control'
@@ -107,6 +117,31 @@ const SignUp = () => {
           />
           {errors.password && errors.password.type === 'required' && (
             <span className='text-danger'>Please enter your password</span>
+          )}
+          {apiError?.password && (
+            <span className='text-danger'>{apiError.password}</span>
+          )}
+        </div>
+        <div className='mb-3'>
+          <label htmlFor='signUpPassword' className='form-label'>
+            Confirm Password
+          </label>
+          <input
+            name='confirmPassword'
+            ref={register({
+              required: true,
+            })}
+            type='password'
+            className='form-control'
+            id='signUpPassword'
+            placeholder='Enter Your Password'
+          />
+          {errors.confirmPassword &&
+            errors.confirmPassword.type === 'required' && (
+              <span className='text-danger'>Passwords must match</span>
+            )}
+          {apiError?.confirmPassword && (
+            <span className='text-danger'>{apiError.confirmPassword}</span>
           )}
         </div>
         <button
