@@ -19,7 +19,7 @@ export const getPostComments = (postId, page) => {
 
 // API to get search post
 export const getSearchPost = (searchString, page) => {
-  return axios.get(`${api}/search/${searchString}/page/${page}`);
+  return axios.get(`${api}/posts/search/${searchString}/page/${page}`);
 };
 
 // API to create comments

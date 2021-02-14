@@ -26,7 +26,7 @@ const Header = () => {
             </div>
             <div className='row d-flex justify-content-center'>
               <div className='col-md-8'>
-                <Search />
+                <Search action={() =>setSearchBox(false)} />
               </div>
             </div>
           </div>

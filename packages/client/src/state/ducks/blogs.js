@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getPublishedPosts, getPost, getPostComments } from '../../api';
+import {
+  getPublishedPosts,
+  getPost,
+  getPostComments,
+  getSearchPost,
+} from '../../api';
 
 function startLoading(state) {
   state.loading = true;
@@ -77,6 +82,18 @@ const commentsSlice = createSlice({
   },
 });
 
+const searchSlice = createSlice({
+  name: 'search',
+  initialState: null,
+  reducers: {
+    getSearchStart: startLoading,
+
+    setSearchString: (state, { payload }) => {
+      return payload;
+    },
+  },
+});
+
 export const {
   getBlogsStart,
   getBlogsSuccess,
@@ -95,10 +112,13 @@ export const {
   getCommentsFailure,
 } = commentsSlice.actions;
 
+export const { setSearchString } = searchSlice.actions;
+
 export default {
   blogs: blogsSlice.reducer,
   blog: blogSlice.reducer,
   comments: commentsSlice.reducer,
+  search: searchSlice.reducer,
 };
 
 export const fatchBlogs = (page) => async (dispatch) => {
