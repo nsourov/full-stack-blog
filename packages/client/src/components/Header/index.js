@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { logOutUser } from '../../state/ducks/authentication';
 import RequestEditor from './RequestEditor';
+import Search from '../Search';
 
 import logo from '../../assets/img/logo.png';
 
@@ -25,19 +26,7 @@ const Header = () => {
             </div>
             <div className='row d-flex justify-content-center'>
               <div className='col-md-8'>
-                <form action='#'>
-                  <div className='form-group'>
-                    <input
-                      type='search'
-                      name='search'
-                      id='search'
-                      placeholder='What are you looking for?'
-                    />
-                    <button type='submit' className='submit'>
-                      <i className='icon-search-1' />
-                    </button>
-                  </div>
-                </form>
+                <Search />
               </div>
             </div>
           </div>

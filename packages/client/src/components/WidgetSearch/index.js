@@ -1,19 +1,13 @@
 import React from 'react';
+import Search from '../Search';
 
 const WidgetSearch = () => {
   return (
-    <div className="widget search">
+    <div className='widget search'>
       <header>
-        <h3 className="h6">Search the blog</h3>
+        <h3 className='h6'>Search the blog ff</h3>
       </header>
-      <form action="#" className="search-form">
-        <div className="form-group">
-          <input type="search" placeholder="What are you looking for?" />
-          <button type="submit" className="submit">
-            <i className="icon-search"></i>
-          </button>
-        </div>
-      </form>
+      <Search />
     </div>
   );
 };
