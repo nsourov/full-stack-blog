@@ -50,8 +50,11 @@ exports.getPost = async (req, res) => {
     return res
       .status(400)
       .json({ success: false, errors: { message: 'Post not found' } });
+  const commentCount = await Comment.count({ post: post.id });
 
-  return res.status(200).json({ success: true, post });
+  return res
+    .status(200)
+    .json({ success: true, post: { ...JSON.parse(JSON.stringify(post)), commentCount } });
 };
 
 exports.getPostPublishedComments = async (req, res) => {
