@@ -5,7 +5,8 @@ exports.getRequests = async (req, res) => {
   const limit = 10;
   const skip = page * limit - limit;
 
-  const requestsPromise = Request.find().populate('user')
+  const requestsPromise = Request.find()
+    .populate('user', '-password')
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
