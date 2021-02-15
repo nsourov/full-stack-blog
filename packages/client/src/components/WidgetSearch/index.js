@@ -5,7 +5,7 @@ const WidgetSearch = () => {
   return (
     <div className='widget search'>
       <header>
-        <h3 className='h6'>Search the blog ff</h3>
+        <h3 className='h6'>Search the blog</h3>
       </header>
       <Search />
     </div>
