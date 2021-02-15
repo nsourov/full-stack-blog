@@ -32,7 +32,9 @@ const Search = () => {
       <div className='container-fluid'>
         <div className='row justify-content-center'>
           <div className='col-12 mb-3'>
-            <h2>Search Result for: {searchString}</h2>
+            <p>
+              Search Result for: <strong>{searchString}</strong>
+            </p>
           </div>
           <BlogLanding data={data} loading={loading} />
           {!loading && data.count > 10 && (
