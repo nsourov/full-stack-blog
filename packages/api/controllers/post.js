@@ -50,6 +50,7 @@ exports.getPost = async (req, res) => {
     return res
       .status(400)
       .json({ success: false, errors: { message: 'Post not found' } });
+
   return res.status(200).json({ success: true, post });
 };
 
@@ -60,7 +61,7 @@ exports.getPostPublishedComments = async (req, res) => {
 
   const args = { post: req.params.postId, published: true };
   const commentsPromise = Comment.find(args)
-    .populate('user',{password: 0, role: 0 })
+    .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -90,7 +91,7 @@ exports.getPostUnPublishedComments = async (req, res) => {
 
   const args = { post: req.params.postId, published: false };
   const commentsPromise = Comment.find(args)
-    .populate('user',{password: 0, role: 0 })
+    .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -175,9 +176,18 @@ exports.getPublishedPosts = async (req, res) => {
       .json({ success: false, errors: { message: "Page doesn't exist" } });
   }
 
+  const withCount = [];
+  for (const post of posts) {
+    const count = await Comment.count({ post: post.id }).exec();
+    withCount.push({
+      ...JSON.parse(JSON.stringify(post)),
+      commentCount: count,
+    });
+  }
+
   return res.status(200).json({
     success: true,
-    posts,
+    posts: withCount,
     page,
     pages,
     count,
