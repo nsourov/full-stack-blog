@@ -61,8 +61,14 @@ export const login = (data) => {
 };
 
 // API to request to editor
-export const requestEditor = () => {
-  return axios.post(`${api}/requests`);
+export const requestEditor = (token) => {
+  return axios.post(
+    `${api}/requests`,
+    {},
+    {
+      headers: { Authorization: token },
+    }
+  );
 };
 
 // API to get posts

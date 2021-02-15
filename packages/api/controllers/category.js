@@ -14,11 +14,6 @@ exports.getCategory = async (req, res) => {
 exports.getCategories = async (req, res) => {
   const categories = await Category.find().sort({ createdAt: 'desc' });
 
-  if (!categories.length) {
-    return res
-      .status(400)
-      .json({ success: false, errors: { message: "Page doesn't exist" } });
-  }
   const withCount = [];
   for (const category of categories) {
     const count = await Post.count({ category: category.id }).exec();

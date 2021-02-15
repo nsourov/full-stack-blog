@@ -6,7 +6,8 @@ import { requestEditor } from '../../api';
 const RequestEditor = () => {
   const handelClick = async () => {
     try {
-      const res = await requestEditor();
+      const token = localStorage.getItem('jwtToken');
+      const res = await requestEditor(token);
       console.log(
         '🚀 ~ file: RequestEditor.js ~ line 13 ~ handelClick ~ res',
         res
