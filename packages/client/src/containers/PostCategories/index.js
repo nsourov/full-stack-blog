@@ -11,7 +11,6 @@ const PostCategories = () => {
     async function ac() {
       try {
         const data = await getCategories();
-        console.log('🚀 ~ file: index.js ~ line 14 ~ ac ~ data', data);
       } catch (error) {
         console.log(error);
       }

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { stripHtml } from 'string-strip-html';
 
-import ReactMarkdown from 'react-markdown';
 import dateFormat from '../../utils/dateFormat';
 import Skeleton from '../../components/Skeleton';
 
@@ -14,7 +13,6 @@ const BlogCard = (props) => {
     category,
     title,
     description,
-    avatar,
     name,
     postDate,
     comment,
@@ -51,8 +49,7 @@ const BlogCard = (props) => {
         <div className='post-footer d-flex align-items-center'>
           <Link to='#' className='author d-flex align-items-center flex-wrap'>
             <div className='avatar'>
-              {/* <img src={avatar} alt='...' className='img-fluid' /> */}
-              <i className="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+              <i className='fa fa-user-circle fa-2x' aria-hidden='true'></i>
             </div>
             <div className='title'>
               <span>{name}</span>

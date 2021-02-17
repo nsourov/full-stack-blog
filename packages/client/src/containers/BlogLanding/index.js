@@ -3,7 +3,6 @@ import React from 'react';
 import BlogCard, { Fallback } from '../../components/BlogCard';
 
 import thumbnail1 from '../../assets/img/blog-post-1.jpg';
-import avatar1 from '../../assets/img/avatar-1.jpg';
 
 const BlogLanding = (props) => {
   const { data, loading } = props;
@@ -20,7 +19,6 @@ const BlogLanding = (props) => {
       </>
     );
   }
-  console.log('data', data);
 
   return data?.posts ? (
     data.posts.map((item) => (
@@ -31,7 +29,6 @@ const BlogLanding = (props) => {
           category={item.category || 'Business'}
           title={item.title}
           description={item.body}
-          avatar={item.avatar || avatar1}
           name={item.user.name || 'Arif'}
           postDate={item.updatedAt}
           comment={item.commentCount || 0}

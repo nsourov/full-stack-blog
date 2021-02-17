@@ -50,9 +50,8 @@ const Post = () => {
               </h1>
 
               <PostFooter
-                name={post.name || 'John doe'}
+                name={post.user.name || 'John doe'}
                 updatedAt={post.updatedAt}
-                image={post.avatar}
                 comment={post.comment || 0}
               />
               <PostBody body={post.body} />
