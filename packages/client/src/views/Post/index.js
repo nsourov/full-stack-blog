@@ -32,6 +32,8 @@ const Post = () => {
     }
   }, [post]);
 
+  console.log('post',post);
+
   return (
     <main className='post blog-post'>
       <div className='container-fluid'>
@@ -52,7 +54,7 @@ const Post = () => {
               <PostFooter
                 name={post.user.name || 'John doe'}
                 updatedAt={post.updatedAt}
-                comment={post.comment || 0}
+                comment={post.commentCount || 0}
               />
               <PostBody body={post.body} />
               <PostComments postId={post._id} slug={post.slug} />
