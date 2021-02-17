@@ -43,7 +43,7 @@ i:hover,
 i:focus,
 span:hover,
 span:focus {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 a i {

@@ -26,7 +26,7 @@ const Header = () => {
             </div>
             <div className='row d-flex justify-content-center'>
               <div className='col-md-8'>
-                <Search action={() =>setSearchBox(false)} />
+                <Search action={() => setSearchBox(false)} />
               </div>
             </div>
           </div>
@@ -72,11 +72,10 @@ const Header = () => {
             <ul className='langs navbar-text'>
               {!isAuthenticated && (
                 <>
-                  <Link to='/signin' className='active btn btn-outline-primary'>
+                  <Link to='/signin' className='btn btn-link text-light'>
                     Sign In
                   </Link>
-                  <span> </span>
-                  <Link className='btn btn-outline-light' to='/signup'>
+                  <Link className='active btn btn-outline-primary' to='/signup'>
                     Sign Up
                   </Link>{' '}
                 </>
@@ -85,7 +84,7 @@ const Header = () => {
                 <a
                   href='#'
                   onClick={() => dispatch(logOutUser())}
-                  className='btn btn-link'
+                  className='btn btn-link text-light'
                 >
                   Log Out
                 </a>
