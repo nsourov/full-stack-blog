@@ -20,6 +20,7 @@ const BlogLanding = (props) => {
       </>
     );
   }
+  console.log('data', data);
 
   return data?.posts ? (
     data.posts.map((item) => (
@@ -31,9 +32,9 @@ const BlogLanding = (props) => {
           title={item.title}
           description={item.body}
           avatar={item.avatar || avatar1}
-          name={item.name || 'Arif'}
+          name={item.user.name || 'Arif'}
           postDate={item.updatedAt}
-          comment={item.comment || 0}
+          comment={item.commentCount || 0}
           slug={item.slug}
         />
       </div>

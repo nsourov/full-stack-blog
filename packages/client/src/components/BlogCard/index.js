@@ -51,7 +51,8 @@ const BlogCard = (props) => {
         <div className='post-footer d-flex align-items-center'>
           <Link to='#' className='author d-flex align-items-center flex-wrap'>
             <div className='avatar'>
-              <img src={avatar} alt='...' className='img-fluid' />
+              {/* <img src={avatar} alt='...' className='img-fluid' /> */}
+              <i className="fa fa-user-circle fa-2x" aria-hidden="true"></i>
             </div>
             <div className='title'>
               <span>{name}</span>
