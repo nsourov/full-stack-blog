@@ -43,6 +43,7 @@ const SignIn = () => {
       sm={12}
       xs={12}
       style={{ padding: '50px 20px' }}
+      className='text-center'
     >
       <form onSubmit={handleSubmit(onsubmit)}>
         <div className='mb-3'>

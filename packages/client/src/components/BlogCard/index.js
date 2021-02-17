@@ -31,7 +31,7 @@ const BlogCard = (props) => {
   return (
     <>
       <div className='post-thumbnail'>
-        <Link to={`/post/${slug}`}>
+        <Link to={`/blog/post/${slug}`}>
           <img src={thumbnail} alt='...' className='img-fluid' />
         </Link>
       </div>
@@ -42,7 +42,7 @@ const BlogCard = (props) => {
             <Link to='#'>{category.name}</Link>
           </div>
         </div>
-        <Link className='d-block' to={`/post/${slug}`}>
+        <Link className='d-block' to={`/blog/post/${slug}`}>
           <h3 className='h4'>{title}</h3>
         </Link>
         <p>{body}</p>

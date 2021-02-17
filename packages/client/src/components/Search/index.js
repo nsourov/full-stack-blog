@@ -16,7 +16,7 @@ const Search = (props) => {
     if (value) {
       dispatch(setSearchString(value));
       if (!location.pathname.includes('/search')) {
-        history.push('/search');
+        history.push('/blog/search');
       }
       if (action) {
         action();
