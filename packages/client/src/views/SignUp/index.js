@@ -52,13 +52,18 @@ const SignUp = () => {
 
   return (
     <Col
-      lg={{ size: 6, offset: 3 }}
-      md={{ size: 8, offset: 2 }}
+      lg={{ size: 4, offset: 4 }}
+      md={{ size: 6, offset: 3 }}
       sm={12}
       xs={12}
       style={{ padding: '50px 20px' }}
+      className='text-center'
     >
-      <form onSubmit={handleSubmit(onsubmit)}>
+      <div className='form-title mb-5'>
+        <h1>Sign In </h1>
+        <h4>4trollz</h4>
+      </div>
+      <form onSubmit={handleSubmit(onsubmit)} className='text-left mb-5'>
         <div className='mb-3'>
           <label htmlFor='signUpName' className='form-label'>
             Full Name
@@ -82,7 +87,7 @@ const SignUp = () => {
         </div>
         <div className='mb-3'>
           <label htmlFor='signUpEmail' className='form-label'>
-            Email address
+            Email
           </label>
           <input
             name='email'
@@ -147,7 +152,7 @@ const SignUp = () => {
         <button
           type='submit'
           disabled={loading}
-          className='text-capitalize btn btn-primary active'
+          className='text-capitalize btn btn-primary active btn-block mt-4'
         >
           {loading && <i className='fa fa-spinner fa-pulse fa-fw'></i>}
           sign up
