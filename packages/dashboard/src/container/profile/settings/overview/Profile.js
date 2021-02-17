@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Input, Select } from 'antd';
+import { useSelector } from 'react-redux';
+
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import { Button } from '../../../../components/buttons/buttons';
 import { BasicFormWrapper, TagInput } from '../../../styled';
@@ -28,12 +30,15 @@ const Profile = () => {
     setState({ tags: checke });
   };
 
+  const user = useSelector((store) => store.auth.user);
+  console.log('🚀 ~ file: Profile.js ~ line 34 ~ Profile ~ user', user);
+
   return (
     <Cards
       title={
         <div className='setting-card-title'>
-          <Heading as='h4'>Edit Profile</Heading>
-          <span>Set Up Your Personal Information</span>
+          <Heading as='h4'>Profile</Heading>
+          {/* <span>Set Up Your Personal Information</span> */}
         </div>
       }
     >
@@ -41,26 +46,22 @@ const Profile = () => {
         <Col xl={12} lg={16} xs={24}>
           <BasicFormWrapper>
             <Form name='editProfile' onFinish={handleSubmit}>
-              <Form.Item name='name' initialValue='Duran Clayton' label='Name'>
+              <Form.Item name='name' initialValue={user?.name} label='Name'>
                 <Input />
               </Form.Item>
 
-              <Form.Item
-                name='email'
-                initialValue='example@email.com'
-                label='Email'
-              >
+              <Form.Item name='email' initialValue={user?.email} label='Email'>
                 <Input type='email' />
               </Form.Item>
               <Form.Item
                 name='password'
-                initialValue='example@email.com'
+                initialValue={user?.password}
                 label='Password'
               >
                 <Input type='password' />
               </Form.Item>
 
-              <div className='setting-form-actions'>
+              {/* <div className='setting-form-actions'>
                 <Button size='default' htmlType='submit' type='primary'>
                   Update Profile
                 </Button>
@@ -68,7 +69,7 @@ const Profile = () => {
                 <Button size='default' onClick={handleCancel} type='light'>
                   Cancel
                 </Button>
-              </div>
+              </div> */}
             </Form>
           </BasicFormWrapper>
         </Col>
