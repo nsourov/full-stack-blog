@@ -188,7 +188,14 @@ const ThemeLayout = (props) => {
               </Scrollbars>
             </Sider>
           </ThemeProvider>
-          <Layout className='atbd-main-layout'>{children}</Layout>
+          <Layout
+            style={{
+              marginLeft: collapsed ? '80px' : '280px',
+            }}
+            className='atbd-main-layout'
+          >
+            {children}
+          </Layout>
         </Layout>
       </Layout>
     </Div>
