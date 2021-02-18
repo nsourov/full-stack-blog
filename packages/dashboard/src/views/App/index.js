@@ -1,15 +1,19 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { me } from '../../api/api';
 import { setCurrentUser, logOutUser } from '../../state/ducks/authentication';
 import Fallback from '../../components/fallback';
+import AdminRoute from '../../components/adminRoute';
 
 const Login = lazy(() => import('../Signin'));
 
 const App = () => {
+  const { isAuthenticated, data } = useSelector((store) => store.user);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     async function checkAuth() {
       try {
@@ -40,6 +44,13 @@ const App = () => {
       <Suspense fallback={<Fallback />}>
         <Switch>
           <Route exact path='/' component={Login} />
+          {/* <Route exact path='/admin' component={Login} /> */}
+          <AdminRoute
+            path='/admin'
+            component={Login}
+            role={data?.role}
+            isAuthenticated={isAuthenticated}
+          />
         </Switch>
       </Suspense>
     </Router>
