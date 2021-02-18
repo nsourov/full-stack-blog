@@ -47,5 +47,11 @@ export const deleteEditorRequest = (userId, token) => {
 };
 
 export const getCategories = () => {
-  return axios.get(`${api}/categories/`);
+  return axios.get(`${api}/categories`);
+};
+
+export const createCategory = (body, token) => {
+  return axios.post(`${api}/categories`, body, {
+    headers: { Authorization: token },
+  });
 };
