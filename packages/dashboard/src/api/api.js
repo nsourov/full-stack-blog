@@ -18,3 +18,10 @@ export const login = (data) => {
 export const getPublishedPost = (page) => {
   return axios.get(`${api}/posts/published/page/${page}`);
 };
+
+// API to get me
+export const getUnpublishedPost = (page, token) => {
+  return axios.get(`${api}/posts/unpublished/page/${page}`, {
+    headers: { Authorization: token },
+  });
+};

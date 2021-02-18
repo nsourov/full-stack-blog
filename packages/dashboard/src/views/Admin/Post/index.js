@@ -1,6 +1,6 @@
-import React, { useState, Suspense, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import FeatherIcon from 'feather-icons-react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Row, Col, Spin, Table, Tag } from 'antd';
 import moment from 'moment';
@@ -11,7 +11,7 @@ import { Button } from '../../../components/buttons/buttons';
 import Heading from '../../../components/heading/heading';
 import { Dropdown } from '../../../components/dropdown/dropdown';
 import { Main } from '../../../container/styled';
-import { getPublishedPost } from '../../../api/api';
+import { getPublishedPost, getUnpublishedPost } from '../../../api/api';
 
 const columns = [
   {
@@ -73,32 +73,15 @@ const columns = [
   },
 ];
 
-const PostList = ({ match }) => {
+const PostList = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [postStatus, setPostStatus] = useState('published');
   const history = useHistory();
-  const [state, setState] = useState({
-    notData: [],
-    visible: false,
-    categoryActive: 'all',
-  });
-  const { notData, visible } = state;
-
-  const { path } = match;
 
   const handleCreatePostRoute = () => {
     history.push('/admin/post/create');
-  };
-  const handleSearch = (searchText) => {
-    // const data = searchData.filter((item) =>
-    //   item.title.toUpperCase().startsWith(searchText.toUpperCase())
-    // );
-    // setState({
-    //   ...state,
-    //   notData: data,
-    // });
   };
 
   const handleTableChange = (pagination) => {
@@ -109,8 +92,17 @@ const PostList = ({ match }) => {
     const fatchPost = async () => {
       try {
         setLoading(true);
-        const { data } = await getPublishedPost(page);
-        setData(data);
+        let posts;
+        if (postStatus === 'published') {
+          const { data } = await getPublishedPost(page);
+          posts = data;
+        }
+        if (postStatus === 'unpublished') {
+          const token = localStorage.getItem('jwtToken');
+          const { data } = await getUnpublishedPost(page, token);
+          posts = data;
+        }
+        setData(posts);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -118,9 +110,7 @@ const PostList = ({ match }) => {
       }
     };
     fatchPost();
-  }, [page]);
-
-  console.log('🚀 ~ file: index.js ~ line 46 ~ fatchPost ~ res', data);
+  }, [page, postStatus]);
 
   return (
     <>
