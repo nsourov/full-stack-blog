@@ -506,9 +506,7 @@ const Div = Styled.div`
                 &.ant-menu-inline-collapsed{
                     .ant-menu-submenu{
                         text-align: ${({ theme }) =>
-                          !theme.rtl
-                            ? 'left'
-                            : 'right'};
+                          !theme.rtl ? 'left' : 'right'};
                         .ant-menu-submenu-title{
                             padding: 0 20px;
                             justify-content: center;
@@ -568,7 +566,7 @@ const Div = Styled.div`
         margin-top: 64px;
         transition: 0.3s ease;
         padding: 30px 20px;
-        min-height: 715px;
+        min-height: calc(100vh - 64px);
         background-color: rgb(244,245,247);
         @media only screen and (max-width: 1150px){
             ${({ theme }) =>
