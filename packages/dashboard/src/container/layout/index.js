@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import FeatherIcon from 'feather-icons-react';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { Layout, Button, Row, Col } from 'antd';
 import { ThemeProvider } from 'styled-components';
 import { Link } from 'react-router-dom';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import { Div, SmallScreenAuthInfo } from './style';
 import Menueitems from './Menueitems';
 import AuthInfo from '../../components/utilities/auth-info/info';
 import { darkTheme } from '../../config/theme/themeVariables';
-
+import 'react-perfect-scrollbar/dist/css/styles.css';
 const { Header, Sider } = Layout;
 
 const SideBarStyle = {
@@ -27,47 +27,6 @@ const ThemeLayout = (props) => {
   const [collapsed, setCollapsed] = useState(false);
   const [hide, setHide] = useState(true);
   const [searchHide, setSearchHide] = useState(true);
-
-  const renderThumbHorizontal = ({ style, ...props }) => {
-    const { ChangeLayoutMode } = props;
-    const thumbStyle = {
-      borderRadius: 6,
-      backgroundColor: ChangeLayoutMode ? '#ffffff16' : '#F1F2F6',
-    };
-    return <div style={{ ...style, ...thumbStyle }} props={props} />;
-  };
-
-  const renderThumbVertical = ({ style, ...props }) => {
-    const { ChangeLayoutMode } = props;
-    const thumbStyle = {
-      borderRadius: 6,
-      backgroundColor: ChangeLayoutMode ? '#ffffff16' : '#F1F2F6',
-      left: '2px',
-    };
-    return <div style={{ ...style, ...thumbStyle }} props={props} />;
-  };
-
-  const renderView = ({ style, ...props }) => {
-    const customStyle = {
-      marginRight: 'auto',
-      marginLeft: '-17px',
-    };
-    return <div {...props} style={{ ...style, ...customStyle }} />;
-  };
-
-  const renderTrackVertical = () => {
-    const thumbStyle = {
-      position: 'absolute',
-      width: '6px',
-      transition: 'opacity 200ms ease 0s',
-      opacity: 0,
-      right: '2px',
-      bottom: '2px',
-      top: '2px',
-      borderRadius: '3px',
-    };
-    return <div style={thumbStyle} />;
-  };
 
   const toggleCollapsedMobile = () => {
     if (window.innerWidth <= 990) {
@@ -170,22 +129,13 @@ const ThemeLayout = (props) => {
               collapsed={collapsed}
               theme='dark'
             >
-              <Scrollbars
-                className='custom-scrollbar'
-                autoHide
-                autoHideTimeout={500}
-                autoHideDuration={200}
-                renderThumbHorizontal={renderThumbHorizontal}
-                renderThumbVertical={renderThumbVertical}
-                renderView={renderView}
-                renderTrackVertical={renderTrackVertical}
-              >
+              <PerfectScrollbar>
                 <Menueitems
                   topMenu={false}
                   toggleCollapsed={toggleCollapsedMobile}
                   darkMode={true}
                 />
-              </Scrollbars>
+              </PerfectScrollbar>
             </Sider>
           </ThemeProvider>
           <Layout
