@@ -9,6 +9,7 @@ import AdminRoute from '../../components/adminRoute';
 
 const Login = lazy(() => import('../Signin'));
 const Admin = lazy(() => import('../Admin'));
+const NotFound = lazy(() => import('../../container/pages/404'));
 
 const App = () => {
   const { isAuthenticated, data } = useSelector((store) => store.user);
@@ -52,6 +53,7 @@ const App = () => {
             role={data?.role}
             isAuthenticated={isAuthenticated}
           />
+          <Route component={NotFound} />
         </Switch>
       </Suspense>
     </Router>
