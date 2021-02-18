@@ -1,31 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Heading from '../../components/heading/heading';
+import { login } from '../../api/api';
+import { setCurrentUser } from '../../state/ducks/authentication';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AuthWrapper } from './style';
 
 const Signin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
+
+  const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
 
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    console.log('e',e)
-    // let data = {
-    //   email,
-    //   password,
-    // };
-    // dispatch(login(history, data));
+  const handleSubmit = async (e) => {
+    try {
+      let data = {
+        email: e.username,
+        password: e.password,
+      };
+      setIsLoading(true);
+      const {
+        data: { token },
+      } = await login(data);
+      dispatch(setCurrentUser({ token }));
+      setIsLoading(false);
+      // history.push('/admin');
+    } catch (error) {
+      setErrors(error.response.data.errors);
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/admin');
+    }
+  }, [history, isAuthenticated]);
 
   return (
     <AuthWrapper>
@@ -43,9 +61,6 @@ const Signin = () => {
             name='username'
             rules={[{ message: 'Please input your email!', required: true }]}
             label='Email Address'
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
             validateStatus={errors?.email ? 'error' : ''}
             help={errors?.email ? errors.email : ''}
           >
@@ -55,9 +70,6 @@ const Signin = () => {
             name='password'
             label='Password'
             rules={[{ message: 'Please input your password!', required: true }]}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
             validateStatus={errors?.password ? 'error' : ''}
             help={errors?.password ? errors.password : ''}
           >
