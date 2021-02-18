@@ -5,7 +5,7 @@ import Fallback from '../../components/fallback';
 import Layout from '../../container/layout';
 
 const Profile = lazy(() => import('./Profile/Profile'));
-const PostList = lazy(() => import('./Post'));
+const PostList = lazy(() => import('./PostList'));
 const NotFound = lazy(() => import('../../container/pages/404'));
 
 const Admin = () => {
