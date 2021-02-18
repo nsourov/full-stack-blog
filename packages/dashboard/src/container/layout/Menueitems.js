@@ -63,14 +63,14 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className='menuItem-iocn' to={`${path}/settings`}>
+            <NavLink className='menuItem-iocn' to={`${path}`}>
               <FeatherIcon icon='settings' />
             </NavLink>
           )
         }
         key='settings'
       >
-        <NavLink onClick={toggleCollapsed} to={`${path}/settings`}>
+        <NavLink onClick={toggleCollapsed} to={`${path}`}>
           Profile
         </NavLink>
       </Menu.Item>
