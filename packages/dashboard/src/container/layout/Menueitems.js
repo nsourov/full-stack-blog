@@ -110,7 +110,7 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
         icon={
           !topMenu && (
             <NavLink className='menuItem-iocn' to={`${path}/request`}>
-              <FeatherIcon icon='user' />
+              <FeatherIcon icon='user-check' />
             </NavLink>
           )
         }
@@ -120,21 +120,18 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
           Request
         </NavLink>
       </Menu.Item>
-
-      {!topMenu && <p className='sidebar-nav-title'>Pages</p>}
-
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className='menuItem-iocn' to={`${path}/404`}>
-              <FeatherIcon icon='info' />
+            <NavLink className='menuItem-iocn' to={`${path}/category`}>
+              <FeatherIcon icon='layers' />
             </NavLink>
           )
         }
-        key='404'
+        key='category'
       >
-        <NavLink onClick={toggleCollapsed} to={`${path}/404`}>
-          404
+        <NavLink onClick={toggleCollapsed} to={`${path}/category`}>
+          Category
         </NavLink>
       </Menu.Item>
     </Menu>
