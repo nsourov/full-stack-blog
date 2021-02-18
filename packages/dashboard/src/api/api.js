@@ -13,3 +13,8 @@ export const me = (token) => {
 export const login = (data) => {
   return axios.post(`${api}/auth/login`, data);
 };
+
+// API to get me
+export const getPublishedPost = (page) => {
+  return axios.get(`${api}/posts/published/page/${page}`);
+};

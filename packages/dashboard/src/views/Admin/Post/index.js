@@ -1,16 +1,43 @@
-import React, { useState,Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import FeatherIcon from 'feather-icons-react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Row, Col, Spin } from 'antd';
+import { Row, Col, Spin, Table } from 'antd';
 
-import { AutoComplete } from '../../../components/autoComplete/autoComplete';
 import { PageHeader } from '../../../components/page-headers/page-headers';
 import { ProjectHeader, ProjectSorting } from './style';
 import { Button } from '../../../components/buttons/buttons';
 import { Main } from '../../../container/styled';
+import { getPublishedPost } from '../../../api/api';
 
-const PostList = ({match}) => {
+
+
+const columns = [
+  {
+    title: 'Title',
+    dataIndex: 'title',
+    width: '20%',
+  },
+  {
+    title: 'Gender',
+    dataIndex: 'gender',
+    filters: [
+      { text: 'Male', value: 'male' },
+      { text: 'Female', value: 'female' },
+    ],
+    width: '20%',
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+  },
+];
+
+
+const PostList = ({ match }) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const [postStatus, setPostStatus] = useState('published');
   const history = useHistory();
   const [state, setState] = useState({
@@ -34,6 +61,23 @@ const PostList = ({match}) => {
     //   notData: data,
     // });
   };
+
+  useEffect(() => {
+    const fatchPost = async () => {
+      try {
+        setLoading(true);
+        const { data } = await getPublishedPost(page);
+        setData(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
+    fatchPost();
+  }, [page]);
+
+  console.log('🚀 ~ file: index.js ~ line 46 ~ fatchPost ~ res', data);
 
   return (
     <>
@@ -84,17 +128,16 @@ const PostList = ({match}) => {
                     </ul>
                   </nav>
                 </div>
-                <div className='project-sort-search'>
-                  <AutoComplete
-                    onSearch={handleSearch}
-                    dataSource={notData}
-                    placeholder='Search post'
-                    patterns
-                  />
-                </div>
               </div>
             </ProjectSorting>
             <div>
+              {loading ? (
+                <div className='spin'>
+                  <Spin />
+                </div>
+              ) : (
+                'data'
+              )}
               {/* <Switch>
                 <Suspense
                   fallback={
