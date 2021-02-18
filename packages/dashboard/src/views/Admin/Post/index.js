@@ -2,15 +2,15 @@ import React, { useState, Suspense, useEffect } from 'react';
 import FeatherIcon from 'feather-icons-react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Row, Col, Spin, Table } from 'antd';
+import { Row, Col, Spin, Table, Tag } from 'antd';
+import moment from 'moment';
 
 import { PageHeader } from '../../../components/page-headers/page-headers';
 import { ProjectHeader, ProjectSorting } from './style';
 import { Button } from '../../../components/buttons/buttons';
+import { Dropdown } from '../../../components/dropdown/dropdown';
 import { Main } from '../../../container/styled';
 import { getPublishedPost } from '../../../api/api';
-
-
 
 const columns = [
   {
@@ -19,20 +19,51 @@ const columns = [
     width: '20%',
   },
   {
-    title: 'Gender',
-    dataIndex: 'gender',
-    filters: [
-      { text: 'Male', value: 'male' },
-      { text: 'Female', value: 'female' },
-    ],
+    title: 'Created Date',
+    dataIndex: 'createdAt',
     width: '20%',
+
+    render: (createdAt) => moment(createdAt).format('MM-DD-YYYY hh:mm a'),
+  },
+  {
+    title: 'Name',
+    dataIndex: 'user',
+    render: (user) => user?.name,
   },
   {
     title: 'Email',
-    dataIndex: 'email',
+    dataIndex: 'user',
+    render: (user) => user?.email,
+  },
+  {
+    title: 'Status',
+    dataIndex: 'published',
+    render: (published) => (
+      <Tag color={published ? 'success' : 'processing'}>
+        {published ? 'published' : ' unpublished'}
+      </Tag>
+    ),
+  },
+  {
+    title: 'Action',
+    dataIndex: 'slug',
+    render: (text, record) => (
+      <Dropdown
+        className='wide-dropdwon'
+        content={
+          <>
+            <Link to={`/admin/post/`}>Edit</Link>
+            <Link to='#'>Delete</Link>
+          </>
+        }
+      >
+        <Link to='#'>
+          <FeatherIcon icon='more-horizontal' size={18} />
+        </Link>
+      </Dropdown>
+    ),
   },
 ];
-
 
 const PostList = ({ match }) => {
   const [data, setData] = useState(null);
@@ -60,6 +91,10 @@ const PostList = ({ match }) => {
     //   ...state,
     //   notData: data,
     // });
+  };
+
+  const handleTableChange = (pagination) => {
+    setPage(pagination.current);
   };
 
   useEffect(() => {
@@ -136,7 +171,16 @@ const PostList = ({ match }) => {
                   <Spin />
                 </div>
               ) : (
-                'data'
+                <Table
+                  columns={columns}
+                  pagination={{
+                    current: page,
+                    total: data?.count,
+                    pageSize: 5,
+                  }}
+                  dataSource={data?.posts}
+                  onChange={handleTableChange}
+                />
               )}
               {/* <Switch>
                 <Suspense
