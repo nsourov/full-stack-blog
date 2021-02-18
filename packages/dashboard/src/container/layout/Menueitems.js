@@ -81,7 +81,7 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
         title='Post'
       >
         <Menu.Item key='views'>
-          <NavLink onClick={toggleCollapsed} to={`${path}/post/view/list`}>
+          <NavLink onClick={toggleCollapsed} to={`${path}/post/list`}>
             Post List
           </NavLink>
         </Menu.Item>

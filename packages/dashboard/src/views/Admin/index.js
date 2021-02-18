@@ -5,6 +5,7 @@ import Fallback from '../../components/fallback';
 import Layout from '../../container/layout';
 
 const Profile = lazy(() => import('./Profile/Profile'));
+const PostList = lazy(() => import('./Post'));
 const NotFound = lazy(() => import('../../container/pages/404'));
 
 const Admin = () => {
@@ -14,6 +15,7 @@ const Admin = () => {
       <Suspense fallback={<Fallback />}>
         <Switch>
           <Route exact path={`${path}`} component={Profile} />
+          <Route exact path={`${path}/post/list`} component={PostList} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>
