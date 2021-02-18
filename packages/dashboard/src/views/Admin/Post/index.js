@@ -6,8 +6,9 @@ import { Row, Col, Spin, Table, Tag } from 'antd';
 import moment from 'moment';
 
 import { PageHeader } from '../../../components/page-headers/page-headers';
-import { ProjectHeader, ProjectSorting } from './style';
+import { ProjectHeader, ProjectSorting, ProjectListTitle } from './style';
 import { Button } from '../../../components/buttons/buttons';
+import Heading from '../../../components/heading/heading';
 import { Dropdown } from '../../../components/dropdown/dropdown';
 import { Main } from '../../../container/styled';
 import { getPublishedPost } from '../../../api/api';
@@ -17,6 +18,13 @@ const columns = [
     title: 'Title',
     dataIndex: 'title',
     width: '20%',
+    render: (title, record) => (
+      <ProjectListTitle>
+        <Heading as='h4'>
+          <Link to={`/admin/post/update/${record?.slug}`}>{title}</Link>
+        </Heading>
+      </ProjectListTitle>
+    ),
   },
   {
     title: 'Created Date',
@@ -52,7 +60,7 @@ const columns = [
         className='wide-dropdwon'
         content={
           <>
-            <Link to={`/admin/post/`}>Edit</Link>
+            <Link to={`/admin/post/update/${record?.slug}`}>Edit</Link>
             <Link to='#'>Delete</Link>
           </>
         }
