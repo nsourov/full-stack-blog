@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 // import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 // import store from './redux/store';
-// import Admin from './routes/admin';
+import Admin from './routes/admin';
 // import Auth from './routes/auth';
 import './static/css/style.css';
 import config from './config/config';
@@ -42,7 +42,7 @@ const ProviderConfig = () => {
 
   return (
     <ConfigProvider direction='ltr'>
-      <ThemeProvider theme={{ ...theme, topMenu: false, darkMode: true }}>
+      <ThemeProvider theme={{ ...theme, topMenu: true, darkMode: true }}>
         <App />
         {/* <Router>
         <UserRoute exact path="/" component={Auth} />

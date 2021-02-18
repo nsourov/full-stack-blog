@@ -1,7 +1,8 @@
 import React from 'react';
+import Layout from '../../container/layout';
 
 const Admin = () => {
-  return <div></div>;
+  return <Layout>Hello</Layout>;
 };
 
 export default Admin;

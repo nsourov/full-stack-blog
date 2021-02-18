@@ -8,6 +8,7 @@ import Fallback from '../../components/fallback';
 import AdminRoute from '../../components/adminRoute';
 
 const Login = lazy(() => import('../Signin'));
+const Admin = lazy(() => import('../Admin'));
 
 const App = () => {
   const { isAuthenticated, data } = useSelector((store) => store.user);
@@ -47,7 +48,7 @@ const App = () => {
           {/* <Route exact path='/admin' component={Login} /> */}
           <AdminRoute
             path='/admin'
-            component={Login}
+            component={Admin}
             role={data?.role}
             isAuthenticated={isAuthenticated}
           />
