@@ -25,3 +25,23 @@ export const getUnpublishedPost = (page, token) => {
     headers: { Authorization: token },
   });
 };
+
+// API to get me
+export const getEditorRequests = (page, token) => {
+  return axios.get(`${api}/requests/page/${page}`, {
+    headers: { Authorization: token },
+  });
+};
+
+// API to get me
+export const acceptEditorRequest = (userId, body, token) => {
+  return axios.put(`${api}/users/${userId}`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const deleteEditorRequest = (userId, token) => {
+  return axios.delete(`${api}/requests/${userId}`, {
+    headers: { Authorization: token },
+  });
+};

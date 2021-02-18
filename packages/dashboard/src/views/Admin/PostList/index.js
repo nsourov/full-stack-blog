@@ -163,42 +163,17 @@ const PostList = () => {
                 </div>
               </div>
             </ProjectSorting>
-            <div>
-              {loading ? (
-                <div className='spin'>
-                  <Spin />
-                </div>
-              ) : (
-                <Table
-                  columns={columns}
-                  pagination={{
-                    current: page,
-                    total: data?.count,
-                    pageSize: 5,
-                  }}
-                  dataSource={data?.posts}
-                  onChange={handleTableChange}
-                />
-              )}
-              {/* <Switch>
-                <Suspense
-                  fallback={
-                    <div className='spin'>
-                      <Spin />
-                    </div>
-                  }
-                >
-                  <Route path={path} component={List} exact />
-                  <List
-                    isLoading={isLoading}
-                    posts={posts}
-                    pages={pages}
-                    paginationChangeHandler={(e) => paginationChangeHandler(e)}
-                    handleDelete={handleDelete}
-                  />
-                </Suspense>
-              </Switch> */}
-            </div>
+            <Table
+              columns={columns}
+              pagination={{
+                current: page,
+                total: data?.count,
+                pageSize: 5,
+              }}
+              loading={loading}
+              dataSource={data?.posts}
+              onChange={handleTableChange}
+            />
           </Col>
         </Row>
       </Main>

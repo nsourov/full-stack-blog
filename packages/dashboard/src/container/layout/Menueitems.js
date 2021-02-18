@@ -106,6 +106,20 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
           Users
         </NavLink>
       </Menu.Item>
+      <Menu.Item
+        icon={
+          !topMenu && (
+            <NavLink className='menuItem-iocn' to={`${path}/request`}>
+              <FeatherIcon icon='user' />
+            </NavLink>
+          )
+        }
+        key='request'
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/request`}>
+          Request
+        </NavLink>
+      </Menu.Item>
 
       {!topMenu && <p className='sidebar-nav-title'>Pages</p>}
 
