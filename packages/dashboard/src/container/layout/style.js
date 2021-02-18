@@ -567,6 +567,9 @@ const Div = Styled.div`
 }) => (theme.topMenu ? 0 : '280px')};
         margin-top: 64px;
         transition: 0.3s ease;
+        padding: 30px 20px;
+        min-height: 715px;
+        background-color: rgb(244,245,247);
         @media only screen and (max-width: 1150px){
             ${({ theme }) =>
               !theme.rtl ? 'margin-left' : 'margin-right'}: auto !important;

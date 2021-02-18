@@ -70,7 +70,7 @@ const Div = Styled.div`
                 }
             }
         }
-       
+
 
     }
     .header-more{
@@ -246,7 +246,7 @@ const Div = Styled.div`
             }
         }
     }
-    
+
     .navbar-brand{
         button{
             padding: ${({ theme }) =>
@@ -286,7 +286,7 @@ const Div = Styled.div`
                 }
             }
         }
-        
+
         .ant-layout-sider-children{
             padding-bottom: 15px;
             >.sidebar-nav-title{
@@ -345,7 +345,7 @@ const Div = Styled.div`
                         }
                     }
                     .badge{
-                        position: absolute;                        
+                        position: absolute;
                         ${({ theme }) => (theme.rtl ? 'left' : 'right')}: 30px;
                         top: 50%;
                         transform: translateY(-50%);
@@ -390,7 +390,7 @@ const Div = Styled.div`
                             width: 16px;
                             height: 16px;
                         }
-                                                
+
                         .ant-menu-submenu-arrow{
                             right: auto;
                             ${({ theme }) =>
@@ -484,7 +484,7 @@ const Div = Styled.div`
                 .ant-menu-submenu,
                 .ant-menu-item{
                     ${({ theme }) => theme.rtl && `padding-right: 5px;`}
-                    
+
                     &.ant-menu-item-selected{
                         border-radius: 4px;
                         &:after{
@@ -508,7 +508,7 @@ const Div = Styled.div`
                         text-align: ${({ theme }) =>
                           !theme.rtl
                             ? 'left'
-                            : 'right'};                        
+                            : 'right'};
                         .ant-menu-submenu-title{
                             padding: 0 20px;
                             justify-content: center;
@@ -623,7 +623,7 @@ const Div = Styled.div`
                 }
             }
         }
-    }    
+    }
 `;
 
 const SmallScreenAuthInfo = Styled.div`
@@ -1050,7 +1050,7 @@ const TopMenuStyle = Styled.div`
                                 font-weight: 400;
                                 transition: .3s;
                             }
-                            
+
                             &:after{
                                 width: 6px;
                                 height: 1px;
