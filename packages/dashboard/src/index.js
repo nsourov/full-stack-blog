@@ -1,17 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import store from "./redux/store"
-import {userProfile} from "./redux/authentication/authReducer"
+import configureStore from './state/store';
+// import { userProfile } from './redux/authentication/authReducer';
 
-if (localStorage.getItem("token")) {
-    store.dispatch(userProfile());
-  }
+// if (localStorage.getItem('token')) {
+//   store.dispatch(userProfile());
+// }
 
+const Container = () => {
+  const reduxStore = configureStore(window.REDUX_INITIAL_DATA);
+  return (
+    <Provider store={reduxStore}>
+      <App />
+    </Provider>
+  );
+};
 
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Container />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
