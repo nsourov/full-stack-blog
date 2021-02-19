@@ -41,7 +41,7 @@ const Signin = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push('/admin/comments');
+      history.push('/admin/post/create');
     }
   }, [history, isAuthenticated]);
 
