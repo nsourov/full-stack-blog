@@ -77,3 +77,7 @@ export const createPost = (body, token) => {
     headers: { Authorization: token },
   });
 };
+
+export const getPost = (slug) => {
+  return axios.get(`${api}/posts/${slug}`);
+};
