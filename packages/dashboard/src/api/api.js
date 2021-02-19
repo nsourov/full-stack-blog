@@ -65,3 +65,12 @@ export const updateCategory = (slug, body, token) => {
     headers: { Authorization: token },
   });
 };
+
+export const getUnPublishedComments = (postId, page, token) => {
+  return axios.get(
+    `${api}/posts/${postId}/comments/unpublished/page/${page}`,
+    {
+      headers: { Authorization: token },
+    }
+  );
+};

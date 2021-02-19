@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Row, Col, Spin, Table, Tag } from 'antd';
+import { Row, Col, Table, Tag } from 'antd';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { PageHeader } from '../../../components/page-headers/page-headers';
 import { ProjectHeader, ProjectSorting, ProjectListTitle } from './style';
@@ -11,7 +12,8 @@ import { Button } from '../../../components/buttons/buttons';
 import Heading from '../../../components/heading/heading';
 import { Dropdown } from '../../../components/dropdown/dropdown';
 import { Main } from '../../../container/styled';
-import { getPublishedPost, getUnpublishedPost } from '../../../api/api';
+import { getUnpublishedPost } from '../../../api/api';
+import { fatchPublishedPost } from '../../../state/ducks/publishedPost';
 
 const columns = [
   {
@@ -74,11 +76,16 @@ const columns = [
 ];
 
 const PostList = () => {
+  const { data: publishedPost, loading: publishedPostLoading } = useSelector(
+    (state) => state.publishedPost
+  );
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [postStatus, setPostStatus] = useState('published');
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   const handleCreatePostRoute = () => {
     history.push('/admin/post/create');
@@ -92,25 +99,27 @@ const PostList = () => {
     const fatchPost = async () => {
       try {
         setLoading(true);
-        let posts;
-        if (postStatus === 'published') {
-          const { data } = await getPublishedPost(page);
-          posts = data;
-        }
-        if (postStatus === 'unpublished') {
-          const token = localStorage.getItem('jwtToken');
-          const { data } = await getUnpublishedPost(page, token);
-          posts = data;
-        }
-        setData(posts);
+        const token = localStorage.getItem('jwtToken');
+        const { data } = await getUnpublishedPost(page, token);
+        setData(data);
         setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
       }
     };
-    fatchPost();
-  }, [page, postStatus]);
+
+    if (postStatus === 'published') {
+      dispatch(fatchPublishedPost(page));
+    }
+    if (postStatus === 'unpublished') {
+      fatchPost();
+    }
+  }, [page, postStatus, dispatch]);
+
+  useEffect(() => {
+    setData(publishedPost);
+  }, [publishedPost]);
 
   return (
     <>
@@ -142,7 +151,13 @@ const PostList = () => {
                           postStatus === 'published' ? 'active' : 'deactivate'
                         }
                       >
-                        <Link onClick={() => setPostStatus('published')} to='#'>
+                        <Link
+                          onClick={() => {
+                            setPage(1);
+                            setPostStatus('published');
+                          }}
+                          to='#'
+                        >
                           Published
                         </Link>
                       </li>
@@ -152,7 +167,10 @@ const PostList = () => {
                         }
                       >
                         <Link
-                          onClick={() => setPostStatus('unpublished')}
+                          onClick={() => {
+                            setPage(1);
+                            setPostStatus('unpublished');
+                          }}
                           to='#'
                         >
                           Unpublished
@@ -170,7 +188,7 @@ const PostList = () => {
                 total: data?.count,
                 pageSize: 5,
               }}
-              loading={loading}
+              loading={loading || publishedPostLoading}
               dataSource={data?.posts}
               onChange={handleTableChange}
             />

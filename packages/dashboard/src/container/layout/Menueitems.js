@@ -134,6 +134,20 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
           Category
         </NavLink>
       </Menu.Item>
+      <Menu.Item
+        icon={
+          !topMenu && (
+            <NavLink className='menuItem-iocn' to={`${path}/comments`}>
+              <FeatherIcon icon='message-circle' />
+            </NavLink>
+          )
+        }
+        key='comments'
+      >
+        <NavLink onClick={toggleCollapsed} to={`${path}/comments`}>
+          Comments
+        </NavLink>
+      </Menu.Item>
     </Menu>
   );
 };
