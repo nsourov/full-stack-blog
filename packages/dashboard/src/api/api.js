@@ -50,8 +50,18 @@ export const getCategories = () => {
   return axios.get(`${api}/categories`);
 };
 
+export const getCategory = (slug) => {
+  return axios.get(`${api}/categories/${slug}`);
+};
+
 export const createCategory = (body, token) => {
   return axios.post(`${api}/categories`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const updateCategory = (slug, body, token) => {
+  return axios.put(`${api}/categories/${slug}`, body, {
     headers: { Authorization: token },
   });
 };

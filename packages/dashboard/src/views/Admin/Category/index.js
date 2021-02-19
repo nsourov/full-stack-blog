@@ -10,13 +10,21 @@ import { fatchCategories } from '../../../state/ducks/category';
 import { Main, TableWrapper, CardToolbox } from '../../../container/styled';
 import { ContactPageheaderStyle } from './style';
 import Create from './Create';
+import Update from './Update';
 
 const { Column } = Table;
 const Category = () => {
   const { data, loading } = useSelector((state) => state.categories);
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [updateData, setUpdateData] = useState(null);
 
   const dispatch = useDispatch();
+
+  const handelUpdateModal = (value) => {
+    setUpdateData(value.slug);
+    setShowUpdateModal(true);
+  };
 
   useEffect(() => {
     dispatch(fatchCategories());
@@ -69,6 +77,7 @@ const Category = () => {
                   <Space size='middle'>
                     <Button
                       type='text'
+                      onClick={() => handelUpdateModal(record)}
                       icon={<FeatherIcon icon='edit' size={18} />}
                     />
                     <Button
@@ -84,6 +93,12 @@ const Category = () => {
         </Row>
       </Main>
       <Create visible={showModal} onCancel={setShowModal} />
+      <Update
+        visible={showUpdateModal}
+        onCancel={setShowUpdateModal}
+        slug={updateData}
+        setUpdateData={setUpdateData}
+      />
     </>
   );
 };
