@@ -32,13 +32,6 @@ const Profile = () => {
               <Form.Item name='email' initialValue={user?.email} label='Email'>
                 <Input type='email' />
               </Form.Item>
-              <Form.Item
-                name='password'
-                initialValue={user?.password}
-                label='Password'
-              >
-                <Input type='password' />
-              </Form.Item>
 
               {/* <div className='setting-form-actions'>
                 <Button size='default' htmlType='submit' type='primary'>

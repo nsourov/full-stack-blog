@@ -63,20 +63,20 @@ const EditorRequest = () => {
     },
     {
       title: 'Action',
-      dataIndex: 'user',
+      dataIndex: '_id',
       align: 'right',
-      render: (user, record) => {
+      render: (item, record) => {
         return (
           <Space size={8}>
             <Button
-              key={user._id}
+              key={record.user._id}
               loading={loadingAccept}
-              onClick={() => handelAccept(user._id)}
+              onClick={() => handelAccept(record.user._id)}
               type='primary'
             >
               Accept
             </Button>
-            <Button onClick={() => handelDelete(user._id)} type='danger'>
+            <Button onClick={() => handelDelete(item)} type='danger'>
               Delete
             </Button>
           </Space>

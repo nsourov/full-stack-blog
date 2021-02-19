@@ -16,7 +16,7 @@ router.get(
 );
 
 router.delete(
-  '/:userId',
+  '/:requestId',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
   requestController.deleteRequest,

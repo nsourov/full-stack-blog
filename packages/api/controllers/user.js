@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Post = require('../models/post');
+const Request = require('../models/request');
 const Comment = require('../models/comment');
 
 exports.getUsers = async (req, res) => {
@@ -7,7 +8,8 @@ exports.getUsers = async (req, res) => {
   const limit = 10;
   const skip = page * limit - limit;
 
-  const usersPromise = User.find().select(['-password'])
+  const usersPromise = User.find()
+    .select(['-password'])
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -32,8 +34,13 @@ exports.getUsers = async (req, res) => {
   });
 };
 exports.getUser = async (req, res) => {
-  const user = await User.findById(req.params.userId).select(['-password']).exec();
-  if (!user) return res.status(400).json({ success: false, errors: { message: 'User not found' } });
+  const user = await User.findById(req.params.userId)
+    .select(['-password'])
+    .exec();
+  if (!user)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'User not found' } });
   return res.status(200).json({ success: true, user });
 };
 
@@ -42,7 +49,8 @@ exports.getUsersPublishedPosts = async (req, res) => {
   const limit = 10;
   const skip = page * limit - limit;
 
-  const postsPromise = Post.find({ published: true, user: req.params.userId }).select(['-comments'])
+  const postsPromise = Post.find({ published: true, user: req.params.userId })
+    .select(['-comments'])
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -72,7 +80,8 @@ exports.getUsersUnPublishedPosts = async (req, res) => {
   const limit = 10;
   const skip = page * limit - limit;
 
-  const postsPromise = Post.find({ published: false, user: req.params.userId }).select(['-comments'])
+  const postsPromise = Post.find({ published: false, user: req.params.userId })
+    .select(['-comments'])
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
@@ -101,8 +110,13 @@ exports.getUsersPublishedComments = async (req, res) => {
   const limit = 10;
   const skip = page * limit - limit;
 
-  const args = { post: req.params.postId, user: req.params.userId, published: true };
-  const commentsPromise = Comment.find(args).skip(skip)
+  const args = {
+    post: req.params.postId,
+    user: req.params.userId,
+    published: true,
+  };
+  const commentsPromise = Comment.find(args)
+    .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
 
@@ -129,8 +143,13 @@ exports.getUsersUnPublishedComments = async (req, res) => {
   const limit = 10;
   const skip = page * limit - limit;
 
-  const args = { post: req.params.postId, user: req.params.userId, published: false };
-  const commentsPromise = Comment.find(args).skip(skip)
+  const args = {
+    post: req.params.postId,
+    user: req.params.userId,
+    published: false,
+  };
+  const commentsPromise = Comment.find(args)
+    .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' });
 
@@ -159,7 +178,8 @@ exports.updateUser = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     req.params.userId,
     req.body,
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   ).select(['-password']);
+  await Request.findOneAndRemove({ user: updatedUser.id });
   return res.status(200).json({ success: true, user: updatedUser });
 };
