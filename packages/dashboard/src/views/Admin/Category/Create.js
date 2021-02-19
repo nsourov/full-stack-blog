@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Input } from 'antd';
+import { useDispatch } from 'react-redux';
 
+import { fatchCategories } from '../../../state/ducks/category';
 import { createCategory } from '../../../api/api';
 import { BasicFormWrapper } from '../../../container/styled';
 import { Modal } from '../../../components/modals/antd-modals';
@@ -10,7 +12,7 @@ import { AddCategory } from './style';
 const Create = ({ visible, onCancel }) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-
+  const dispatch = useDispatch();
   const handleOk = async (values) => {
     try {
       setLoading(true);
@@ -19,8 +21,8 @@ const Create = ({ visible, onCancel }) => {
         description: values.description,
       };
       const token = localStorage.getItem('jwtToken');
-      const res = await createCategory(data, token);
-      console.log('🚀 ~ file: index.js ~ line 31 ~ handleOk ~ res', res);
+      await createCategory(data, token);
+      dispatch(fatchCategories());
       onCancel(false);
       setLoading(false);
     } catch (error) {
