@@ -57,13 +57,16 @@ const columns = [
   {
     title: 'Action',
     dataIndex: 'slug',
-    render: (text, record) => (
+    render: (slug, record) => (
       <Dropdown
         className='wide-dropdwon'
         content={
           <>
-            <Link to={`/admin/post/update/${record?.slug}`}>Edit</Link>
+            <Link to={`/admin/post/update/${slug}`}>Edit</Link>
             <Link to='#'>Delete</Link>
+            <Link to={`/admin/post/comments/${slug}/${record._id}`}>
+              Comments
+            </Link>
           </>
         }
       >

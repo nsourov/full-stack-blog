@@ -25,7 +25,7 @@ const Admin = () => {
           <Route exact path={`${path}/post/update/:slug`} component={UpdatePost} />
           <Route exact path={`${path}/request`} component={EditorRequest} />
           <Route exact path={`${path}/category`} component={Category} />
-          <Route exact path={`${path}/comments`} component={Comments} />
+          <Route exact path={`${path}/post/comments/:slug/:postId`} component={Comments} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>

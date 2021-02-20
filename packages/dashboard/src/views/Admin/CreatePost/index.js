@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Upload, Alert } from 'antd';
+import { Form, Input, Button, Upload, Alert, Select } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Editor from '../../../components/editor/Editor';
 import { Main } from '../../../container/styled';
-import { createPost } from '../../../api/api';
+import { createPost, createPublishPost } from '../../../api/api';
+import { fatchCategories } from '../../../state/ducks/category';
+
+const { Option } = Select;
 
 const CreatePost = () => {
+  const {
+    data: { categories },
+    loading,
+  } = useSelector((state) => state.categories);
+
   const [form] = Form.useForm();
   const [photo, setPhoto] = useState(null);
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [load, setLoad] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+
+  const dispatch = useDispatch();
 
   const clearSuccess = () => {
     setSuccess(false);
@@ -24,6 +36,7 @@ const CreatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', description);
+    formData.append('category', category);
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
@@ -45,6 +58,10 @@ const CreatePost = () => {
     }
   };
 
+  React.useEffect(() => {
+    dispatch(fatchCategories());
+  }, [dispatch]);
+
   const normFile = (e) => {
     setPhoto(e.fileList[0]);
   };
@@ -59,7 +76,8 @@ const CreatePost = () => {
 
     try {
       setLoad(true);
-      await UserAxios.post('/posts/create-publish', formData);
+      const token = localStorage.getItem('jwtToken');
+      await createPublishPost(formData, token);
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -72,6 +90,11 @@ const CreatePost = () => {
     }
   };
 
+  // if (!loading) {
+  //   return 'Loading';
+  // }
+
+  // console.log('categories', data,loading);
   return (
     <Main>
       <h2 className='mt4'>New Post </h2>
@@ -89,7 +112,30 @@ const CreatePost = () => {
         >
           <Input placeholder='Title' />
         </Form.Item>
+        <Form.Item
+          name='Category'
+          // value={title}
 
+          // validateStatus={errors?.title ? 'error' : ''}
+          help={errors?.category ? errors.category : ''}
+          rules={[{ required: true }]}
+        >
+          <Select
+            placeholder='Select a category'
+            onChange={(e) => {
+              setCategory(e);
+            }}
+            allowClear
+          >
+            {!loading
+              ? categories.map((item) => (
+                  <Option key={item._id} value={item._id}>
+                    {item.name}
+                  </Option>
+                ))
+              : 'Loading...'}
+          </Select>
+        </Form.Item>
         <Editor
           onChange={(e) => {
             setDescription(e);

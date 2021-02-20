@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Form, Input, Button, Upload, Alert } from 'antd';
+import { Form, Input, Button, Upload, Alert, Select } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Editor from '../../../components/editor/Editor';
 import { Main } from '../../../container/styled';
-import { getPost } from '../../../api/api';
+import { getPost, updatePost, publishPost } from '../../../api/api';
+import { fatchCategories } from '../../../state/ducks/category';
+
+const { Option } = Select;
 
 const UpdatePost = () => {
+  const {
+    data: { categories },
+    loading,
+  } = useSelector((state) => state.categories);
+
   const [form] = Form.useForm();
   const [photo, setPhoto] = useState(null);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [category, setCategory] = useState('');
   const [load, setLoad] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
@@ -20,6 +30,7 @@ const UpdatePost = () => {
   const [image, setImage] = useState(false);
   const [post, setPost] = useState(false);
   const { slug } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,13 +38,17 @@ const UpdatePost = () => {
       let { post } = result.data;
       setTitle(post.title);
       setBody(post.body);
+      setCategory(post?.category);
       setImage(post.image);
-      console.log(result);
       setPost(post);
       setFetchLoad(true);
     };
     fetchData();
   }, [slug]);
+
+  useEffect(() => {
+    dispatch(fatchCategories());
+  }, [dispatch]);
 
   const clearSuccess = () => {
     setSuccess(false);
@@ -54,7 +69,8 @@ const UpdatePost = () => {
 
     try {
       setLoad(true);
-      await UserAxios.put(`/posts/${params.slug}/publish`, data);
+      const token = localStorage.getItem('jwtToken');
+      await publishPost(slug, data, token);
       setErrors({});
       setSuccessPublished(true);
       setLoad(false);
@@ -71,6 +87,7 @@ const UpdatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', body);
+    formData.append('category', category);
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
@@ -81,7 +98,8 @@ const UpdatePost = () => {
     };
     try {
       setLoad(true);
-      await UserAxios.put(`/posts/${params.slug}`, data);
+      const token = localStorage.getItem('jwtToken');
+      await updatePost(slug, data, token);
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -96,12 +114,10 @@ const UpdatePost = () => {
   };
 
   const normFile = (e) => {
-    console.log('Upload event:', e);
-
     setPhoto(e.file);
   };
 
-  if (!fetchLoad) {
+  if (!fetchLoad || loading) {
     return <h2>No post found!</h2>;
   }
 
@@ -120,10 +136,33 @@ const UpdatePost = () => {
           onChange={(e) => {
             setTitle(e.target.value);
           }}
-          validateStatus={errors.title ? 'error' : ''}
-          help={errors.title ? errors.title : ''}
+          validateStatus={errors?.title ? 'error' : ''}
+          help={errors?.title ? errors.title : ''}
         >
           <Input placeholder='Title' defaultValue={title} />
+        </Form.Item>
+        <Form.Item
+          name='Category'
+          // value={title}
+
+          // validateStatus={errors?.title ? 'error' : ''}
+          help={errors?.category ? errors.category : ''}
+          rules={[{ required: true }]}
+        >
+          <Select
+            placeholder='Select a category'
+            defaultValue={category}
+            onChange={(e) => {
+              setCategory(e);
+            }}
+            allowClear
+          >
+            {categories.map((item) => (
+              <Option key={item._id} value={item._id}>
+                {item.name}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
         <Editor
           onChange={(e) => {

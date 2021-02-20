@@ -81,3 +81,27 @@ export const createPost = (body, token) => {
 export const getPost = (slug) => {
   return axios.get(`${api}/posts/${slug}`);
 };
+
+export const updatePost = (slug, body, token) => {
+  return axios.put(`${api}/posts/${slug}`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const publishPost = (slug, body, token) => {
+  return axios.put(`${api}/posts/${slug}/publish`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const createPublishPost = (body, token) => {
+  return axios.post(`${api}/posts/create-publish`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const publishedComment = (slug, commentId, body, token) => {
+  return axios.put(`${api}/posts/${slug}/comment/${commentId}`, body, {
+    headers: { Authorization: token },
+  });
+};
