@@ -103,6 +103,7 @@ const EditorRequest = () => {
     <Main>
       <Row gutter={25}>
         <Col xs={24}>
+          <h2>Requests to Editor</h2>
           <Table
             columns={columns}
             pagination={{
