@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
-import { Row, Col, Table, Space, Tooltip, Button } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col, Table, Button } from 'antd';
 import { useParams } from 'react-router-dom';
 
-import { Main, TableWrapper, CardToolbox } from '../../../container/styled';
+import { Main } from '../../../container/styled';
 import { getUnPublishedComments, publishedComment } from '../../../api/api';
 
 const Comments = () => {
@@ -13,9 +12,7 @@ const Comments = () => {
   const [data, setData] = useState(null);
 
   const { postId, slug } = useParams();
-  console.log('🚀 ~ file: index.js ~ line 16 ~ Comments ~ slug', slug);
 
-  const dispatch = useDispatch();
   const fatchComments = async () => {
     try {
       setLoading(true);

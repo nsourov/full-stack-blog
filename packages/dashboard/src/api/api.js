@@ -111,3 +111,9 @@ export const deletePost = (slug, token) => {
     headers: { Authorization: token },
   });
 };
+
+export const getUsers = (page, token) => {
+  return axios.get(`${api}/users/page/${page}`, {
+    headers: { Authorization: token },
+  });
+};

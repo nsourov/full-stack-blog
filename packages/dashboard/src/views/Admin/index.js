@@ -11,6 +11,7 @@ const UpdatePost = lazy(() => import('./UpdatePost'));
 const EditorRequest = lazy(() => import('./EditorRequest'));
 const Category = lazy(() => import('./Category'));
 const Comments = lazy(() => import('./Comments'));
+const Users = lazy(() => import('./Users'));
 const NotFound = lazy(() => import('../../container/pages/404'));
 
 const Admin = () => {
@@ -25,6 +26,7 @@ const Admin = () => {
           <Route exact path={`${path}/post/update/:slug`} component={UpdatePost} />
           <Route exact path={`${path}/request`} component={EditorRequest} />
           <Route exact path={`${path}/category`} component={Category} />
+          <Route exact path={`${path}/users/list`} component={Users} />
           <Route exact path={`${path}/post/comments/:slug/:postId`} component={Comments} />
           <Route component={NotFound} />
         </Switch>
