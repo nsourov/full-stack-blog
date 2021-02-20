@@ -11,6 +11,7 @@ const PostComment = (props) => {
   const { name, date, description, userId, slug, commentId, reFatch } = props;
   const [edit, setEdit] = useState(false);
   const [comment, setComment] = useState(description);
+  const [loading, setLoading] = useState(false);
 
   const {
     isAuthenticated,
@@ -24,13 +25,16 @@ const PostComment = (props) => {
   const onsubmit = async (e) => {
     try {
       if (edit && e.body !== comment) {
+        setLoading(true);
         await updateComment(slug, commentId, e, localStorage.jwtToken);
         setComment(e?.body);
         reset();
         setEdit(false);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -82,7 +86,13 @@ const PostComment = (props) => {
               })}
               className='form-control w-50'
             />
-            <Button className='m-1' color='success' size='sm'>
+            <Button
+              disabled={loading}
+              className='m-1'
+              color='success'
+              size='sm'
+            >
+              {loading && <i className='fa fa-spinner fa-pulse fa-fw'></i>}
               Save
             </Button>
             <Button
@@ -90,6 +100,7 @@ const PostComment = (props) => {
               className='m-1'
               color='danger'
               size='sm'
+              disabled={loading}
             >
               Cancel
             </Button>
