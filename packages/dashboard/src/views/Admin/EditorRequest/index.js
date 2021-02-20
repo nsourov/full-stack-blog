@@ -13,7 +13,6 @@ import { ProjectListTitle } from './style';
 
 const EditorRequest = () => {
   const [loading, setLoading] = useState(true);
-  const [loadingAccept, setLoadingAccept] = useState(false);
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
 
@@ -21,19 +20,34 @@ const EditorRequest = () => {
     setPage(pagination.current);
   };
 
+  const fatchRequest = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('jwtToken');
+      const { data } = await getEditorRequests(page, token);
+      setData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fatchRequest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
   const handelAccept = async (userId) => {
     try {
-      setLoadingAccept(true);
       const body = {
         role: 'editor',
       };
       const token = localStorage.getItem('jwtToken');
       await acceptEditorRequest(userId, body, token);
-      // await deleteEditorRequest(userId, token);
-      setLoadingAccept(false);
+      fatchRequest();
     } catch (error) {
       console.error(error);
-      setLoadingAccept(false);
     }
   };
 
@@ -41,6 +55,7 @@ const EditorRequest = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       await deleteEditorRequest(userId, token);
+      fatchRequest();
     } catch (error) {
       console.error(error);
     }
@@ -70,7 +85,6 @@ const EditorRequest = () => {
           <Space size={8}>
             <Button
               key={record.user._id}
-              loading={loadingAccept}
               onClick={() => handelAccept(record.user._id)}
               type='primary'
             >
@@ -84,26 +98,6 @@ const EditorRequest = () => {
       },
     },
   ];
-
-  useEffect(() => {
-    const fatchRequest = async () => {
-      try {
-        setLoading(true);
-        const token = localStorage.getItem('jwtToken');
-        const { data } = await getEditorRequests(page, token);
-        console.log(
-          '🚀 ~ file: index.js ~ line 78 ~ fatchRequest ~ data',
-          data
-        );
-        setData(data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-    fatchRequest();
-  }, [page]);
 
   return (
     <Main>
