@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 const TitleComponent = ({ title }) => {
   return (
     <Helmet>
-      <title>{title ? `${title} - App name` : 'App name'}</title>
+      <title>{title ? `${title}` : 'App name'}</title>
     </Helmet>
   );
 };
