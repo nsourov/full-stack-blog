@@ -46,11 +46,7 @@ const PostComment = (props) => {
       <div className='comment-header d-flex justify-content-between'>
         <div className='user d-flex align-items-center'>
           <div className='image'>
-            <img
-              src={avatar || dummiAvatar}
-              alt='...'
-              className='img-fluid rounded-circle'
-            />
+            <i className='fa fa-user-circle-o fa-2x' aria-hidden='true'></i>
           </div>
           <div className='title'>
             <strong>{name}</strong>

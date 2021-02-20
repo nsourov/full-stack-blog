@@ -1442,6 +1442,10 @@ main.posts-listing .post-footer {
   margin-right: 15px;
 }
 
+.blog-post .post-comments .image i {
+  color: #999;
+}
+
 .blog-post .post-comments .title::after {
   display: none;
 }
