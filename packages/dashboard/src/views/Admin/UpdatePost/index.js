@@ -38,7 +38,7 @@ const UpdatePost = () => {
       let { post } = result.data;
       setTitle(post.title);
       setBody(post.body);
-      setCategory(post?.category);
+      setCategory(post?.category?._id);
       setImage(post.image);
       setPost(post);
       setFetchLoad(true);
@@ -58,10 +58,10 @@ const UpdatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', body);
+    formData.append('category', category);
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
-
     let data = {
       title,
       body,
@@ -92,14 +92,10 @@ const UpdatePost = () => {
       formData.append('photo', photo.originFileObj);
     }
 
-    let data = {
-      title,
-      body,
-    };
     try {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
-      await updatePost(slug, data, token);
+      await updatePost(slug, formData, token);
       setErrors({});
       setSuccess(true);
       setLoad(false);

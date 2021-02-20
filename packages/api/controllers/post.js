@@ -265,6 +265,7 @@ exports.createAndPublishPost = async (req, res) => {
     image:
       req.body.image && `${process.env.SERVER_URL}/uploads/${req.body.image}`,
     user: req.user.id,
+    category: req.body.categoryId,
     published: true,
   });
 

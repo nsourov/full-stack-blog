@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const PostMeta = () => {
+const PostMeta = ({ category }) => {
   return (
-    <div className="post-meta d-flex justify-content-between">
-      <div className="category">
-        <Link to="#">Business</Link>
-        <Link to="#">Financial</Link>
+    <div className='post-meta d-flex justify-content-between'>
+      <div className='category'>
+        <Link to='#'>{category}</Link>
       </div>
     </div>
   );

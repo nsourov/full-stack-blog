@@ -32,7 +32,7 @@ const Post = () => {
     }
   }, [post]);
 
-  console.log('post',post);
+  console.log('post', post);
 
   return (
     <main className='post blog-post'>
@@ -43,7 +43,7 @@ const Post = () => {
               <img src={post.image || blog3} alt='...' className='img-fluid' />
             </div>
             <div className='post-details'>
-              <PostMeta />
+              <PostMeta category={post?.category?.name} />
               <h1>
                 {post.title}
                 <Link to='#'>

@@ -36,14 +36,13 @@ const CreatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', description);
-    formData.append('category', category);
+    formData.append('categoryId', category);
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
 
     try {
       setLoad(true);
-      // await UserAxios.post('/posts', formData);
       const token = localStorage.getItem('jwtToken');
       await createPost(formData, token);
       setErrors({});
@@ -70,6 +69,7 @@ const CreatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', description);
+    formData.append('categoryId', category);
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
@@ -107,8 +107,8 @@ const CreatePost = () => {
           onChange={(e) => {
             setTitle(e.target.value);
           }}
-          validateStatus={errors.title ? 'error' : ''}
-          help={errors.title ? errors.title : ''}
+          validateStatus={errors?.title ? 'error' : ''}
+          help={errors?.title ? errors.title : ''}
         >
           <Input placeholder='Title' />
         </Form.Item>
