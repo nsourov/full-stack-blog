@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { fatchComments } from '../../state/ducks/blogs';
 import PostComment from '../../components/PostComment';
-import Pagination from '../../components/Pagination'
+import Pagination from '../../components/Pagination';
 
 const PostComments = ({ postId, slug }) => {
   const [page, setPage] = useState(1);
@@ -18,7 +18,10 @@ const PostComments = ({ postId, slug }) => {
   if (loading) {
     return 'Loading';
   }
-  console.log(data);
+
+  const reFatch = () => {
+    dispatch(fatchComments(postId, page));
+  };
 
   return (
     <div className='post-comments'>
@@ -34,19 +37,21 @@ const PostComments = ({ postId, slug }) => {
             key={comment._id}
             commentId={comment._id}
             userId={comment.user._id}
-            avatar={comment.user.avatar}
             name={comment.user.name}
             date={comment.updatedAt}
             description={comment.body}
+            reFatch={reFatch}
             slug={slug}
           />
         ))}
-      {
-       !loading && data.count > 10 &&  <Pagination activePage={page}
-        countPerPage={10}
-        count={data.count}
-        onChange={(pageNumber) => setPage(pageNumber)} />
-      }
+      {!loading && data.count > 10 && (
+        <Pagination
+          activePage={page}
+          countPerPage={10}
+          count={data.count}
+          onChange={(pageNumber) => setPage(pageNumber)}
+        />
+      )}
     </div>
   );
 };

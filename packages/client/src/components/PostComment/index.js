@@ -6,11 +6,11 @@ import { useForm } from 'react-hook-form';
 
 import { updateComment, deleteComment } from '../../api';
 import dateFormat from '../../utils/dateFormat';
-import dummiAvatar from '../../assets/img/avatar-1.jpg';
 
 const PostComment = (props) => {
+  const { name, date, description, userId, slug, commentId, reFatch } = props;
   const [edit, setEdit] = useState(false);
-  const { avatar, name, date, description, userId, slug, commentId } = props;
+  const [comment, setComment] = useState(description);
 
   const {
     isAuthenticated,
@@ -23,9 +23,12 @@ const PostComment = (props) => {
 
   const onsubmit = async (e) => {
     try {
-      await updateComment(slug, commentId, e, localStorage.jwtToken);
-      reset();
-      setEdit(false);
+      if (edit && e.body !== comment) {
+        await updateComment(slug, commentId, e, localStorage.jwtToken);
+        setComment(e?.body);
+        reset();
+        setEdit(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -34,6 +37,7 @@ const PostComment = (props) => {
   const onDelete = async (e) => {
     try {
       await deleteComment(slug, commentId, localStorage.jwtToken);
+      reFatch();
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +59,7 @@ const PostComment = (props) => {
         </div>
       </div>
       <div className='comment-body'>
-        {!edit && <p>{description}</p>}
+        {!edit && <p>{comment}</p>}
         {isAuthenticated && isUser && !edit && (
           <>
             <Button color='link' onClick={() => setEdit(true)}>
@@ -70,7 +74,7 @@ const PostComment = (props) => {
         {isAuthenticated && isUser && edit && (
           <form onSubmit={handleSubmit(onsubmit)} className='commenting-form'>
             <textarea
-              defaultValue={description}
+              defaultValue={comment}
               type='text'
               name='body'
               ref={register({
@@ -78,8 +82,16 @@ const PostComment = (props) => {
               })}
               className='form-control w-50'
             />
-            <Button className='mt-1' color='success'>
+            <Button className='m-1' color='success' size='sm'>
               Save
+            </Button>
+            <Button
+              onClick={() => setEdit(false)}
+              className='m-1'
+              color='danger'
+              size='sm'
+            >
+              Cancel
             </Button>
           </form>
         )}
