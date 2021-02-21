@@ -50,7 +50,7 @@ exports.getPost = async (req, res) => {
     return res
       .status(400)
       .json({ success: false, errors: { message: 'Post not found' } });
-  const commentCount = await Comment.count({ post: post.id });
+  const commentCount = await Comment.count({ post: post.id, published: true });
 
   return res
     .status(200)
@@ -178,9 +178,18 @@ exports.getSearchPosts = async (req, res) => {
       .json({ success: false, errors: { message: "Page doesn't exist" } });
   }
 
+  const withCount = [];
+  for (const post of posts) {
+    const count = await Comment.count({ post: post.id, published: true }).exec();
+    withCount.push({
+      ...JSON.parse(JSON.stringify(post)),
+      commentCount: count,
+    });
+  }
+
   return res.status(200).json({
     success: true,
-    posts,
+    posts: withCount,
     page,
     pages,
     count,
