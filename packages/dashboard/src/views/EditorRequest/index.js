@@ -45,7 +45,7 @@ const EditorRequest = () => {
       };
       const token = localStorage.getItem('jwtToken');
       await acceptEditorRequest(userId, body, token);
-      message.success('Accept request successfully')
+      message.success('Accept request successfully');
       fatchRequest();
     } catch (error) {
       console.error(error);
@@ -56,7 +56,7 @@ const EditorRequest = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       await deleteEditorRequest(userId, token);
-      message.success('Delete request successfully')
+      message.success('Delete request successfully');
       fatchRequest();
     } catch (error) {
       console.error(error);
@@ -111,7 +111,7 @@ const EditorRequest = () => {
             pagination={{
               current: page,
               total: data?.count,
-              pageSize: 5,
+              pageSize: 10,
             }}
             loading={loading}
             dataSource={data?.requests}
