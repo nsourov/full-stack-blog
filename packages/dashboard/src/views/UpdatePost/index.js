@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Form, Input, Button, Upload, Alert, Select } from 'antd';
+import { Form, Input, Button, Upload, Alert, Select, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -72,6 +72,7 @@ const UpdatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await publishPost(slug, data, token);
+      message.success('Post published successfully')
       setErrors({});
       setSuccessPublished(true);
       setLoad(false);
@@ -97,6 +98,7 @@ const UpdatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await updatePost(slug, formData, token);
+      message.success('Post update successfully')
       setErrors({});
       setSuccess(true);
       setLoad(false);

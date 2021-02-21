@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Row, Col, Table, Tag } from 'antd';
+import { Row, Col, Table, Tag, message } from 'antd';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -67,6 +67,7 @@ const PostList = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       await deletePost(slug, token);
+      message.success('Delete post successfully')
       if (postStatus === 'published') {
         dispatch(fatchPublishedPost(page, role, id));
       }

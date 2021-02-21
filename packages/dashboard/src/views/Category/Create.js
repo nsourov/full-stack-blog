@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import { fatchCategories } from '../../state/ducks/category';
@@ -22,6 +22,7 @@ const Create = ({ visible, onCancel }) => {
       };
       const token = localStorage.getItem('jwtToken');
       await createCategory(data, token);
+      message.success('Create category successfully');
       dispatch(fatchCategories());
       onCancel(false);
       setLoading(false);

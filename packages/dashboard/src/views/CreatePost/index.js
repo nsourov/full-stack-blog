@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Upload, Alert, Select } from 'antd';
+import { Form, Input, Button, Upload, Alert, Select,message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -46,6 +46,7 @@ const CreatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await createPost(formData, token);
+      message.success('Post create successfully')
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -79,6 +80,7 @@ const CreatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await createPublishPost(formData, token);
+      message.success('Post create and published successfully')
       setErrors({});
       setSuccess(true);
       setLoad(false);

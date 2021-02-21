@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Spin, Table, Space } from 'antd';
+import { Row, Col, message, Table, Space } from 'antd';
 
 import { Button } from '../../components/buttons/buttons';
 import { Main } from '../../container/styled';
@@ -45,6 +45,7 @@ const EditorRequest = () => {
       };
       const token = localStorage.getItem('jwtToken');
       await acceptEditorRequest(userId, body, token);
+      message.success('Accept request successfully')
       fatchRequest();
     } catch (error) {
       console.error(error);
@@ -55,6 +56,7 @@ const EditorRequest = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       await deleteEditorRequest(userId, token);
+      message.success('Delete request successfully')
       fatchRequest();
     } catch (error) {
       console.error(error);
