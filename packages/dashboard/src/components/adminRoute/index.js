@@ -11,19 +11,20 @@ const AdminRoute = ({ component: AdminComponent, ...rest }) => {
       render={(props) => {
         const hasAccess =
           rest.isAuthenticated &&
+          !rest.admin &&
           (rest.role === 'admin' || rest.role === 'editor');
+
+        const admin =
+          rest.isAuthenticated && rest.admin && rest.role === 'admin';
+
         if (hasAccess) {
           return <AdminComponent {...props} />;
         }
+        if (admin) {
+          return <AdminComponent {...props} />;
+        }
         // dispatch(logOutUser());
-        return (
-          <Redirect
-            to={{
-              pathname: '/',
-              state: { message: 'You are not accessible to this route' },
-            }}
-          />
-        );
+        return <Redirect to='/signin' />;
       }}
     />
   );

@@ -22,7 +22,7 @@ const Pages = () => {
             render={(props) =>
               withTitle({
                 component: Blog,
-                title: 'Bruch Blog',
+                title: 'Bruce Blog',
                 ...props,
               })
             }
