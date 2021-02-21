@@ -47,8 +47,6 @@ app.use('/posts', postRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/requests', requestRoutes);
 
-console.log(process.env.APP_SECRET);
-
 function ignoreFavicon(req, res, next) {
   if (req.originalUrl.includes('favicon.ico')) {
     res.status(204).end();

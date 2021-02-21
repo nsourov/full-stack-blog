@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.6.0",
+    "express": "^4.17.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
@@ -33,6 +34,7 @@
   "homepage": "/",
   "scripts": {
     "start": "react-app-rewired start",
+    "start:prod": "node lib/index.js",
     "build": "set \"GENERATE_SOURCEMAP=false\" && react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",

@@ -7,6 +7,8 @@ WORKDIR /app
 COPY  ./packages/api/package.json ./packages/api/package.json
 #  dashboard
 COPY  ./packages/dashboard/package.json ./packages/dashboard/package.json
+#  client
+COPY  ./packages/client/package.json ./packages/client/package.json
 
 # root package file
 COPY package.json package.json
@@ -17,5 +19,3 @@ RUN yarn
 # copy whatever is here into container
 # copy everything except packages
 COPY . .
-
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
