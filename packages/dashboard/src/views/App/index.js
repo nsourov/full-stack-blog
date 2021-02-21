@@ -124,6 +124,8 @@ const App = () => {
               exact
               path='/post/comments/:slug/:postId'
               component={Comments}
+              role={data?.role}
+              isAuthenticated={isAuthenticated}
               admin
             />
             <Route exact path='/signin' component={Login} />

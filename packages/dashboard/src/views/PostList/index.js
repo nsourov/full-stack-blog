@@ -28,7 +28,7 @@ const PostList = () => {
   const dispatch = useDispatch();
 
   const handleCreatePostRoute = () => {
-    history.push('/admin/post/create');
+    history.push('/post/create');
   };
 
   const handleTableChange = (pagination) => {
@@ -85,7 +85,7 @@ const PostList = () => {
       render: (title, record) => (
         <ProjectListTitle>
           <Heading as='h4'>
-            <Link to={`/admin/post/update/${record?.slug}`}>{title}</Link>
+            <Link to={`/post/update/${record?.slug}`}>{title}</Link>
           </Heading>
         </ProjectListTitle>
       ),
@@ -124,11 +124,11 @@ const PostList = () => {
           className='wide-dropdwon'
           content={
             <>
-              <Link to={`/admin/post/update/${slug}`}>Edit</Link>
+              <Link to={`/post/update/${slug}`}>Edit</Link>
               <Link onClick={() => handelDeletePost(slug)} to='#'>
                 Delete
               </Link>
-              <Link to={`/admin/post/comments/${slug}/${record._id}`}>
+              <Link to={`/post/comments/${slug}/${record._id}`}>
                 Comments
               </Link>
             </>
