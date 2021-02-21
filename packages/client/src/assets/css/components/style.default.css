@@ -2716,3 +2716,7 @@ a.text-dark:hover {
   justify-content: center;
   z-index: 99999;
 }
+
+.notifications-component{
+  z-index: 99999 !important;
+}

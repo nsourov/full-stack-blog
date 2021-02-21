@@ -14917,6 +14917,11 @@ react-modal-video@^1.2.6:
   dependencies:
     react-transition-group "^2.2.1"
 
+react-notifications-component@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/react-notifications-component/-/react-notifications-component-3.0.3.tgz#512a20ee02e3c9946d31b3a0f65e414f5257e38a"
+  integrity sha512-OHE4gyf6UrlB6VvZ56ftPKB/X23ZpPbNzgarNKYMracEiziJgHu8u8e3Fp6earfMcEigxb+LDZAo0dnkiccKqA==
+
 react-perfect-scrollbar@^1.5.8:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/react-perfect-scrollbar/-/react-perfect-scrollbar-1.5.8.tgz#380959387a325c5c9d0268afc08b3f73ed5b3078"
