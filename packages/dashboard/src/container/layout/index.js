@@ -4,6 +4,7 @@ import { Layout, Button, Row, Col } from 'antd';
 import { ThemeProvider } from 'styled-components';
 import { Link } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { useSelector } from 'react-redux';
 
 import { Div, SmallScreenAuthInfo } from './style';
 import Menueitems from './Menueitems';
@@ -24,6 +25,7 @@ const SideBarStyle = {
 
 const ThemeLayout = (props) => {
   const { children } = props;
+  const { isAuthenticated } = useSelector((state) => state.user);
   const [collapsed, setCollapsed] = useState(false);
   const [hide, setHide] = useState(true);
   const [searchHide, setSearchHide] = useState(true);
@@ -49,7 +51,7 @@ const ThemeLayout = (props) => {
     setHide(!hide);
   };
 
-  return (
+  return isAuthenticated ? (
     <Div darkMode>
       <Layout className='layout'>
         <Header
@@ -76,7 +78,7 @@ const ThemeLayout = (props) => {
                     ? 'striking-logo top-menu'
                     : 'striking-logo'
                 }
-                to='/admin'
+                to='/'
               >
                 <img src={require(`../../static/img/logo.png`)} alt='4trollz' />
               </Link>
@@ -149,6 +151,8 @@ const ThemeLayout = (props) => {
         </Layout>
       </Layout>
     </Div>
+  ) : (
+    children
   );
 };
 
