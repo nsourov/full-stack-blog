@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Table, Space, Tooltip, Button } from 'antd';
+import { Row, Col, Table, Space, Tooltip, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { fatchCategories } from '../../state/ducks/category';
-// import { Button } from '../../components/buttons/buttons';
-import { Main, TableWrapper, CardToolbox } from '../../container/styled';
+import { Main, CardToolbox } from '../../container/styled';
+import { deleteCategory } from '../../api/api';
 import { ContactPageheaderStyle } from './style';
 import Create from './Create';
 import Update from './Update';
@@ -29,6 +29,18 @@ const Category = () => {
   useEffect(() => {
     dispatch(fatchCategories());
   }, [dispatch]);
+
+  const handelDelete = async (slug) => {
+    try {
+      const token = localStorage.getItem('jwtToken');
+      await deleteCategory(slug, token);
+      message.success('Delete category successfully');
+      dispatch(fatchCategories());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <CardToolbox>
@@ -71,22 +83,25 @@ const Category = () => {
               <Column title='Post' dataIndex='postCount' />
               <Column
                 title='Action'
-                key='action'
+                key='slug'
                 align='center'
-                render={(text, record) => (
-                  <Space size='middle'>
-                    <Button
-                      type='text'
-                      onClick={() => handelUpdateModal(record)}
-                      icon={<FeatherIcon icon='edit' size={18} />}
-                    />
-                    <Button
-                      type='text'
-                      danger
-                      icon={<FeatherIcon icon='trash' size={18} />}
-                    />
-                  </Space>
-                )}
+                render={(item, record) => {
+                  return (
+                    <Space size='middle'>
+                      <Button
+                        type='text'
+                        onClick={() => handelUpdateModal(record)}
+                        icon={<FeatherIcon icon='edit' size={18} />}
+                      />
+                      <Button
+                        type='text'
+                        danger
+                        onClick={() => handelDelete(item?.slug)}
+                        icon={<FeatherIcon icon='trash' size={18} />}
+                      />
+                    </Space>
+                  );
+                }}
               />
             </Table>
           </Col>

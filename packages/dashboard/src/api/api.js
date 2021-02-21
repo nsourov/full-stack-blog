@@ -70,6 +70,12 @@ export const createCategory = (body, token) => {
   });
 };
 
+export const deleteCategory = (slug, token) => {
+  return axios.delete(`${api}/categories/${slug}`, {
+    headers: { Authorization: token },
+  });
+};
+
 export const updateCategory = (slug, body, token) => {
   return axios.put(`${api}/categories/${slug}`, body, {
     headers: { Authorization: token },
