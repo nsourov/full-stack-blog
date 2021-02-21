@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Form, Input } from 'antd';
 import { useDispatch } from 'react-redux';
 
-import { fatchCategories } from '../../../state/ducks/category';
-import { createCategory } from '../../../api/api';
-import { BasicFormWrapper } from '../../../container/styled';
-import { Modal } from '../../../components/modals/antd-modals';
-import { Button } from '../../../components/buttons/buttons';
+import { fatchCategories } from '../../state/ducks/category';
+import { createCategory } from '../../api/api';
+import { BasicFormWrapper } from '../../container/styled';
+import { Modal } from '../../components/modals/antd-modals';
+import { Button } from '../../components/buttons/buttons';
 import { AddCategory } from './style';
 
 const Create = ({ visible, onCancel }) => {

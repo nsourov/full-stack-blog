@@ -9,15 +9,14 @@ import AdminRoute from '../../components/adminRoute';
 import Layout from '../../container/layout';
 
 const Login = lazy(() => import('../Signin'));
-// const Admin = lazy(() => import('../Admin'));
-const Profile = lazy(() => import('../Admin/Profile/Profile'));
-const PostList = lazy(() => import('../Admin/PostList'));
-const CreatePost = lazy(() => import('../Admin/CreatePost'));
-const UpdatePost = lazy(() => import('../Admin/UpdatePost'));
-const EditorRequest = lazy(() => import('../Admin/EditorRequest'));
-const Category = lazy(() => import('../Admin/Category'));
-const Comments = lazy(() => import('../Admin/Comments'));
-const Users = lazy(() => import('../Admin/Users'));
+const Profile = lazy(() => import('../Profile/Profile'));
+const PostList = lazy(() => import('../PostList'));
+const CreatePost = lazy(() => import('../CreatePost'));
+const UpdatePost = lazy(() => import('../UpdatePost'));
+const EditorRequest = lazy(() => import('../EditorRequest'));
+const Category = lazy(() => import('../Category'));
+const Comments = lazy(() => import('../Comments'));
+const Users = lazy(() => import('../Users'));
 const NotFound = lazy(() => import('../../container/pages/404'));
 
 const App = () => {

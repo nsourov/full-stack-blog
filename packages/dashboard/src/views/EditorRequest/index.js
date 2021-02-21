@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Spin, Table, Space } from 'antd';
 
-import { Button } from '../../../components/buttons/buttons';
-import { Main } from '../../../container/styled';
+import { Button } from '../../components/buttons/buttons';
+import { Main } from '../../container/styled';
 import {
   getEditorRequests,
   acceptEditorRequest,
   deleteEditorRequest,
-} from '../../../api/api';
-import Heading from '../../../components/heading/heading';
+} from '../../api/api';
+import Heading from '../../components/heading/heading';
 import { ProjectListTitle } from './style';
 
 const EditorRequest = () => {

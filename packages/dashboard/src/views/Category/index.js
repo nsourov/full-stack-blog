@@ -4,10 +4,10 @@ import { Row, Col, Table, Space, Tooltip, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 
-import { PageHeader } from '../../../components/page-headers/page-headers';
-import { fatchCategories } from '../../../state/ducks/category';
-// import { Button } from '../../../components/buttons/buttons';
-import { Main, TableWrapper, CardToolbox } from '../../../container/styled';
+import { PageHeader } from '../../components/page-headers/page-headers';
+import { fatchCategories } from '../../state/ducks/category';
+// import { Button } from '../../components/buttons/buttons';
+import { Main, TableWrapper, CardToolbox } from '../../container/styled';
 import { ContactPageheaderStyle } from './style';
 import Create from './Create';
 import Update from './Update';

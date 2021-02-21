@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Row, Col, Table, Button } from 'antd';
 import { useParams } from 'react-router-dom';
 
-import { Main } from '../../../container/styled';
-import { getUnPublishedComments, publishedComment } from '../../../api/api';
+import { Main } from '../../container/styled';
+import { getUnPublishedComments, publishedComment } from '../../api/api';
 
 const Comments = () => {
   const [page, setPage] = useState(1);

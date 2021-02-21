@@ -6,14 +6,14 @@ import { Row, Col, Table, Tag } from 'antd';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { PageHeader } from '../../../components/page-headers/page-headers';
+import { PageHeader } from '../../components/page-headers/page-headers';
 import { ProjectHeader, ProjectSorting, ProjectListTitle } from './style';
-import { Button } from '../../../components/buttons/buttons';
-import Heading from '../../../components/heading/heading';
-import { Dropdown } from '../../../components/dropdown/dropdown';
-import { Main } from '../../../container/styled';
-import { getUnpublishedPost, deletePost } from '../../../api/api';
-import { fatchPublishedPost } from '../../../state/ducks/publishedPost';
+import { Button } from '../../components/buttons/buttons';
+import Heading from '../../components/heading/heading';
+import { Dropdown } from '../../components/dropdown/dropdown';
+import { Main } from '../../container/styled';
+import { getUnpublishedPost, deletePost } from '../../api/api';
+import { fatchPublishedPost } from '../../state/ducks/publishedPost';
 
 const PostList = () => {
   const { data: publishedPost, loading: publishedPostLoading } = useSelector(
