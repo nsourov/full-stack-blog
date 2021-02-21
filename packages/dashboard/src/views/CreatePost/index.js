@@ -15,6 +15,7 @@ const CreatePost = () => {
     data: { categories },
     loading,
   } = useSelector((state) => state.categories);
+  const { role } = useSelector((state) => state.user.data);
 
   const [form] = Form.useForm();
   const [photo, setPhoto] = useState(null);
@@ -179,18 +180,19 @@ const CreatePost = () => {
           >
             {load ? 'Loading...' : 'Create'}
           </Button>
-
-          <Button
-            className='btn-signin'
-            htmlType='button'
-            onClick={handlePublished}
-            type='primary'
-            size='large'
-            style={{ marginLeft: '25px' }}
-            disabled={load}
-          >
-            {load ? 'Loading...' : 'Published'}
-          </Button>
+          {role === 'admin' && (
+            <Button
+              className='btn-signin'
+              htmlType='button'
+              onClick={handlePublished}
+              type='primary'
+              size='large'
+              style={{ marginLeft: '25px' }}
+              disabled={load}
+            >
+              {load ? 'Loading...' : 'Published'}
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </Main>

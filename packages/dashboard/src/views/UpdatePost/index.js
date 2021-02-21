@@ -16,6 +16,7 @@ const UpdatePost = () => {
     data: { categories },
     loading,
   } = useSelector((state) => state.categories);
+  const { role } = useSelector((state) => state.user.data);
 
   const [form] = Form.useForm();
   const [photo, setPhoto] = useState(null);
@@ -205,7 +206,7 @@ const UpdatePost = () => {
           >
             {load ? 'Loading...' : 'Update'}
           </Button>
-          {!post.published && (
+          {role === 'admin' && !post.published && (
             <Button
               className='btn-signin'
               htmlType='button'
