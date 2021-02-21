@@ -17,12 +17,12 @@ const Category = () => {
   const { data, loading } = useSelector((state) => state.categories);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [updateData, setUpdateData] = useState(null);
+  const [defaultValue, setDefaultValue] = useState({});
 
   const dispatch = useDispatch();
 
-  const handelUpdateModal = (value) => {
-    setUpdateData(value.slug);
+  const handelUpdateModal = async (slug) => {
+    setDefaultValue(slug);
     setShowUpdateModal(true);
   };
 
@@ -90,7 +90,7 @@ const Category = () => {
                     <Space size='middle'>
                       <Button
                         type='text'
-                        onClick={() => handelUpdateModal(record)}
+                        onClick={() => handelUpdateModal(item)}
                         icon={<FeatherIcon icon='edit' size={18} />}
                       />
                       <Button
@@ -110,9 +110,8 @@ const Category = () => {
       <Create visible={showModal} onCancel={setShowModal} />
       <Update
         visible={showUpdateModal}
+        defaultValue={defaultValue}
         onCancel={setShowUpdateModal}
-        slug={updateData}
-        setUpdateData={setUpdateData}
       />
     </>
   );

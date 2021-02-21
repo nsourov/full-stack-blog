@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, message } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import { fatchCategories } from '../../state/ducks/category';
-import { updateCategory, getCategory } from '../../api/api';
+import { updateCategory } from '../../api/api';
 import { BasicFormWrapper } from '../../container/styled';
 import { Modal } from '../../components/modals/antd-modals';
 import { Button } from '../../components/buttons/buttons';
 import { AddCategory } from './style';
 
-const Update = ({ visible, onCancel, slug }) => {
-console.log('🚀 ~ file: Update.js ~ line 13 ~ Update ~ slug', slug)
+const Update = ({ visible, onCancel, defaultValue }) => {
   const [loading, setLoading] = useState(false);
-  const [defaultValue, setDefaultValue] = useState(null);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const handleOk = async (values) => {
@@ -23,7 +21,8 @@ console.log('🚀 ~ file: Update.js ~ line 13 ~ Update ~ slug', slug)
         description: values.description,
       };
       const token = localStorage.getItem('jwtToken');
-      await updateCategory(slug, data, token);
+      await updateCategory(defaultValue?.slug, data, token);
+      message.success('Category update successfully');
       dispatch(fatchCategories());
       onCancel(false);
       setLoading(false);
@@ -33,24 +32,14 @@ console.log('🚀 ~ file: Update.js ~ line 13 ~ Update ~ slug', slug)
     }
   };
 
-  useEffect(() => {
-    const fatchCategory = async () => {
-      try {
-        setLoading(true);
-        const { data } = await getCategory(slug);
-        console.log(
-          '🚀 ~ file: Update.js ~ line 39 ~ fatchCategory ~ data',
-          data
-        );
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-        onCancel(false);
-      }
-    };
-    fatchCategory();
-  }, [onCancel, slug]);
+  React.useEffect(() => {
+    if (visible) {
+      form.setFieldsValue({
+        name: defaultValue?.name,
+        description: defaultValue?.description,
+      });
+    }
+  }, [defaultValue.description, defaultValue.name, form, visible]);
 
   return (
     <Modal
@@ -65,7 +54,7 @@ console.log('🚀 ~ file: Update.js ~ line 13 ~ Update ~ slug', slug)
             <Form.Item
               label='Category'
               name='name'
-              initialValue={defaultValue?.name}
+              // initialValue={defaultValue.name}
               rules={[
                 {
                   message: 'Please input your category name!',
@@ -76,11 +65,7 @@ console.log('🚀 ~ file: Update.js ~ line 13 ~ Update ~ slug', slug)
               <Input placeholder='Category Name' />
             </Form.Item>
 
-            <Form.Item
-              initialValue={defaultValue?.description}
-              label='Description'
-              name='description'
-            >
+            <Form.Item label='Description' name='description'>
               <Input.TextArea />
             </Form.Item>
 
