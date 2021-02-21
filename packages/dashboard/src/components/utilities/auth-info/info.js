@@ -1,19 +1,16 @@
 import React from 'react';
 import { Avatar } from 'antd';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
 import { InfoWraper, UserDropDwon } from './auth-info-style';
 import { Popover } from '../../popup/popup';
-import { logOut } from '../../../redux/authentication/actionCreator';
 import Heading from '../../heading/heading';
 
 const AuthInfo = () => {
-  const dispatch = useDispatch();
-
   const SignOut = (e) => {
     e.preventDefault();
-    dispatch(logOut());
+    localStorage.removeItem('token');
+    window.location = '/'
   };
 
   const userContent = (

@@ -27,11 +27,7 @@ const renderItem = (title, count) => {
 };
 
 const AutoComplete = (props) => {
-  const { rtl } = useSelector((state) => {
-    return {
-      rtl: state.ChangeLayoutMode.rtlData,
-    };
-  });
+
   const {
     customComponent,
     patterns,
@@ -51,7 +47,7 @@ const AutoComplete = (props) => {
         options: [
           renderItem(
             title,
-            <span className="certain-search-item-count">{count} people</span>
+            <span className='certain-search-item-count'>{count} people</span>
           ),
         ],
       };
@@ -72,8 +68,8 @@ const AutoComplete = (props) => {
     </AutoCompleteStyled>
   ) : patterns ? (
     <AutoCompleteStyled
-      className="certain-category-search"
-      dropdownClassName="certain-category-search-dropdown"
+      className='certain-category-search'
+      dropdownClassName='certain-category-search-dropdown'
       dropdownMatchSelectWidth={false}
       dropdownStyle={{ width: 300 }}
       style={{ width }}
@@ -85,9 +81,9 @@ const AutoComplete = (props) => {
         suffix={
           patternButtons ? (
             <Button
-              className="search-btn"
-              style={{ [rtl ? 'marginLeft' : 'marginRight']: -20 }}
-              type="primary"
+              className='search-btn'
+              style={{ marginLeft: -20 }}
+              type='primary'
             >
               <SearchOutlined />
             </Button>

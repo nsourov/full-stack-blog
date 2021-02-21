@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Input, Select } from 'antd';
+import { useSelector } from 'react-redux';
+
 import { Cards } from '../../../../components/cards/frame/cards-frame';
 import { Button } from '../../../../components/buttons/buttons';
 import { BasicFormWrapper, TagInput } from '../../../styled';
@@ -28,80 +30,46 @@ const Profile = () => {
     setState({ tags: checke });
   };
 
+  const user = useSelector((store) => store.auth.user);
+  console.log('🚀 ~ file: Profile.js ~ line 34 ~ Profile ~ user', user);
+
   return (
     <Cards
       title={
-        <div className="setting-card-title">
-          <Heading as="h4">Edit Profile</Heading>
-          <span>Set Up Your Personal Information</span>
+        <div className='setting-card-title'>
+          <Heading as='h4'>Profile</Heading>
+          {/* <span>Set Up Your Personal Information</span> */}
         </div>
       }
     >
-      <Row justify="center">
+      <Row justify='center'>
         <Col xl={12} lg={16} xs={24}>
           <BasicFormWrapper>
-            <Form name="editProfile" onFinish={handleSubmit}>
-              <Form.Item name="name" initialValue="Duran Clayton" label="Name">
+            <Form name='editProfile' onFinish={handleSubmit}>
+              <Form.Item name='name' initialValue={user?.name} label='Name'>
                 <Input />
               </Form.Item>
-              <Form.Item
-                name="phone"
-                initialValue="01742920502"
-                label="Phone Number"
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item name="country" initialValue="" label="Country">
-                <Select style={{ width: '100%' }}>
-                  <Option value="">Please Select</Option>
-                  <Option value="bangladesh">Bangladesh</Option>
-                  <Option value="india">India</Option>
-                  <Option value="pakistan">Pakistan</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item name="city" initialValue="" label="City">
-                <Select style={{ width: '100%' }}>
-                  <Option value="">Please Select</Option>
-                  <Option value="dhaka">Dhaka</Option>
-                  <Option value="mymensingh">Mymensingh</Option>
-                  <Option value="khulna">Khulna</Option>
-                </Select>
+
+              <Form.Item name='email' initialValue={user?.email} label='Email'>
+                <Input type='email' />
               </Form.Item>
               <Form.Item
-                name="company"
-                initialValue="Example"
-                label="Company Name"
+                name='password'
+                initialValue={user?.password}
+                label='Password'
               >
-                <Input />
+                <Input type='password' />
               </Form.Item>
-              <Form.Item
-                name="website"
-                initialValue="www.example.com"
-                label="Website"
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="userBio"
-                initialValue="Nam malesuada dolor tellus pretium amet was hendrerit facilisi id vitae enim sed ornare there suspendisse sed orci neque ac sed aliquet risus faucibus in pretium molestee."
-                label="User Bio"
-              >
-                <Input.TextArea rows={3} />
-              </Form.Item>
-              <Form.Item name="skills" label="Skills">
-                <TagInput>
-                  <Tag animate onChange={checked} data={state.tags} />
-                </TagInput>
-              </Form.Item>
-              <div className="setting-form-actions">
-                <Button size="default" htmlType="submit" type="primary">
+
+              {/* <div className='setting-form-actions'>
+                <Button size='default' htmlType='submit' type='primary'>
                   Update Profile
                 </Button>
                 &nbsp; &nbsp;
-                <Button size="default" onClick={handleCancel} type="light">
+                <Button size='default' onClick={handleCancel} type='light'>
                   Cancel
                 </Button>
-              </div>
+              </div> */}
             </Form>
           </BasicFormWrapper>
         </Col>

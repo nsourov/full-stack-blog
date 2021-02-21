@@ -133,7 +133,7 @@ const BannerCard = ({ item }) => {
           <h4 className="banner-card__title">
             <img
               src={require(`../../static/img/icon/${icon}`)}
-              alt="StrikingDash Banner"
+              alt="Dashboard Banner"
             />
             <span>{title}</span>
           </h4>

@@ -77,11 +77,11 @@ const CardFrame = Styled(Card)`
       bodypadding ? `${bodypadding} !important` : '25px'};
     table{
       .ant-tag{
-        line-height: 18px;
-        border: 0 none;
-        text-transform: uppercase;
-        font-size: 10px;
-        color: #fff;
+        // line-height: 18px;
+        // border: 0 none;
+        // text-transform: uppercase;
+        // font-size: 10px;
+        // color: #fff;
         &.early{
           background: ${({ theme }) => theme['primary-color']};
         }

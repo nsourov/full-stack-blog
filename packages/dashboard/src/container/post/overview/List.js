@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Table, Progress, Pagination, Tag } from 'antd';
+import { Row, Col, Table, Pagination, Tag, Skeleton } from 'antd';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import Heading from '../../../components/heading/heading';
 import { Cards } from '../../../components/cards/frame/cards-frame';
-import {
-  ProjectPagination,
-  ProjectListTitle,
-  ProjectListAssignees,
-  ProjectList,
-} from '../style';
+import { ProjectPagination, ProjectListTitle, ProjectList } from '../style';
 import { Dropdown } from '../../../components/dropdown/dropdown';
 
-const ProjectLists = () => {
+const ProjectLists = ({ isLoading, posts, pages, paginationChangeHandler, handleDelete }) => {
   const project = useSelector((state) => state.projects.data);
   const [state, setState] = useState({
     projects: project,
@@ -34,80 +30,40 @@ const ProjectLists = () => {
     setState({ ...state, current, pageSize });
   };
 
-  const onHandleChange = (current, pageSize) => {
-    // You can create pagination in here
-    setState({ ...state, current, pageSize });
-  };
-
   const dataSource = [];
 
   if (projects.length)
-    projects.map((value) => {
-      const { id, title, status, category, percentage } = value;
+    posts.map((value) => {
+      const { title, category, published, slug, createdAt } = value;
       return dataSource.push({
-        key: id,
-        project: (
+        key: slug,
+        title: (
           <ProjectListTitle>
-            <Heading as="h4">
-              <Link to={`/admin/project/projectDetails/${id}`}>{title}</Link>
+            <Heading as='h4'>
+              <Link to={`/admin/post/${slug}`}>{title}</Link>
             </Heading>
 
             <p>{category}</p>
           </ProjectListTitle>
         ),
-        startDate: <span className="date-started">26 Dec 2019</span>,
-        deadline: <span className="date-finished">18 Mar 2020</span>,
-        assigned: (
-          <ProjectListAssignees>
-            <ul>
-              <li>
-                <img src={require(`../../../static/img/users/1.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/2.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/3.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/4.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/5.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/6.png`)} alt="" />
-              </li>
-              <li>
-                <img src={require(`../../../static/img/users/7.png`)} alt="" />
-              </li>
-            </ul>
-          </ProjectListAssignees>
-        ),
-        status: <Tag className={status}>{status}</Tag>,
-        completion: (
-          <div className="project-list-progress">
-            <Progress
-              percent={status === 'complete' ? 100 : percentage}
-              strokeWidth={5}
-              className="progress-primary"
-            />
-            <p>12/15 Task Completed</p>
-          </div>
+        createdAt: <span className='date-started'>{moment(createdAt).format('MM-DD-YYYY hh:mm a')}</span>,
+        status: (
+          <Tag color={published ? 'success' : 'processing'}>
+            {published ? 'published' : ' unpublished'}
+          </Tag>
         ),
         action: (
           <Dropdown
-            className="wide-dropdwon"
+            className='wide-dropdwon'
             content={
               <>
-                <Link to="#">View</Link>
-                <Link to="#">Edit</Link>
-                <Link to="#">Delete</Link>
+                <Link to={`/admin/post/${slug}`}>Edit</Link>
+                <Link to='#' onClick={() => handleDelete(slug)}>Delete</Link>
               </>
             }
           >
-            <Link to="#">
-              <FeatherIcon icon="more-horizontal" size={18} />
+            <Link to='#'>
+              <FeatherIcon icon='more-horizontal' size={18} />
             </Link>
           </Dropdown>
         ),
@@ -116,24 +72,14 @@ const ProjectLists = () => {
 
   const columns = [
     {
-      title: 'Project',
-      dataIndex: 'project',
-      key: 'project',
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
     },
     {
-      title: 'Start Date',
-      dataIndex: 'startDate',
-      key: 'startDate',
-    },
-    {
-      title: 'Deadline',
-      dataIndex: 'deadline',
-      key: 'deadline',
-    },
-    {
-      title: 'Assigned To',
-      dataIndex: 'assigned',
-      key: 'assigned',
+      title: 'Created Date',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
     },
     {
       title: 'Status',
@@ -141,13 +87,7 @@ const ProjectLists = () => {
       key: 'status',
     },
     {
-      title: 'Completion',
-      dataIndex: 'completion',
-      key: 'completion',
-    },
-
-    {
-      title: '',
+      title: 'Action',
       dataIndex: 'action',
       key: 'action',
     },
@@ -157,27 +97,37 @@ const ProjectLists = () => {
     <Row gutter={25}>
       <Col xs={24}>
         <Cards headless>
-          <ProjectList>
-            <div className="table-responsive">
-              <Table
-                pagination={false}
-                dataSource={dataSource}
-                columns={columns}
-              />
-            </div>
-          </ProjectList>
+          {isLoading && (
+            <>
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+            </>
+          )}
+
+          {!isLoading && (
+            <ProjectList>
+              <div className='table-responsive'>
+                <Table
+                  pagination={false}
+                  dataSource={dataSource}
+                  columns={columns}
+                />
+              </div>
+            </ProjectList>
+          )}
         </Cards>
       </Col>
-      <Col xs={24} className="pb-30">
+      <Col xs={24} className='pb-30'>
         <ProjectPagination>
           {projects.length ? (
             <Pagination
-              onChange={onHandleChange}
-              showSizeChanger
+              onChange={paginationChangeHandler}
+              // showSizeChanger
               onShowSizeChange={onShowSizeChange}
               pageSize={10}
               defaultCurrent={1}
-              total={40}
+              total={10 * pages}
             />
           ) : null}
         </ProjectPagination>

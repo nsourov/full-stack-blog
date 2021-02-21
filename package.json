@@ -7,7 +7,12 @@
   ],
   "scripts": {
     "start:api": "lerna exec --stream --scope=@blog/api -- yarn start",
-    "start:dashboard": "lerna exec --scope=@blog/dashboard -- yarn start"
+    "start:dashboard": "lerna exec --scope=@blog/dashboard -- yarn start",
+    "start:client": "lerna exec --scope=@blog/client -- yarn start",
+    "build:dashboard": "lerna exec --scope=@blog/dashboard -- yarn build",
+    "prod:dashboard": "lerna exec --scope=@blog/dashboard -- yarn start:prod",
+    "build:client": "lerna exec --scope=@blog/client -- yarn build",
+    "prod:client": "lerna exec --scope=@blog/client -- yarn start:prod"
   },
   "devDependencies": {
     "husky": "^4.2.5",

@@ -1,14 +1,12 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import { ReactSVG } from 'react-svg';
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
-import versions from '../demoData/changelog.json';
 
 const { SubMenu } = Menu;
 
-const MenuItems = ({ darkMode, toggleCollapsed, topMenu, events }) => {
+const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
   const { path } = useRouteMatch();
 
   const pathName = window.location.pathname;
@@ -16,14 +14,6 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu, events }) => {
   const mainPath = pathArray[1];
   const mainPathSplit = mainPath.split('/');
 
-  const {
-    onRtlChange,
-    onLtrChange,
-    modeChangeDark,
-    modeChangeLight,
-    modeChangeTopNav,
-    modeChangeSideNav,
-  } = events;
   const [openKeys, setOpenKeys] = React.useState(
     !topMenu
       ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`]
@@ -67,18 +57,18 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu, events }) => {
           ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`]
           : []
       }
-      overflowedIndicator={<FeatherIcon icon="more-vertical" />}
+      overflowedIndicator={<FeatherIcon icon='more-vertical' />}
       openKeys={openKeys}
     >
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/settings`}>
-              <FeatherIcon icon="settings" />
+            <NavLink className='menuItem-iocn' to={`${path}/settings`}>
+              <FeatherIcon icon='settings' />
             </NavLink>
           )
         }
-        key="settings"
+        key='settings'
       >
         <NavLink onClick={toggleCollapsed} to={`${path}/settings`}>
           Profile
@@ -86,23 +76,18 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu, events }) => {
       </Menu.Item>
 
       <SubMenu
-        key="post"
-        icon={!topMenu && <FeatherIcon icon="target" />}
-        title="Post"
+        key='post'
+        icon={!topMenu && <FeatherIcon icon='target' />}
+        title='Post'
       >
-        <Menu.Item key="views">
+        <Menu.Item key='views'>
           <NavLink onClick={toggleCollapsed} to={`${path}/post/view/list`}>
             Post List
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="PostCreate">
-          <NavLink onClick={toggleCollapsed} to={`${path}/editor`}>
+        <Menu.Item key='PostCreate'>
+          <NavLink onClick={toggleCollapsed} to={`${path}/post/create`}>
             Create Post
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="postDetails">
-          <NavLink onClick={toggleCollapsed} to={`${path}/post/postDetails/1`}>
-            Post Details
           </NavLink>
         </Menu.Item>
       </SubMenu>
@@ -110,29 +95,29 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu, events }) => {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/users/dataTable`}>
-              <FeatherIcon icon="users" />
+            <NavLink className='menuItem-iocn' to={`${path}/users/dataTable`}>
+              <FeatherIcon icon='users' />
             </NavLink>
           )
         }
-        key="dataTable"
+        key='dataTable'
       >
         <NavLink onClick={toggleCollapsed} to={`${path}/users/list`}>
           Users
         </NavLink>
       </Menu.Item>
 
-      {!topMenu && <p className="sidebar-nav-title">Pages</p>}
+      {!topMenu && <p className='sidebar-nav-title'>Pages</p>}
 
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className="menuItem-iocn" to={`${path}/404`}>
-              <FeatherIcon icon="info" />
+            <NavLink className='menuItem-iocn' to={`${path}/404`}>
+              <FeatherIcon icon='info' />
             </NavLink>
           )
         }
-        key="404"
+        key='404'
       >
         <NavLink onClick={toggleCollapsed} to={`${path}/404`}>
           404
