@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const api = process.env.REACT_APP_API_URL;
 
-
 // API to get me
 export const me = (token) => {
   return axios.get(`${api}/auth/me`, {
@@ -16,15 +15,25 @@ export const login = (data) => {
 };
 
 // API to get me
-export const getPublishedPost = (page) => {
-  return axios.get(`${api}/posts/published/page/${page}`);
+export const getPublishedPost = (page, role, userId) => {
+  if (role === 'admin') {
+    return axios.get(`${api}/posts/published/page/${page}`);
+  } else {
+    return axios.get(`${api}/posts/${userId}/published/page/${page}`);
+  }
 };
 
 // API to get me
-export const getUnpublishedPost = (page, token) => {
-  return axios.get(`${api}/posts/unpublished/page/${page}`, {
-    headers: { Authorization: token },
-  });
+export const getUnpublishedPost = (page, token, role, userId) => {
+  if (role === 'admin') {
+    return axios.get(`${api}/posts/unpublished/page/${page}`, {
+      headers: { Authorization: token },
+    });
+  } else {
+    return axios.get(`${api}/posts/${userId}/unpublished/page/${page}`, {
+      headers: { Authorization: token },
+    });
+  }
 };
 
 // API to get me

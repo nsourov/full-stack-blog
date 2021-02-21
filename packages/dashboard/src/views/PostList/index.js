@@ -19,6 +19,7 @@ const PostList = () => {
   const { data: publishedPost, loading: publishedPostLoading } = useSelector(
     (state) => state.publishedPost
   );
+  const { id, role } = useSelector((state) => state.user.data);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -39,7 +40,7 @@ const PostList = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('jwtToken');
-      const { data } = await getUnpublishedPost(page, token);
+      const { data } = await getUnpublishedPost(page, token, role, id);
       setData(data);
       setLoading(false);
     } catch (error) {
@@ -50,7 +51,7 @@ const PostList = () => {
 
   useEffect(() => {
     if (postStatus === 'published') {
-      dispatch(fatchPublishedPost(page));
+      dispatch(fatchPublishedPost(page, role, id));
     }
     if (postStatus === 'unpublished') {
       fatchPost();
@@ -67,7 +68,7 @@ const PostList = () => {
       const token = localStorage.getItem('jwtToken');
       await deletePost(slug, token);
       if (postStatus === 'published') {
-        dispatch(fatchPublishedPost(page));
+        dispatch(fatchPublishedPost(page, role, id));
       }
       if (postStatus === 'unpublished') {
         fatchPost();
@@ -128,9 +129,11 @@ const PostList = () => {
               <Link onClick={() => handelDeletePost(slug)} to='#'>
                 Delete
               </Link>
-              <Link to={`/post/comments/${slug}/${record._id}`}>
-                Comments
-              </Link>
+              {role === 'admin' && (
+                <Link to={`/post/comments/${slug}/${record._id}`}>
+                  Comments
+                </Link>
+              )}
             </>
           }
         >
