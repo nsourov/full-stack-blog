@@ -79,11 +79,11 @@ const Signin = () => {
           >
             <Input.Password placeholder='Password' />
           </Form.Item>
-          <div className='auth-form-action'>
+          {/* <div className='auth-form-action'>
             <NavLink className='forgot-pass-link' to='/forgotPassword'>
               Forgot password?
             </NavLink>
-          </div>
+          </div> */}
           <Form.Item>
             <Button
               className='btn-signin'
