@@ -10,17 +10,28 @@ const {
   checkRole,
   checkPostPermission,
   checkCommentPermission,
+  checkEditorPosts,
 } = require('../middlewares');
 
 // Post Routes
 router.get('/published/page/:page', postController.getPublishedPosts);
+router.get('/:userId/published/page/:page', postController.getUserPublishedPosts);
+
 router.get('/search/:searchString/page/:page', postController.getSearchPosts);
+
 router.get(
   '/unpublished/page/:page',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
   postController.getUnPublishedPosts
 );
+router.get(
+  '/:userId/unpublished/page/:page',
+  passport.authenticate('jwt', { session: false }),
+  checkEditorPosts,
+  postController.getUserUnPublishedPosts
+);
+
 router.get('/:slug', postController.getPost);
 router.get(
   '/:postId/comments/published/page/:page',
@@ -30,6 +41,12 @@ router.get(
   '/:postId/comments/unpublished/page/:page',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
+  postController.getPostUnPublishedComments
+);
+router.get(
+  '/:userId/:postId/comments/unpublished/page/:page',
+  passport.authenticate('jwt', { session: false }),
+  checkEditorPosts,
   postController.getPostUnPublishedComments
 );
 router.delete(

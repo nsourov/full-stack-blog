@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const api = process.env.REACT_APP_API_URL;
 
+
 // API to get me
 export const me = (token) => {
   return axios.get(`${api}/auth/me`, {

@@ -58,3 +58,16 @@ exports.checkCommentPermission = async (req, res, next) => {
 
   return next();
 };
+
+exports.checkEditorPosts = async (req, res, next) => {
+  const { role } = req.user;
+  const user = req.params.userId;
+  if (role === 'editor' && user === req.user.id) {
+    return next();
+  }
+
+  return res.status(403).json({
+    success: false,
+    errors: { message: "You don't have permission" },
+  });
+};

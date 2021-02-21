@@ -117,6 +117,37 @@ exports.getPostUnPublishedComments = async (req, res) => {
   });
 };
 
+exports.getUserPostUnPublishedComments = async (req, res) => {
+  const page = req.params.page || 1;
+  const user = req.params.userId;
+  const limit = 10;
+  const skip = page * limit - limit;
+
+  const args = { post: req.params.postId, published: false, user };
+  const commentsPromise = Comment.find(args)
+    .populate('user', { password: 0, role: 0 })
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: 'desc' });
+
+  const countPromise = Comment.count(args);
+
+  const [comments, count] = await Promise.all([commentsPromise, countPromise]);
+  const pages = Math.ceil(count / limit);
+  if (!comments.length && skip) {
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: "Page doesn't exist" } });
+  }
+  return res.status(200).json({
+    success: true,
+    comments,
+    page,
+    pages,
+    count,
+  });
+};
+
 exports.getSearchPosts = async (req, res) => {
   const page = req.params.page || 1;
   const searchString = req.params.searchString || '';
@@ -181,7 +212,49 @@ exports.getPublishedPosts = async (req, res) => {
 
   const withCount = [];
   for (const post of posts) {
-    const count = await Comment.count({ post: post.id }).exec();
+    const count = await Comment.count({ post: post.id, published: true }).exec();
+    withCount.push({
+      ...JSON.parse(JSON.stringify(post)),
+      commentCount: count,
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    posts: withCount,
+    page,
+    pages,
+    count,
+  });
+};
+
+exports.getUserPublishedPosts = async (req, res) => {
+  const page = req.params.page || 1;
+  const user = req.params.userId;
+  const limit = 5;
+  const skip = page * limit - limit;
+
+  const postsPromise = Post.find({ published: true, user })
+    .select(['-comments'])
+    .populate('category')
+    .populate('user', { password: 0, role: 0 })
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: 'desc' });
+
+  const countPromise = Post.count({ published: true, user });
+
+  const [posts, count] = await Promise.all([postsPromise, countPromise]);
+  const pages = Math.ceil(count / limit);
+  if (!posts.length && skip) {
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: "Page doesn't exist" } });
+  }
+
+  const withCount = [];
+  for (const post of posts) {
+    const count = await Comment.count({ post: post.id, user, published: true }).exec();
     withCount.push({
       ...JSON.parse(JSON.stringify(post)),
       commentCount: count,
@@ -211,6 +284,40 @@ exports.getUnPublishedPosts = async (req, res) => {
     .sort({ created: 'desc' });
 
   const countPromise = Post.count({ published: false });
+
+  const [posts, count] = await Promise.all([postsPromise, countPromise]);
+  const pages = Math.ceil(count / limit);
+
+  if (!posts.length && skip) {
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: "Page doesn't exist" } });
+  }
+
+  return res.status(200).json({
+    success: true,
+    posts,
+    page,
+    pages,
+    count,
+  });
+};
+
+exports.getUserUnPublishedPosts = async (req, res) => {
+  const page = req.params.page || 1;
+  const user = req.params.userId;
+  const limit = 5;
+  const skip = page * limit - limit;
+
+  const postsPromise = Post.find({ published: false, user })
+    .select(['-comments'])
+    .populate('category')
+    .populate('user', { password: 0, role: 0 })
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: 'desc' });
+
+  const countPromise = Post.count({ published: false, user });
 
   const [posts, count] = await Promise.all([postsPromise, countPromise]);
   const pages = Math.ceil(count / limit);
