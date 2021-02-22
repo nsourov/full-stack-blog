@@ -1,16 +1,14 @@
 import React from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import withTitle from '../../components/TitleComponent';
 import Sidebar from '../Sidebar';
 
 import Blog from '../Blog';
 import Post from '../Post';
-import SignUp from '../SignUp';
 import Search from '../Search';
 
 const Pages = () => {
-  const check = useLocation();
 
   return (
     <>

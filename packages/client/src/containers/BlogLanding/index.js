@@ -29,7 +29,7 @@ const BlogLanding = (props) => {
           category={item.category || 'Business'}
           title={item.title}
           description={item.body}
-          name={item.user.name || 'Arif'}
+          name={item.user.name || 'User'}
           postDate={item.updatedAt}
           comment={item.commentCount || 0}
           slug={item.slug}

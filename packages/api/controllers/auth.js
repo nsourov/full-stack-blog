@@ -32,6 +32,7 @@ exports.register = async (req, res) => {
       name: newUser.name,
       email: newUser.email,
       role: newUser.role,
+      editorRequested: newUser.editorRequested,
     },
     process.env.APP_SECRET
   );
@@ -56,26 +57,34 @@ exports.login = async (req, res) => {
     errors.password = 'Password incorrect';
     return res.status(400).json({ success: false, errors });
   }
-  console.log(process.env.APP_SECRET);
+
   const token = jwt.sign(
     {
       id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
+      editorRequested: user.editorRequested,
     },
     process.env.APP_SECRET,
-    { expiresIn: 3600 }
+    { expiresIn: '7d' }
   );
 
   return res.status(200).json({ success: true, token: `Bearer ${token}` });
 };
 
-exports.me = async (req, res) =>
-  res.status(200).json({
-    authenticated: true,
-    id: req.user.id,
-    name: req.user.name,
-    email: req.user.email,
-    role: req.user.role,
-  });
+exports.me = async (req, res) => {
+  const user = await User.findById(req.user.id);
+  const token = jwt.sign(
+    {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      editorRequested: user.editorRequested,
+    },
+    process.env.APP_SECRET,
+    { expiresIn: '7d' }
+  );
+  return res.status(200).json({ success: true, token: `Bearer ${token}` });
+};

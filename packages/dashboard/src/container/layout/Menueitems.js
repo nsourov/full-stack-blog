@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
+import { useSelector } from 'react-redux';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
@@ -7,6 +8,7 @@ import propTypes from 'prop-types';
 const { SubMenu } = Menu;
 
 const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
+  const { data: user } = useSelector((store) => store.user);
   const { path } = useRouteMatch();
 
   const pathName = window.location.pathname;
@@ -63,14 +65,14 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
       <Menu.Item
         icon={
           !topMenu && (
-            <NavLink className='menuItem-iocn' to={`${path}`}>
+            <NavLink className='menuItem-iocn' to='/'>
               <FeatherIcon icon='settings' />
             </NavLink>
           )
         }
         key='settings'
       >
-        <NavLink onClick={toggleCollapsed} to={`${path}`}>
+        <NavLink onClick={toggleCollapsed} to='/'>
           Profile
         </NavLink>
       </Menu.Item>
@@ -81,59 +83,62 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
         title='Post'
       >
         <Menu.Item key='views'>
-          <NavLink onClick={toggleCollapsed} to={`${path}/post/list`}>
+          <NavLink onClick={toggleCollapsed} to='/post/list'>
             Post List
           </NavLink>
         </Menu.Item>
         <Menu.Item key='PostCreate'>
-          <NavLink onClick={toggleCollapsed} to={`${path}/post/create`}>
+          <NavLink onClick={toggleCollapsed} to='/post/create'>
             Create Post
           </NavLink>
         </Menu.Item>
       </SubMenu>
-
-      <Menu.Item
-        icon={
-          !topMenu && (
-            <NavLink className='menuItem-iocn' to={`${path}/users/dataTable`}>
-              <FeatherIcon icon='users' />
+      {user.role === 'admin' && (
+        <>
+          <Menu.Item
+            icon={
+              !topMenu && (
+                <NavLink className='menuItem-iocn' to='/users/list'>
+                  <FeatherIcon icon='users' />
+                </NavLink>
+              )
+            }
+            key='/users/list'
+          >
+            <NavLink onClick={toggleCollapsed} to='/users/list'>
+              Users
             </NavLink>
-          )
-        }
-        key='dataTable'
-      >
-        <NavLink onClick={toggleCollapsed} to={`${path}/users/list`}>
-          Users
-        </NavLink>
-      </Menu.Item>
-      <Menu.Item
-        icon={
-          !topMenu && (
-            <NavLink className='menuItem-iocn' to={`${path}/request`}>
-              <FeatherIcon icon='user-check' />
+          </Menu.Item>
+          <Menu.Item
+            icon={
+              !topMenu && (
+                <NavLink className='menuItem-iocn' to='/request'>
+                  <FeatherIcon icon='user-check' />
+                </NavLink>
+              )
+            }
+            key='request'
+          >
+            <NavLink onClick={toggleCollapsed} to='/request'>
+              Request
             </NavLink>
-          )
-        }
-        key='request'
-      >
-        <NavLink onClick={toggleCollapsed} to={`${path}/request`}>
-          Request
-        </NavLink>
-      </Menu.Item>
-      <Menu.Item
-        icon={
-          !topMenu && (
-            <NavLink className='menuItem-iocn' to={`${path}/category`}>
-              <FeatherIcon icon='layers' />
+          </Menu.Item>
+          <Menu.Item
+            icon={
+              !topMenu && (
+                <NavLink className='menuItem-iocn' to='/category'>
+                  <FeatherIcon icon='layers' />
+                </NavLink>
+              )
+            }
+            key='category'
+          >
+            <NavLink onClick={toggleCollapsed} to='/category'>
+              Category
             </NavLink>
-          )
-        }
-        key='category'
-      >
-        <NavLink onClick={toggleCollapsed} to={`${path}/category`}>
-          Category
-        </NavLink>
-      </Menu.Item>
+          </Menu.Item>
+        </>
+      )}
     </Menu>
   );
 };

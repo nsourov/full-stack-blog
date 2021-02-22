@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Form, Input, Button, Upload, Alert, Select } from 'antd';
+import { Form, Input, Button, Upload, Alert, Select, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Editor from '../../../components/editor/Editor';
-import { Main } from '../../../container/styled';
-import { getPost, updatePost, publishPost } from '../../../api/api';
-import { fatchCategories } from '../../../state/ducks/category';
+import Editor from '../../components/editor/Editor';
+import { Main } from '../../container/styled';
+import { getPost, updatePost, publishPost } from '../../api/api';
+import { fatchCategories } from '../../state/ducks/category';
 
 const { Option } = Select;
 
@@ -16,6 +16,7 @@ const UpdatePost = () => {
     data: { categories },
     loading,
   } = useSelector((state) => state.categories);
+  const { role } = useSelector((state) => state.user.data);
 
   const [form] = Form.useForm();
   const [photo, setPhoto] = useState(null);
@@ -71,6 +72,7 @@ const UpdatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await publishPost(slug, data, token);
+      message.success('Post published successfully')
       setErrors({});
       setSuccessPublished(true);
       setLoad(false);
@@ -96,6 +98,7 @@ const UpdatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await updatePost(slug, formData, token);
+      message.success('Post update successfully')
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -205,7 +208,7 @@ const UpdatePost = () => {
           >
             {load ? 'Loading...' : 'Update'}
           </Button>
-          {!post.published && (
+          {role === 'admin' && !post.published && (
             <Button
               className='btn-signin'
               htmlType='button'

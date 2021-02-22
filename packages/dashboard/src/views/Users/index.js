@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Table, Button } from 'antd';
 
-import { Main } from '../../../container/styled';
-import { getUsers } from '../../../api/api';
+import { Main } from '../../container/styled';
+import { getUsers } from '../../api/api';
 
 const columns = [
   {

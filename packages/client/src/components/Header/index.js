@@ -89,19 +89,25 @@ const Header = () => {
                   Log Out
                 </a>
               )}
-              {isAuthenticated && data.role === 'editor' && (
-                <a
-                  target='_blank'
-                  href='http://localhost:3000/'
-                  className='btn btn-success'
-                >
-                  Dashboard
-                </a>
-              )}
+              {isAuthenticated &&
+                (data.role === 'editor' || data.role === 'admin') && (
+                  <a
+                    target='_blank'
+                    href='http://localhost:3000/'
+                    className='btn btn-info'
+                  >
+                    Dashboard
+                  </a>
+                )}
 
-              {isAuthenticated && data.role === 'visitor' && (
-                <RequestEditor data={data} isAuthenticated={isAuthenticated} />
-              )}
+              {isAuthenticated &&
+                data.role === 'visitor' &&
+                !data.editorRequested && (
+                  <RequestEditor
+                    data={data}
+                    isAuthenticated={isAuthenticated}
+                  />
+                )}
             </ul>
           </div>
         </div>

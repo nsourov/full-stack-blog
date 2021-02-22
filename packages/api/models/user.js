@@ -21,6 +21,10 @@ const UserSchema = new Schema(
       enum: ['admin', 'editor', 'visitor'],
       default: 'visitor',
     },
+    editorRequested: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

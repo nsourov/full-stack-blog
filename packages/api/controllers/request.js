@@ -1,4 +1,5 @@
 const Request = require('../models/request');
+const User = require('../models/user');
 
 exports.getRequests = async (req, res) => {
   const page = req.params.page || 1;
@@ -32,7 +33,8 @@ exports.getRequests = async (req, res) => {
 };
 
 exports.deleteRequest = async (req, res) => {
-  await Request.findByIdAndDelete(req.params.requestId).exec();
+  const deleted = await Request.findByIdAndDelete(req.params.requestId);
+  const user = await User.findByIdAndUpdate(deleted.user, { editorRequested: false });
   return res.status(200).json({ success: true });
 };
 
@@ -41,6 +43,7 @@ exports.createRequest = async (req, res) => {
     user: req.user.id,
   });
 
+  await User.findByIdAndUpdate(req.user.id, { editorRequested: true }).exec();
   await newRequest.save();
   return res.status(200).json({ success: true, request: newRequest });
 };

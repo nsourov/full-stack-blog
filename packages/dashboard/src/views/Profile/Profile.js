@@ -2,9 +2,9 @@ import React from 'react';
 import { Row, Col, Form, Input, Select } from 'antd';
 import { useSelector } from 'react-redux';
 
-import { Cards } from '../../../components/cards/frame/cards-frame';
-import Heading from '../../../components/heading/heading';
-import { BasicFormWrapper } from '../../../container/styled';
+import { Cards } from '../../components/cards/frame/cards-frame';
+import Heading from '../../components/heading/heading';
+import { BasicFormWrapper } from '../../container/styled';
 
 const Profile = () => {
   const user = useSelector((store) => store.user.data);

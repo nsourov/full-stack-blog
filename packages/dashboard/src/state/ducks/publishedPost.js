@@ -43,11 +43,11 @@ export default {
   publishedPost: publishedPostSlice.reducer,
 };
 
-export const fatchPublishedPost = (page) => async (dispatch) => {
+export const fatchPublishedPost = (page, role, id) => async (dispatch) => {
   try {
     dispatch(getPublishedPostStart());
 
-    const { data } = await getPublishedPost(page);
+    const { data } = await getPublishedPost(page, role, id);
 
     dispatch(getPublishedPostSuccess(data));
   } catch (error) {

@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Container, Row } from 'reactstrap';
+import ReactNotification from 'react-notifications-component';
 
 import '../../assets/css/style.css';
 import '../../assets/css/components/style.default.css';
@@ -19,6 +20,7 @@ import Footer from '../../components/Footer';
 
 import { me } from '../../api';
 import { setCurrentUser, logOutUser } from '../../state/ducks/authentication';
+import 'react-notifications-component/dist/theme.css';
 
 // Pages
 const Pages = lazy(() => import('../Pages'));
@@ -35,9 +37,9 @@ const App = () => {
           return;
         }
         const res = await me(localStorage.jwtToken);
-        const user = res?.data;
-        if (user) {
-          dispatch(setCurrentUser({ token: localStorage.jwtToken }));
+        const { token } = res?.data;
+        if (token) {
+          dispatch(setCurrentUser({ token }));
           return;
         }
 
@@ -55,6 +57,7 @@ const App = () => {
 
   return (
     <Router>
+      <ReactNotification />
       <Header />
       <Container>
         <Row>

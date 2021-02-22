@@ -2,39 +2,40 @@ import React from 'react';
 import { Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
+import { useSelector, useDispatch } from 'react-redux';
 import { InfoWraper, UserDropDwon } from './auth-info-style';
 import { Popover } from '../../popup/popup';
 import Heading from '../../heading/heading';
 
+import { logOutUser } from '../../../state/ducks/authentication';
+
 const AuthInfo = () => {
+  const user = useSelector((state) => state.user.data);
+  const dispatch = useDispatch();
   const SignOut = (e) => {
     e.preventDefault();
-    localStorage.removeItem('token');
-    window.location = '/'
+    dispatch(logOutUser());
   };
 
   const userContent = (
     <UserDropDwon>
-      <div className="user-dropdwon">
-        <figure className="user-dropdwon__info">
-          <img
-            src={require('../../../static/img/avatar/chat-auth.png')}
-            alt=""
-          />
-          <figcaption>
-            <Heading as="h5">Abdullah Bin Talha</Heading>
-            <p>Admin</p>
+      <div className='user-dropdwon'>
+        <figure className='user-dropdwon__info'>
+          <Avatar icon={<FeatherIcon icon='user' />} />
+          <figcaption style={{ marginLeft: 15 }}>
+            <Heading as='h5'>{user?.name}</Heading>
+            <p>{user?.role}</p>
           </figcaption>
         </figure>
-        <ul className="user-dropdwon__links">
+        <ul className='user-dropdwon__links'>
           <li>
-            <Link to="#">
-              <FeatherIcon icon="user" /> Profile
+            <Link to='/'>
+              <FeatherIcon icon='user' /> Profile
             </Link>
           </li>
         </ul>
-        <Link className="user-dropdwon__bottomAction" onClick={SignOut} to="#">
-          <FeatherIcon icon="log-out" /> Sign Out
+        <Link className='user-dropdwon__bottomAction' onClick={SignOut} to='#'>
+          <FeatherIcon icon='log-out' /> Sign Out
         </Link>
       </div>
     </UserDropDwon>
@@ -42,10 +43,10 @@ const AuthInfo = () => {
 
   return (
     <InfoWraper>
-      <div className="nav-author">
-        <Popover placement="bottomRight" content={userContent} action="click">
-          <Link to="#" className="head-example">
-            <Avatar src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png" />
+      <div className='nav-author'>
+        <Popover placement='bottomRight' content={userContent} action='click'>
+          <Link to='#' className='head-example'>
+            <Avatar icon={<FeatherIcon icon='user' />} />
           </Link>
         </Popover>
       </div>

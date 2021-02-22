@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, Redirect } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -32,18 +32,22 @@ const Signin = () => {
       } = await login(data);
       dispatch(setCurrentUser({ token }));
       setIsLoading(false);
-      // history.push('/admin');
+      history.push('/');
     } catch (error) {
       setErrors(error.response.data.errors);
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      history.push('/admin/post/create');
-    }
-  }, [history, isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     history.push('/');
+  //   }
+  // }, [history, isAuthenticated]);
+
+  if (isAuthenticated) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <AuthWrapper>
@@ -75,11 +79,11 @@ const Signin = () => {
           >
             <Input.Password placeholder='Password' />
           </Form.Item>
-          <div className='auth-form-action'>
+          {/* <div className='auth-form-action'>
             <NavLink className='forgot-pass-link' to='/forgotPassword'>
               Forgot password?
             </NavLink>
-          </div>
+          </div> */}
           <Form.Item>
             <Button
               className='btn-signin'

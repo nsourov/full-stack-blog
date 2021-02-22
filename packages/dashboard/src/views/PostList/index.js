@@ -2,23 +2,24 @@ import React, { useState, useEffect } from 'react';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Row, Col, Table, Tag } from 'antd';
+import { Row, Col, Table, Tag, message } from 'antd';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { PageHeader } from '../../../components/page-headers/page-headers';
+import { PageHeader } from '../../components/page-headers/page-headers';
 import { ProjectHeader, ProjectSorting, ProjectListTitle } from './style';
-import { Button } from '../../../components/buttons/buttons';
-import Heading from '../../../components/heading/heading';
-import { Dropdown } from '../../../components/dropdown/dropdown';
-import { Main } from '../../../container/styled';
-import { getUnpublishedPost, deletePost } from '../../../api/api';
-import { fatchPublishedPost } from '../../../state/ducks/publishedPost';
+import { Button } from '../../components/buttons/buttons';
+import Heading from '../../components/heading/heading';
+import { Dropdown } from '../../components/dropdown/dropdown';
+import { Main } from '../../container/styled';
+import { getUnpublishedPost, deletePost } from '../../api/api';
+import { fatchPublishedPost } from '../../state/ducks/publishedPost';
 
 const PostList = () => {
   const { data: publishedPost, loading: publishedPostLoading } = useSelector(
     (state) => state.publishedPost
   );
+  const { id, role } = useSelector((state) => state.user.data);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -28,7 +29,7 @@ const PostList = () => {
   const dispatch = useDispatch();
 
   const handleCreatePostRoute = () => {
-    history.push('/admin/post/create');
+    history.push('/post/create');
   };
 
   const handleTableChange = (pagination) => {
@@ -39,7 +40,7 @@ const PostList = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('jwtToken');
-      const { data } = await getUnpublishedPost(page, token);
+      const { data } = await getUnpublishedPost(page, token, role, id);
       setData(data);
       setLoading(false);
     } catch (error) {
@@ -50,7 +51,7 @@ const PostList = () => {
 
   useEffect(() => {
     if (postStatus === 'published') {
-      dispatch(fatchPublishedPost(page));
+      dispatch(fatchPublishedPost(page, role, id));
     }
     if (postStatus === 'unpublished') {
       fatchPost();
@@ -66,8 +67,9 @@ const PostList = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       await deletePost(slug, token);
+      message.success('Delete post successfully')
       if (postStatus === 'published') {
-        dispatch(fatchPublishedPost(page));
+        dispatch(fatchPublishedPost(page, role, id));
       }
       if (postStatus === 'unpublished') {
         fatchPost();
@@ -85,7 +87,7 @@ const PostList = () => {
       render: (title, record) => (
         <ProjectListTitle>
           <Heading as='h4'>
-            <Link to={`/admin/post/update/${record?.slug}`}>{title}</Link>
+            <Link to={`/post/update/${record?.slug}`}>{title}</Link>
           </Heading>
         </ProjectListTitle>
       ),
@@ -124,13 +126,15 @@ const PostList = () => {
           className='wide-dropdwon'
           content={
             <>
-              <Link to={`/admin/post/update/${slug}`}>Edit</Link>
+              <Link to={`/post/update/${slug}`}>Edit</Link>
               <Link onClick={() => handelDeletePost(slug)} to='#'>
                 Delete
               </Link>
-              <Link to={`/admin/post/comments/${slug}/${record._id}`}>
-                Comments
-              </Link>
+              {role === 'admin' && (
+                <Link to={`/post/comments/${slug}/${record._id}`}>
+                  Comments
+                </Link>
+              )}
             </>
           }
         >

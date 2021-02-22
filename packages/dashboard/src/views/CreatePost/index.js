@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Upload, Alert, Select } from 'antd';
+import { Form, Input, Button, Upload, Alert, Select,message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Editor from '../../../components/editor/Editor';
-import { Main } from '../../../container/styled';
-import { createPost, createPublishPost } from '../../../api/api';
-import { fatchCategories } from '../../../state/ducks/category';
+import Editor from '../../components/editor/Editor';
+import { Main } from '../../container/styled';
+import { createPost, createPublishPost } from '../../api/api';
+import { fatchCategories } from '../../state/ducks/category';
 
 const { Option } = Select;
 
@@ -15,6 +15,7 @@ const CreatePost = () => {
     data: { categories },
     loading,
   } = useSelector((state) => state.categories);
+  const { role } = useSelector((state) => state.user.data);
 
   const [form] = Form.useForm();
   const [photo, setPhoto] = useState(null);
@@ -45,6 +46,7 @@ const CreatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await createPost(formData, token);
+      message.success('Post create successfully')
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -78,6 +80,7 @@ const CreatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await createPublishPost(formData, token);
+      message.success('Post create and published successfully')
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -179,18 +182,19 @@ const CreatePost = () => {
           >
             {load ? 'Loading...' : 'Create'}
           </Button>
-
-          <Button
-            className='btn-signin'
-            htmlType='button'
-            onClick={handlePublished}
-            type='primary'
-            size='large'
-            style={{ marginLeft: '25px' }}
-            disabled={load}
-          >
-            {load ? 'Loading...' : 'Published'}
-          </Button>
+          {role === 'admin' && (
+            <Button
+              className='btn-signin'
+              htmlType='button'
+              onClick={handlePublished}
+              type='primary'
+              size='large'
+              style={{ marginLeft: '25px' }}
+              disabled={load}
+            >
+              {load ? 'Loading...' : 'Published'}
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </Main>

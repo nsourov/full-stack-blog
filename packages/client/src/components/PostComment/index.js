@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Button } from 'reactstrap';
 import { useForm } from 'react-hook-form';
+import { store } from 'react-notifications-component';
 
 import { updateComment, deleteComment } from '../../api';
 import dateFormat from '../../utils/dateFormat';
@@ -31,6 +32,18 @@ const PostComment = (props) => {
         reset();
         setEdit(false);
         setLoading(false);
+        store.addNotification({
+          message: 'Update comment successfully!',
+          type: 'success',
+          insert: 'bottom',
+          container: 'bottom-right',
+          animationIn: ['animate__animated', 'animate__fadeIn'],
+          animationOut: ['animate__animated', 'animate__fadeOut'],
+          dismiss: {
+            duration: 5000,
+            onScreen: true,
+          },
+        });
       }
     } catch (error) {
       console.log(error);
@@ -42,6 +55,18 @@ const PostComment = (props) => {
     try {
       await deleteComment(slug, commentId, localStorage.jwtToken);
       reFatch();
+      store.addNotification({
+        message: 'Delete comment successfully!',
+        type: 'success',
+        insert: 'bottom',
+        container: 'bottom-right',
+        animationIn: ['animate__animated', 'animate__fadeIn'],
+        animationOut: ['animate__animated', 'animate__fadeOut'],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
     } catch (error) {
       console.log(error);
     }

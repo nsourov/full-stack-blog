@@ -181,5 +181,6 @@ exports.updateUser = async (req, res) => {
     { new: true, runValidators: true }
   ).select(['-password']);
   await Request.findOneAndRemove({ user: updatedUser.id });
+  await User.findByIdAndUpdate(updatedUser.id, { editorRequested: false });
   return res.status(200).json({ success: true, user: updatedUser });
 };
