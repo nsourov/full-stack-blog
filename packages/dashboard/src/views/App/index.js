@@ -34,9 +34,9 @@ const App = () => {
           return;
         }
         const res = await me(localStorage.jwtToken);
-        const user = res?.data;
-        if (user) {
-          dispatch(setCurrentUser({ token: localStorage.jwtToken }));
+        const { token } = res?.data;
+        if (token) {
+          dispatch(setCurrentUser({ token }));
           setLoading(false);
           return;
         }

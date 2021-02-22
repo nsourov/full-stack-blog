@@ -862,7 +862,7 @@ const TaskLists = Styled.div`
                     .task-title{
                         color: ${({ theme }) => theme['gray-color']};
                     }
-                    .task-created{
+                    .task-createdAt{
                         font-size: 12px;
                         color: ${({ theme }) => theme['gray-color']};
                     }
@@ -915,7 +915,7 @@ const TasklistAction = Styled.div`
     span, a{
         color: ${({ theme }) => theme['gray-solid']};
     }
-    .task-created{
+    .task-createdAt{
         color: #9299b8 !important;
     }
     .task-move{

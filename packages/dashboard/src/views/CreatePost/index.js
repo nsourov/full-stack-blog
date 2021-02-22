@@ -37,7 +37,9 @@ const CreatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', description);
-    formData.append('categoryId', category);
+    if(category && category.length > 0) {
+      formData.append('category', category);
+    }
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
@@ -71,7 +73,9 @@ const CreatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', description);
-    formData.append('categoryId', category);
+    if(category && category.length > 0) {
+      formData.append('category', category);
+    }
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
@@ -102,6 +106,7 @@ const CreatePost = () => {
     <Main>
       <h2 className='mt4'>New Post </h2>
       {success && <Alert message='Post add successfully' type='success' />}
+      <br />
       <Form name='login' form={form} onFinish={handleSubmit} layout='vertical'>
         <Form.Item
           name='Title'

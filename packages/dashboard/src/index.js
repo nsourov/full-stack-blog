@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import configureStore from './state/store';
 // import { userProfile } from './redux/authentication/authReducer';
 
-// if (localStorage.getItem('token')) {
+// if (localStorage.getItem('jwtToken')) {
 //   store.dispatch(userProfile());
 // }
 

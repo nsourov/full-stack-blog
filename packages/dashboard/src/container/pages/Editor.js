@@ -40,7 +40,6 @@ const Editors = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(photo);
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', description);

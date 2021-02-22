@@ -24,11 +24,11 @@ const Forms = () => {
                 <Signup />
               </Cards>
             </Col>
-            <Col xs={24}>
+            {/* <Col xs={24}>
               <Cards title="Forget Password">
                 <ForgotPassword />
               </Cards>
-            </Col>
+            </Col> */}
           </Row>
         </FormGroupWrapper>
       </Main>

@@ -77,7 +77,7 @@ const ProjectLists = ({ isLoading, posts, pages, paginationChangeHandler, handle
       key: 'title',
     },
     {
-      title: 'Created Date',
+      title: 'createdAt Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
     },

@@ -93,7 +93,7 @@ const Header = () => {
                 (data.role === 'editor' || data.role === 'admin') && (
                   <a
                     target='_blank'
-                    href='http://localhost:3000/'
+                    href={process.env.DASHBOARD_URL}
                     className='btn btn-info'
                   >
                     Dashboard

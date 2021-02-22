@@ -1,14 +1,31 @@
-import React from 'react';
-import { Row, Col, Form, Input, Select } from 'antd';
+import React, { useState } from 'react';
+import { Row, Col, Form, Input, Button, message } from 'antd';
 import { useSelector } from 'react-redux';
 
 import { Cards } from '../../components/cards/frame/cards-frame';
 import Heading from '../../components/heading/heading';
 import { BasicFormWrapper } from '../../container/styled';
+import UserAxios from '../../redux/Axios/UserAxios';
 
 const Profile = () => {
+  const [load, setLoad] = useState(false);
+
   const user = useSelector((store) => store.user.data);
   const [form] = Form.useForm();
+
+  const handleSubmit = async () => {
+    setLoad(true);
+    const res = await UserAxios.put(
+      `/users/profile/${user.id}`,
+      form.getFieldsValue()
+    );
+    if (res.data.success) {
+      message.success('Profile Updated!');
+    } else {
+      message.error('Failed to update profile');
+    }
+    setLoad(false);
+  };
 
   return (
     <Cards
@@ -21,10 +38,7 @@ const Profile = () => {
       <Row justify='center'>
         <Col xl={12} lg={16} xs={24}>
           <BasicFormWrapper>
-            <Form
-              name='editProfile'
-              // onFinish={handleSubmit}
-            >
+            <Form name='editProfile' form={form}>
               <Form.Item name='name' initialValue={user?.name} label='Name'>
                 <Input />
               </Form.Item>
@@ -33,15 +47,21 @@ const Profile = () => {
                 <Input type='email' />
               </Form.Item>
 
-              {/* <div className='setting-form-actions'>
-                <Button size='default' htmlType='submit' type='primary'>
+              <Form.Item name='password' label='Password'>
+                <Input.Password visibilityToggle />
+              </Form.Item>
+
+              <div className='setting-form-actions'>
+                <Button
+                  size='default'
+                  htmlType='submit'
+                  type='primary'
+                  onClick={handleSubmit}
+                  loading={load}
+                >
                   Update Profile
                 </Button>
-                &nbsp; &nbsp;
-                <Button size='default' onClick={handleCancel} type='light'>
-                  Cancel
-                </Button>
-              </div> */}
+              </div>
             </Form>
           </BasicFormWrapper>
         </Col>

@@ -17,7 +17,7 @@ const TaskList = () => {
       title: <span className="task-title">Add Images To the gallery</span>,
       component: (
         <TasklistAction>
-          <span className="task-created">09:20 AM </span>
+          <span className="task-createdAt">09:20 AM </span>
           <img
             className="task-author"
             style={{ width: '30px' }}
@@ -59,7 +59,7 @@ const TaskList = () => {
       title: <span className="task-title">Add Images To the gallery</span>,
       component: (
         <TasklistAction>
-          <span className="task-created">09:20 AM </span>
+          <span className="task-createdAt">09:20 AM </span>
           <img
             className="task-author"
             style={{ width: '30px' }}
@@ -101,7 +101,7 @@ const TaskList = () => {
       title: <span className="task-title">Add Images To the gallery</span>,
       component: (
         <TasklistAction>
-          <span className="task-created">09:20 AM </span>
+          <span className="task-createdAt">09:20 AM </span>
           <img
             className="task-author"
             style={{ width: '30px' }}
@@ -143,7 +143,7 @@ const TaskList = () => {
       title: <span className="task-title">Add Images To the gallery</span>,
       component: (
         <TasklistAction>
-          <span className="task-created">09:20 AM </span>
+          <span className="task-createdAt">09:20 AM </span>
           <img
             className="task-author"
             style={{ width: '30px' }}
@@ -185,7 +185,7 @@ const TaskList = () => {
       title: <span className="task-title">Add Images To the gallery</span>,
       component: (
         <TasklistAction>
-          <span className="task-created">09:20 AM </span>
+          <span className="task-createdAt">09:20 AM </span>
           <img
             className="task-author"
             style={{ width: '30px' }}
@@ -227,7 +227,7 @@ const TaskList = () => {
       title: <span className="task-title">Add Images To the gallery</span>,
       component: (
         <TasklistAction>
-          <span className="task-created">09:20 AM </span>
+          <span className="task-createdAt">09:20 AM </span>
           <img
             className="task-author"
             style={{ width: '30px' }}

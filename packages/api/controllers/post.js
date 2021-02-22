@@ -67,7 +67,7 @@ exports.getPostPublishedComments = async (req, res) => {
     .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Comment.count(args);
 
@@ -97,7 +97,7 @@ exports.getPostUnPublishedComments = async (req, res) => {
     .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Comment.count(args);
 
@@ -128,7 +128,7 @@ exports.getUserPostUnPublishedComments = async (req, res) => {
     .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Comment.count(args);
 
@@ -163,7 +163,7 @@ exports.getSearchPosts = async (req, res) => {
     .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Post.count({
     published: true,
@@ -207,7 +207,7 @@ exports.getPublishedPosts = async (req, res) => {
     .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Post.count({ published: true });
 
@@ -249,7 +249,7 @@ exports.getUserPublishedPosts = async (req, res) => {
     .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Post.count({ published: true, user });
 
@@ -290,7 +290,7 @@ exports.getUnPublishedPosts = async (req, res) => {
     .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Post.count({ published: false });
 
@@ -324,7 +324,7 @@ exports.getUserUnPublishedPosts = async (req, res) => {
     .populate('user', { password: 0, role: 0 })
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Post.count({ published: false, user });
 

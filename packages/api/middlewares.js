@@ -1,9 +1,19 @@
 const Post = require('./models/post');
+const User = require('./models/user');
 const Comment = require('./models/comment');
 
 exports.isAdmin = (req, res, next) => {
-  console.log(req.user.role)
   if (req.user && req.user.role === 'admin') {
+    return next();
+  }
+  return res
+    .status(403)
+    .json({ success: false, errors: { message: "You don't have permission" } });
+};
+
+exports.checkOwnProfile = async (req, res, next) => {
+  const user = await User.findById(req.params.userId);
+  if (user.id === req.user.id) {
     return next();
   }
   return res

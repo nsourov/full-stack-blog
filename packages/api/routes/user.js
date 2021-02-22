@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Import controllers
 const userController = require('../controllers/user');
-const { isAdmin } = require('../middlewares');
+const { isAdmin, checkOwnProfile } = require('../middlewares');
 
 // User Routes
 router.get('/page/:page',
@@ -57,6 +57,13 @@ router.put(
   passport.authenticate('jwt', { session: false }),
   isAdmin,
   userController.updateUser,
+);
+
+router.put(
+  '/profile/:userId',
+  passport.authenticate('jwt', { session: false }),
+  checkOwnProfile,
+  userController.updateProfile,
 );
 
 // Export Router

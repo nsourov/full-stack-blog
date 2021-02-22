@@ -10,7 +10,7 @@ exports.getRequests = async (req, res) => {
     .populate('user', '-password')
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Request.count();
 

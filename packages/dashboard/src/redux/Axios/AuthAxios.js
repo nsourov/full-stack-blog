@@ -1,8 +1,8 @@
 import axios from 'axios';
-import store from '../store';
+
 // Set config defaults when creating the instance
 const AuthAxios = axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 export default AuthAxios;

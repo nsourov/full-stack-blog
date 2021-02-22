@@ -6,7 +6,7 @@ export const UserPrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      localStorage.getItem('token') ? (
+      localStorage.getItem('jwtToken') ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -24,7 +24,7 @@ export const UserRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      localStorage.getItem('token') ? (
+      localStorage.getItem('jwtToken') ? (
         <Redirect
           to={{
             pathname: '/admin',

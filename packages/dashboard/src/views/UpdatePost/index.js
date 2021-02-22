@@ -59,7 +59,9 @@ const UpdatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', body);
-    formData.append('category', category);
+    if (category && category.length > 0) {
+      formData.append('category', category);
+    }
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
@@ -72,7 +74,7 @@ const UpdatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await publishPost(slug, data, token);
-      message.success('Post published successfully')
+      message.success('Post published successfully');
       setErrors({});
       setSuccessPublished(true);
       setLoad(false);
@@ -89,7 +91,9 @@ const UpdatePost = () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', body);
-    formData.append('category', category);
+    if (category && category.length > 0) {
+      formData.append('category', category);
+    }
     if (photo) {
       formData.append('photo', photo.originFileObj);
     }
@@ -98,7 +102,7 @@ const UpdatePost = () => {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await updatePost(slug, formData, token);
-      message.success('Post update successfully')
+      message.success('Post update successfully');
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -128,6 +132,7 @@ const UpdatePost = () => {
       {successPublished && (
         <Alert message='Post published successfully' type='success' />
       )}
+      <br />
       <Form name='login' form={form} onFinish={handleSubmit} layout='vertical'>
         <Form.Item
           name='Title'

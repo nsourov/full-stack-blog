@@ -1,3 +1,6 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/user');
 const Post = require('../models/post');
 const Request = require('../models/request');
@@ -12,7 +15,7 @@ exports.getUsers = async (req, res) => {
     .select(['-password'])
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = User.count();
 
@@ -53,7 +56,7 @@ exports.getUsersPublishedPosts = async (req, res) => {
     .select(['-comments'])
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Post.count();
 
@@ -84,7 +87,7 @@ exports.getUsersUnPublishedPosts = async (req, res) => {
     .select(['-comments'])
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Post.count();
 
@@ -118,7 +121,7 @@ exports.getUsersPublishedComments = async (req, res) => {
   const commentsPromise = Comment.find(args)
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Comment.count(args);
 
@@ -151,7 +154,7 @@ exports.getUsersUnPublishedComments = async (req, res) => {
   const commentsPromise = Comment.find(args)
     .skip(skip)
     .limit(limit)
-    .sort({ created: 'desc' });
+    .sort({ createdAt: 'desc' });
 
   const countPromise = Comment.count(args);
 
@@ -170,10 +173,12 @@ exports.getUsersUnPublishedComments = async (req, res) => {
     count,
   });
 };
+
 exports.deleteUser = async (req, res) => {
   await User.findOneAndDelete({ _id: req.params.userId }).exec();
   return res.status(200).json({ success: true });
 };
+
 exports.updateUser = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     req.params.userId,
@@ -183,4 +188,28 @@ exports.updateUser = async (req, res) => {
   await Request.findOneAndRemove({ user: updatedUser.id });
   await User.findByIdAndUpdate(updatedUser.id, { editorRequested: false });
   return res.status(200).json({ success: true, user: updatedUser });
+};
+
+exports.updateProfile = async (req, res) => {
+  if (req.body.password) {
+    req.body.password = await bcrypt.hash(req.body.password, 10);
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.userId,
+    req.body,
+    { new: true, runValidators: true }
+  ).select(['-password']);
+
+  const token = jwt.sign(
+    {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      editorRequested: updatedUser.editorRequested,
+    },
+    process.env.APP_SECRET
+  );
+  return res.status(200).json({ success: true, token: `Bearer ${token}` });
 };

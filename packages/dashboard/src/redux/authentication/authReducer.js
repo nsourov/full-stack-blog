@@ -32,11 +32,11 @@ export const login = (history, data) => async dispatch => {
   try {
     let res = await AuthAxios.post('/auth/login', data);
     let { token } = res.data;
-    localStorage.setItem('token', token);
+    localStorage.setItem('jwtToken', token);
 
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('jwtToken')) {
       dispatch(
-        userProfile(localStorage.getItem('token'))
+        userProfile(localStorage.getItem('jwtToken'))
       );
     }
     dispatch(setError({}));
@@ -59,12 +59,12 @@ export const userProfile = (token, history) => async dispatch => {
     UserAxios.defaults.headers.Authorization = token;
   }
   try {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('jwtToken')) {
       let result = await UserAxios.get('/auth/me');
       dispatch(setUser(result.data));
     }
   } catch (err) {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwtToken');
     dispatch(setUser({}));
   }
 };

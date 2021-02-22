@@ -93,7 +93,7 @@ const PostList = () => {
       ),
     },
     {
-      title: 'Created Date',
+      title: 'createdAt Date',
       dataIndex: 'createdAt',
       width: '20%',
 
