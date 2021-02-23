@@ -7,7 +7,7 @@ import {
   getEditorRequests,
   acceptEditorRequest,
   deleteEditorRequest,
-} from '../../api/api';
+} from '../../api';
 import Heading from '../../components/heading/heading';
 import { ProjectListTitle } from './style';
 

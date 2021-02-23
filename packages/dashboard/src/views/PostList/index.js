@@ -12,7 +12,7 @@ import { Button } from '../../components/buttons/buttons';
 import Heading from '../../components/heading/heading';
 import { Dropdown } from '../../components/dropdown/dropdown';
 import { Main } from '../../container/styled';
-import { getUnpublishedPost, deletePost } from '../../api/api';
+import { getUnpublishedPost, deletePost } from '../../api';
 import { fatchPublishedPost } from '../../state/ducks/publishedPost';
 
 const PostList = () => {

@@ -3,7 +3,7 @@ import { Form, Input, message } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import { fatchCategories } from '../../state/ducks/category';
-import { updateCategory } from '../../api/api';
+import { updateCategory } from '../../api';
 import { BasicFormWrapper } from '../../container/styled';
 import { Modal } from '../../components/modals/antd-modals';
 import { Button } from '../../components/buttons/buttons';

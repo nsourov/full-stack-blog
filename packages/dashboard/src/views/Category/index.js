@@ -7,7 +7,7 @@ import FeatherIcon from 'feather-icons-react';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { fatchCategories } from '../../state/ducks/category';
 import { Main, CardToolbox } from '../../container/styled';
-import { deleteCategory } from '../../api/api';
+import { deleteCategory } from '../../api';
 import { ContactPageheaderStyle } from './style';
 import Create from './Create';
 import Update from './Update';

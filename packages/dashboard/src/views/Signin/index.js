@@ -4,7 +4,7 @@ import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Heading from '../../components/heading/heading';
-import { login } from '../../api/api';
+import { login } from '../../api';
 import { setCurrentUser } from '../../state/ducks/authentication';
 
 // eslint-disable-next-line import/no-extraneous-dependencies

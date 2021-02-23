@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Editor from '../../components/editor/Editor';
 import { Main } from '../../container/styled';
-import { createPost, createPublishPost } from '../../api/api';
+import { createPost, createPublishPost } from '../../api';
 import { fatchCategories } from '../../state/ducks/category';
 
 const { Option } = Select;

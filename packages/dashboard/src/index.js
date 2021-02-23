@@ -4,11 +4,6 @@ import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './state/store';
-// import { userProfile } from './redux/authentication/authReducer';
-
-// if (localStorage.getItem('jwtToken')) {
-//   store.dispatch(userProfile());
-// }
 
 const Container = () => {
   const reduxStore = configureStore(window.REDUX_INITIAL_DATA);

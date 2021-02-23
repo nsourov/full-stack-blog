@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getCategories } from '../../api/api'
+import { getCategories } from '../../api'
 
 function startLoading(state) {
   state.loading = true;
