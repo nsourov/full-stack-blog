@@ -1058,7 +1058,6 @@ section.gallery .overlay i {
 */
 footer.main-footer {
   background: #0e0e0e;
-  padding: 100px 0 0;
   color: #fff;
 }
 
@@ -1067,6 +1066,23 @@ footer.main-footer .contact-details p {
   color: #fff;
   margin-bottom: 5px;
   font-size: 0.95em;
+}
+/* footer.main-footer .footer-nav{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+footer.main-footer .footer-nav li {
+  list-style: none;
+  display: inline-block;
+  padding: 0 10px;
+  position: relative;
+  line-height: 15px;
+  border-right: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+footer.main-footer .footer-nav li:last-child {
+  border: none;
 }
 
 footer.main-footer .contact-details a {
@@ -2717,6 +2733,6 @@ a.text-dark:hover {
   z-index: 99999;
 }
 
-.notifications-component{
+.notifications-component {
   z-index: 99999 !important;
 }
