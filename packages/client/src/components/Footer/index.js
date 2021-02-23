@@ -7,7 +7,7 @@ const Footer = () => {
       <div className='copyrights'>
         <div className='container'>
           <div className='row'>
-            <div className='col-md-6 col-sm-12 text-sm-center'>
+            <div className='col-md-6 col-sm-12 text-sm-center text-md-left'>
               <p>&copy; 2021. All rights reserved.</p>
             </div>
             <div className='col-md-6 col-sm-12 text-sm-center text-md-right'>
