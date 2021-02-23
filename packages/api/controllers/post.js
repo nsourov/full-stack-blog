@@ -11,7 +11,7 @@ const {
 
 const multerOptions = {
   storage: multer.memoryStorage(),
-  limits: { fileSize: 2 * 1024 * 1024 }, // 2mb
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20mb
   fileFilter(req, file, next) {
     const isPhoto = file.mimetype.startsWith('image/');
     if (isPhoto) {

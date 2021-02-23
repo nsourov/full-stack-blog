@@ -29,8 +29,8 @@ mongoose
 
 // parse application/x-www-form-urlencoded
 // parse application/json
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '20mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '20mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 // Handle CORS errors
 app.use(cors());
