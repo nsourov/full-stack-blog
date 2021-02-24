@@ -91,7 +91,7 @@ const App = () => {
                   withTitle({
                     component: Search,
                     title: 'Blogs',
-                    sidebar: false,
+                    sidebar: true,
                     ...props,
                   })
                 }
