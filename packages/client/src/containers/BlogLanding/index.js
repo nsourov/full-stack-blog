@@ -2,8 +2,6 @@ import React from 'react';
 
 import BlogCard, { Fallback } from '../../components/BlogCard';
 
-import thumbnail1 from '../../assets/img/blog-post-1.jpg';
-
 const BlogLanding = (props) => {
   const { data, loading } = props;
 
@@ -24,7 +22,7 @@ const BlogLanding = (props) => {
     data.posts.map((item) => (
       <div className='post post-list col-lg-10 col-md-12' key={item._id}>
         <BlogCard
-          thumbnail={item.image || thumbnail1}
+          thumbnail={item.image}
           date={item.createdAt}
           category={item.category || ''}
           title={item.title}

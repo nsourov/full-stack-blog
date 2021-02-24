@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Skeleton from '../../components/Skeleton';
 import { fatchBlog } from '../../state/ducks/blogs';
-import blog3 from '../../assets/img/blog-post-3.jpg';
 
 import PostComments from '../../containers/PostComments';
 import AddComment from './AddComment';
@@ -39,9 +38,12 @@ const Post = () => {
       <div className='container-fluid'>
         {!loading ? (
           <div className='post-single'>
-            <div className='post-thumbnail'>
-              <img src={post.image || blog3} alt='...' className='img-fluid' />
-            </div>
+            {post?.image && (
+              <div className='post-thumbnail'>
+                <img src={post.image} alt='...' className='img-fluid' />
+              </div>
+            )}
+
             <div className='post-details'>
               <PostMeta category={post?.category?.name} />
               <h1>

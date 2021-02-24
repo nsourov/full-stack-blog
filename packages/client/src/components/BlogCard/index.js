@@ -29,11 +29,14 @@ const BlogCard = (props) => {
 
   return (
     <>
-      <div className='post-thumbnail'>
-        <Link to={`/blog/post/${slug}`}>
-          <img src={thumbnail} alt='...' className='img-fluid' />
-        </Link>
-      </div>
+      {thumbnail && (
+        <div className='post-thumbnail'>
+          <Link to={`/blog/post/${slug}`}>
+            <img src={thumbnail} alt='...' className='img-fluid' />
+          </Link>
+        </div>
+      )}
+
       <div className='post-details'>
         <div className='post-meta d-flex justify-content-between'>
           <div className='date meta-last'>{dateFormat(date)}</div>
