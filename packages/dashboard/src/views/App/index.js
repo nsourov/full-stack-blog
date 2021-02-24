@@ -17,7 +17,7 @@ const EditorRequest = lazy(() => import('../EditorRequest'));
 const Category = lazy(() => import('../Category'));
 const Comments = lazy(() => import('../Comments'));
 const Users = lazy(() => import('../Users'));
-const NotFound = lazy(() => import('../../container/pages/404'));
+const NotFound = lazy(() => import('../NotFound'));
 
 const App = () => {
   const [loading, setLoading] = useState(true);

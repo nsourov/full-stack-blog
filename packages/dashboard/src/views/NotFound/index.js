@@ -1,7 +1,7 @@
 import React from 'react';
 import { ErrorWrapper } from './style';
 import { NavLink } from 'react-router-dom';
-import { Main } from '../styled';
+import { Main } from '../../container/styled';
 import Heading from '../../components/heading/heading';
 import { Button } from '../../components/buttons/buttons';
 
