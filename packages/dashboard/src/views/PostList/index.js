@@ -96,7 +96,7 @@ const PostList = () => {
       title: 'createdAt Date',
       dataIndex: 'createdAt',
       width: '20%',
-
+      responsive: ['sm'],
       render: (createdAt) => moment(createdAt).format('MM-DD-YYYY hh:mm a'),
     },
     {
@@ -107,6 +107,7 @@ const PostList = () => {
     {
       title: 'Email',
       dataIndex: 'user',
+      responsive: ['sm'],
       render: (user) => user?.email,
     },
     {
