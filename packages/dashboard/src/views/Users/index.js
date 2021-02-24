@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Table, Button } from 'antd';
+import { Row, Col, Table } from 'antd';
 
 import { Main } from '../../container/styled';
 import { getUsers } from '../../api';

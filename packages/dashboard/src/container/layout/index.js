@@ -26,7 +26,6 @@ const ThemeLayout = (props) => {
   const { children } = props;
   const { isAuthenticated } = useSelector((state) => state.user);
   const [collapsed, setCollapsed] = useState(false);
-  const [hide, setHide] = useState(true);
 
   const toggleCollapsedMobile = () => {
     if (window.innerWidth <= 990) {
@@ -97,7 +96,7 @@ const ThemeLayout = (props) => {
           <Row>
             <Col md={0} sm={24} xs={24}>
               <div className='small-screen-headerRight'>
-                <SmallScreenAuthInfo hide={hide} darkMode={true}>
+                <SmallScreenAuthInfo hide={true} darkMode={true}>
                   <AuthInfo rtl={false} />
                 </SmallScreenAuthInfo>
               </div>
