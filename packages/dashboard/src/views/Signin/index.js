@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink, useHistory, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -39,12 +39,6 @@ const Signin = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     history.push('/');
-  //   }
-  // }, [history, isAuthenticated]);
-
   if (isAuthenticated) {
     return <Redirect to='/' />;
   }
@@ -59,7 +53,7 @@ const Signin = () => {
           layout='vertical'
         >
           <Heading as='h3'>
-            Sign in to <span className='color-secondary'>Admin</span>
+            Sign in to <span className='color-secondary'>Dashboard</span>
           </Heading>
           <Form.Item
             name='username'
