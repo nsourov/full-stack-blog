@@ -81,23 +81,23 @@ const Header = () => {
                 </>
               )}
               {isAuthenticated && (
-                <a
-                  href='#'
+                <Link
+                  to='#'
                   onClick={() => dispatch(logOutUser())}
                   className='btn btn-link text-light'
                 >
                   Log Out
-                </a>
+                </Link>
               )}
               {isAuthenticated &&
                 (data.role === 'editor' || data.role === 'admin') && (
-                  <a
+                  <Link
                     target='_blank'
-                    href={process.env.REACT_APP_DASHBOARD_URL}
+                    to={process.env.REACT_APP_DASHBOARD_URL}
                     className='btn btn-info'
                   >
                     Dashboard
-                  </a>
+                  </Link>
                 )}
 
               {isAuthenticated &&

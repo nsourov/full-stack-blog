@@ -19,7 +19,7 @@ const PostComment = (props) => {
     data: { id },
   } = useSelector((store) => store.user);
 
-  const { register, handleSubmit, errors, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const isUser = id === userId;
 

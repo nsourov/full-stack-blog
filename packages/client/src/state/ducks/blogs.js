@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import {
-  getPublishedPosts,
-  getPost,
-  getPostComments,
-  getSearchPost,
-} from '../../api';
+import { getPublishedPosts, getPost, getPostComments } from '../../api';
 
 function startLoading(state) {
   state.loading = true;
