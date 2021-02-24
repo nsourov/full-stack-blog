@@ -10,7 +10,6 @@ import { Container, Row } from 'reactstrap';
 import ReactNotification from 'react-notifications-component';
 
 import '../../assets/css/style.css';
-import '../../assets/css/components/style.default.css';
 
 import Fallback from '../../components/Fallback';
 import NotFound from '../../components/404';

@@ -607,7 +607,12 @@ div[class*='-btn'] {
 /* Navbar Media Query ------------------------------------- */
 @media (max-width: 991px) {
   nav.navbar .navbar-header {
-    width: 100%;
+    width: 30%;
+  }
+  .navbar-collapse {
+    width: 70%;
+    flex-basis: 70%;
+    text-align: end;
   }
   nav.navbar::after {
     width: 100%;
@@ -617,6 +622,14 @@ div[class*='-btn'] {
   }
   nav.navbar .search-area {
     font-size: 0.75em;
+  }
+}
+@media (max-width: 480px){
+  .navbar-text{
+    display: none;
+  }
+  .langs{
+    display: block;
   }
 }
 
