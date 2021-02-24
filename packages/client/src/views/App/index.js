@@ -59,7 +59,7 @@ const App = () => {
     <Router>
       <ReactNotification />
       <Header />
-      <Container>
+      <Container className='main-wraper'>
         <Row>
           <Suspense fallback={<Fallback />}>
             <Switch>

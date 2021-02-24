@@ -1136,7 +1136,6 @@ footer.main-footer .latest-posts .date {
 
 footer.main-footer .copyrights {
   background: #090909;
-  margin-top: 100px;
   padding: 20px 0;
   font-size: 0.9em;
 }
@@ -2735,4 +2734,8 @@ a.text-dark:hover {
 
 .notifications-component {
   z-index: 99999 !important;
+}
+
+.main-wraper {
+  min-height: calc(100vh - 151px);
 }
