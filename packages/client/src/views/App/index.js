@@ -1,10 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Container, Row } from 'reactstrap';
 import ReactNotification from 'react-notifications-component';
@@ -21,10 +16,13 @@ import { me } from '../../api';
 import { setCurrentUser, logOutUser } from '../../state/ducks/authentication';
 import 'react-notifications-component/dist/theme.css';
 
+import Post from '../Post';
+import Search from '../Search';
+
 // Pages
-const Pages = lazy(() => import('../Pages'));
 const SignIn = lazy(() => import('../SignIn'));
 const SignUp = lazy(() => import('../SignUp'));
+const Blog = lazy(() => import('../Blog'));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,16 +60,38 @@ const App = () => {
         <Row>
           <Suspense fallback={<Fallback />}>
             <Switch>
-              {/* Page routes */}
-              <Route exact path='/'>
-                <Redirect to='/blog' />
-              </Route>
               <Route
-                path='/blog'
+                exact
+                path='/'
                 render={(props) =>
                   withTitle({
-                    component: Pages,
-                    title: 'Welcome',
+                    component: Blog,
+                    title: '4Trollz',
+                    sidebar: true,
+                    ...props,
+                  })
+                }
+              />
+              <Route
+                exact
+                path='/blog/post/:slug'
+                render={(props) =>
+                  withTitle({
+                    component: Post,
+                    title: 'Post',
+                    sidebar: true,
+                    ...props,
+                  })
+                }
+              />
+              <Route
+                exact
+                path='/blog/search'
+                render={(props) =>
+                  withTitle({
+                    component: Search,
+                    title: 'Blogs',
+                    sidebar: false,
                     ...props,
                   })
                 }

@@ -1,19 +1,31 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
+import Sidebar from '../Sidebar';
+
 const TitleComponent = ({ title }) => {
   return (
     <Helmet>
-      <title>{title ? `${title}` : 'App name'}</title>
+      <title>{title ? `${title}` : '4Trollz'}</title>
     </Helmet>
   );
 };
 
-const withTitle = ({ component: Component, title, ...props }) => {
+const withTitle = ({ component: Component, title, sidebar, ...props }) => {
   return (
     <>
       <TitleComponent title={title} />
-      <Component {...props} />
+      {sidebar ? (
+        <>
+          <div className='col-lg-8'>
+            <Component {...props} />
+          </div>
+
+          <Sidebar />
+        </>
+      ) : (
+        <Component {...props} />
+      )}
     </>
   );
 };
