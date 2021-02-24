@@ -139,3 +139,9 @@ export const updateUser = (userId, body, token) => {
     headers: { Authorization: token },
   });
 };
+
+export const deleteUser = (userId, token) => {
+  return axios.delete(`${api}/users/${userId}`, {
+    headers: { Authorization: token },
+  });
+};
