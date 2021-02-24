@@ -39,6 +39,10 @@ exports.deleteRequest = async (req, res) => {
 };
 
 exports.createRequest = async (req, res) => {
+  const alreadyRequested = await Request.findOne({user: req.user.id}).exec();
+  if(alreadyRequested) {
+    return res.status(403).json({success: false, errors: { message: "Already requested" }});
+  };
   const newRequest = new Request({
     user: req.user.id,
   });
