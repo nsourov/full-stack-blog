@@ -133,3 +133,9 @@ export const getUsers = (page, token) => {
     headers: { Authorization: token },
   });
 };
+
+export const updateUser = (userId, body, token) => {
+  return axios.put(`${api}/users/profile/${userId}`, body, {
+    headers: { Authorization: token },
+  });
+};

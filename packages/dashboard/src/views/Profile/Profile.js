@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import Heading from '../../components/heading/heading';
 import { BasicFormWrapper } from '../../container/styled';
-import UserAxios from '../../redux/Axios/UserAxios';
+import { updateUser } from '../../api';
 
 const Profile = () => {
   const [load, setLoad] = useState(false);
@@ -15,10 +15,14 @@ const Profile = () => {
 
   const handleSubmit = async () => {
     setLoad(true);
-    const res = await UserAxios.put(
-      `/users/profile/${user.id}`,
-      form.getFieldsValue()
-    );
+    // const res = await UserAxios.put(
+    //   `/users/profile/${user.id}`,
+    //   form.getFieldsValue()
+    // );
+
+    const token = localStorage.getItem('jwtToken');
+
+    const res = await updateUser(user.id, form.getFieldsValue(), token);
     if (res.data.success) {
       message.success('Profile Updated!');
     } else {
