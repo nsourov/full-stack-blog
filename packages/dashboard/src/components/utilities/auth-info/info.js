@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { InfoWraper, UserDropDwon } from './auth-info-style';
 import { Popover } from '../../popup/popup';
 import Heading from '../../heading/heading';
+import Notification from './notification';
 
 import { logOutUser } from '../../../state/ducks/authentication';
 
@@ -43,6 +44,7 @@ const AuthInfo = () => {
 
   return (
     <InfoWraper>
+      <Notification />
       <div className='nav-author'>
         <Popover placement='bottomRight' content={userContent} action='click'>
           <Link to='#' className='head-example'>
