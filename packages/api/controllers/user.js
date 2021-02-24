@@ -175,6 +175,9 @@ exports.getUsersUnPublishedComments = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
+  await Post.deleteMany({ user: req.params.userId }).exec();
+  await Comment.deleteMany({ user: req.params.userId }).exec();
+  await Request.deleteMany({ user: req.params.userId }).exec();
   await User.findOneAndDelete({ _id: req.params.userId }).exec();
   return res.status(200).json({ success: true });
 };

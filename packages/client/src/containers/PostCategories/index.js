@@ -20,7 +20,7 @@ const PostCategories = () => {
 
 
   return (
-    <div className='widget categories'>
+    <div className='widget categories' style={{ padding: 30 }}>
       <header>
         <h3 className='h6'>Categories</h3>
       </header>

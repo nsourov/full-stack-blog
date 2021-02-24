@@ -107,7 +107,7 @@ h1:hover a {
 
 .widget {
   margin-bottom: 40px;
-  padding: 30px;
+  /* padding: 30px; */
   border: 1px solid #eee;
 }
 
