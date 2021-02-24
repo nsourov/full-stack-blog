@@ -1,9 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Table } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
 import { Main } from '../../container/styled';
-import { getUsers } from '../../api';
+import { getUsers, deleteUser } from '../../api';
 
+const Users = () => {
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = useState(null);
+
+  const fatchUsers = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem('jwtToken');
+        const { data } = await getUsers(page, token);
+        setData(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
+  
+  const handelDelete = async (userId) => {
+    try {
+      const token = localStorage.getItem('jwtToken');
+      await deleteUser(userId, token);
+      message.success('User deleted');
+      await fatchUsers();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  useEffect(() => {
+    fatchUsers();
+  }, [page]);
+
+  const handleTableChange = (pagination) => {
+    setPage(pagination.current);
+  };
+  
+  
 const columns = [
   {
     title: 'Name',
@@ -17,32 +56,17 @@ const columns = [
     title: 'Role',
     dataIndex: 'role',
   },
+  {
+    title: 'Action',
+    dataIndex: '_id',
+    align: 'right',
+    render: (item, record) => {
+      return (
+          <Button onClick={() => handelDelete(item)} icon={<DeleteOutlined />} />
+      );
+    },
+  },
 ];
-
-const Users = () => {
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = React.useState(true);
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const fatchUsers = async () => {
-      try {
-        setLoading(true);
-        const token = localStorage.getItem('jwtToken');
-        const { data } = await getUsers(page, token);
-        setData(data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    };
-    fatchUsers();
-  }, [page]);
-
-  const handleTableChange = (pagination) => {
-    setPage(pagination.current);
-  };
 
   return (
     <Main>
