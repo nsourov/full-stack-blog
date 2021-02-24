@@ -87,7 +87,7 @@ const ThemeLayout = (props) => {
 
             <Col lg={14} md={8} sm={0} xs={0}></Col>
 
-            <Col lg={6} md={10} sm={0} xs={0}>
+            <Col lg={6} md={10} sm={18} xs={12}>
               <AuthInfo />
             </Col>
           </Row>
