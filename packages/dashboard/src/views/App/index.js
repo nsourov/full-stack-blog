@@ -9,7 +9,7 @@ import AdminRoute from '../../components/adminRoute';
 import Layout from '../../container/layout';
 
 const Login = lazy(() => import('../Signin'));
-const Profile = lazy(() => import('../Profile/Profile'));
+const Profile = lazy(() => import('../Profile'));
 const PostList = lazy(() => import('../PostList'));
 const CreatePost = lazy(() => import('../CreatePost'));
 const UpdatePost = lazy(() => import('../UpdatePost'));
