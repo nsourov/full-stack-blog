@@ -93,7 +93,7 @@ const Header = () => {
                 (data.role === 'editor' || data.role === 'admin') && (
                   <Link
                     target='_blank'
-                    to={process.env.REACT_APP_DASHBOARD_URL}
+                    to={process.env.REACT_APP_DASHBOARD_URL || '/'}
                     className='btn btn-info'
                   >
                     Dashboard

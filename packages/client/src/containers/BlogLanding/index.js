@@ -26,7 +26,7 @@ const BlogLanding = (props) => {
         <BlogCard
           thumbnail={item.image || thumbnail1}
           date={item.createdAt}
-          category={item.category || 'Business'}
+          category={item.category || ''}
           title={item.title}
           description={item.body}
           name={item.user.name || 'User'}

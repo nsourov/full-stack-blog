@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { stripHtml } from 'string-strip-html';
 
 import dateFormat from '../../utils/dateFormat';
@@ -66,16 +65,6 @@ const BlogCard = (props) => {
       </div>
     </>
   );
-};
-
-BlogCard.propTypes = {
-  date: PropTypes.string,
-  category: PropTypes.string,
-  title: PropTypes.string,
-  description: PropTypes.string,
-  name: PropTypes.string,
-  postDate: PropTypes.string,
-  comment: PropTypes.number,
 };
 
 export const Fallback = () => {
