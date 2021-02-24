@@ -91,13 +91,14 @@ const Header = () => {
               )}
               {isAuthenticated &&
                 (data.role === 'editor' || data.role === 'admin') && (
-                  <Link
+                  <a
                     target='_blank'
-                    to={process.env.REACT_APP_DASHBOARD_URL || '/'}
+                    rel='noopener noreferrer'
+                    href={process.env.REACT_APP_DASHBOARD_URL || '/'}
                     className='btn btn-info'
                   >
                     Dashboard
-                  </Link>
+                  </a>
                 )}
 
               {isAuthenticated &&
