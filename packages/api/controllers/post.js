@@ -52,10 +52,9 @@ exports.getPost = async (req, res) => {
       .json({ success: false, errors: { message: 'Post not found' } });
   const commentCount = await Comment.count({ post: post.id, published: true });
 
-  return res.status(200).json({
-    success: true,
-    post: { ...JSON.parse(JSON.stringify(post)), commentCount },
-  });
+  return res
+    .status(200)
+    .json({ success: true, post: { ...JSON.parse(JSON.stringify(post)), commentCount } });
 };
 
 exports.getPostPublishedComments = async (req, res) => {
@@ -181,10 +180,7 @@ exports.getSearchPosts = async (req, res) => {
 
   const withCount = [];
   for (const post of posts) {
-    const count = await Comment.count({
-      post: post.id,
-      published: true,
-    }).exec();
+    const count = await Comment.count({ post: post.id, published: true }).exec();
     withCount.push({
       ...JSON.parse(JSON.stringify(post)),
       commentCount: count,
@@ -225,10 +221,7 @@ exports.getPublishedPosts = async (req, res) => {
 
   const withCount = [];
   for (const post of posts) {
-    const count = await Comment.count({
-      post: post.id,
-      published: true,
-    }).exec();
+    const count = await Comment.count({ post: post.id, published: true }).exec();
     withCount.push({
       ...JSON.parse(JSON.stringify(post)),
       commentCount: count,
@@ -270,11 +263,7 @@ exports.getUserPublishedPosts = async (req, res) => {
 
   const withCount = [];
   for (const post of posts) {
-    const count = await Comment.count({
-      post: post.id,
-      user,
-      published: true,
-    }).exec();
+    const count = await Comment.count({ post: post.id, user, published: true }).exec();
     withCount.push({
       ...JSON.parse(JSON.stringify(post)),
       commentCount: count,
@@ -365,20 +354,11 @@ exports.createPost = async (req, res) => {
     return res.status(400).json({ success: false, errors });
   }
 
-  let imageUrl;
-
-  if (req.body.image) {
-    if (process.env.NODE_ENV === 'development') {
-      imageUrl = `${process.env.SERVER_URL}/uploads/${req.body.image}`;
-    } else {
-      imageUrl = `${process.env.API_URL_PROD}/uploads/${req.body.image}`;
-    }
-  }
-
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
-    image: imageUrl,
+    image:
+      req.body.image && `${process.env.REACT_APP_API_URL}/uploads/${req.body.image}`,
     user: req.user.id,
     category: req.body.categoryId,
   });
@@ -399,7 +379,7 @@ exports.createAndPublishPost = async (req, res) => {
     title: req.body.title,
     body: req.body.body,
     image:
-      req.body.image && `${process.env.SERVER_URL}/uploads/${req.body.image}`,
+      req.body.image && `${process.env.REACT_APP_API_URL}/uploads/${req.body.image}`,
     user: req.user.id,
     category: req.body.categoryId,
     published: true,
@@ -422,22 +402,14 @@ exports.updatePost = async (req, res) => {
     return res.status(400).json({ success: false, errors });
   }
 
-  let imageUrl;
-
-  if (req.body.image) {
-    if (process.env.NODE_ENV === 'development') {
-      imageUrl = `${process.env.SERVER_URL}/uploads/${req.body.image}`;
-    } else {
-      imageUrl = `${process.env.API_URL_PROD}/uploads/${req.body.image}`;
-    }
-  }
-
   const updatedPost = await Post.findOneAndUpdate(
     { slug: req.params.slug },
     {
       ...req.body,
       ...(req.body.image && {
-        image: imageUrl,
+        image:
+          req.body.image &&
+          `${process.env.REACT_APP_API_URL}/uploads/${req.body.image}`,
       }),
     },
     { new: true, runValidators: true }

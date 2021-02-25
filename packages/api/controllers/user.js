@@ -35,14 +35,6 @@ exports.resize = async (req, res, next) => {
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, 800, jimp.AUTO);
   await photo.write(`./public/uploads/${req.body.image}`);
-  let imageUrl;
-  if (process.env.NODE_ENV === 'development') {
-    imageUrl = `${process.env.SERVER_URL}/uploads/${req.body.image}`;
-  } else {
-    imageUrl = `${process.env.API_URL_PROD}/uploads/${req.body.image}`;
-  }
-
-  req.body.image = imageUrl;
   // once we have written the photo to our filesystem, keep going!
   next();
 };
@@ -257,7 +249,12 @@ exports.updateProfile = async (req, res) => {
   }
   const updatedUser = await User.findByIdAndUpdate(
     req.params.userId,
-    req.body,
+    {
+      ...req.body,
+      ...(req.body.image && {
+        image: `${process.env.REACT_APP_API_URL}/uploads/${req.body.image}`,
+      }),
+    },
     { new: true, runValidators: true }
   ).select(['-password']);
 
