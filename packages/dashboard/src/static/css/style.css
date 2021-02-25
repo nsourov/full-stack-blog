@@ -2716,3 +2716,8 @@ html[dir='rtl'] .ant-menu-vertical .ant-menu-submenu-title {
 li.active > .display {
   display: block;
 }
+
+.ant-form-item-extra {
+  color: #999 !important;
+  font-size: 12px !important;
+}

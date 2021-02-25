@@ -6,6 +6,7 @@ const authSlice = createSlice({
   initialState: {
     isAuthenticated: false,
     data: {},
+    admin: {},
   },
   reducers: {
     setCurrentUser: (state, { payload: { token } }) => {
@@ -20,6 +21,9 @@ const authSlice = createSlice({
         return { isAuthenticated: false, data: {} };
       }
     },
+    setAdmin: (state, { payload }) => {
+      state.admin = payload;
+    },
     logOutUser: () => {
       localStorage.removeItem('jwtToken');
       return { isAuthenticated: false, data: {} };
@@ -27,7 +31,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCurrentUser, logOutUser } = authSlice.actions;
+export const { setCurrentUser, setAdmin, logOutUser } = authSlice.actions;
 
 export default {
   user: authSlice.reducer,

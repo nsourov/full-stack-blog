@@ -8,62 +8,69 @@ const userController = require('../controllers/user');
 const { isAdmin, checkOwnProfile } = require('../middlewares');
 
 // User Routes
-router.get('/page/:page',
-  passport.authenticate('jwt', { session: false }),
-  isAdmin,
-  userController.getUsers);
+router.get('/admin-info', userController.getAdmin);
 
-router.get('/:userId',
+router.get(
+  '/page/:page',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
-  userController.getUser);
+  userController.getUsers
+);
+
+router.get(
+  '/:userId',
+  passport.authenticate('jwt', { session: false }),
+  isAdmin,
+  userController.getUser
+);
+
 
 router.get(
   '/:userId/posts/published/page/:page',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
-  userController.getUsersPublishedPosts,
+  userController.getUsersPublishedPosts
 );
 router.get(
   '/:userId/posts/unpublished/page/:page',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
-  userController.getUsersUnPublishedPosts,
+  userController.getUsersUnPublishedPosts
 );
 
 router.get(
   '/:userId/post/:postId/comments/published/page/:page',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
-  userController.getUsersPublishedComments,
+  userController.getUsersPublishedComments
 );
 
 router.get(
   '/:userId/post/:postId/comments/unpublished/page/:page',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
-  userController.getUsersUnPublishedComments,
+  userController.getUsersUnPublishedComments
 );
 
 router.delete(
   '/:userId',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
-  userController.deleteUser,
+  userController.deleteUser
 );
 
 router.put(
   '/:userId',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
-  userController.updateUser,
+  userController.updateUser
 );
 
 router.put(
   '/profile/:userId',
   passport.authenticate('jwt', { session: false }),
   checkOwnProfile,
-  userController.updateProfile,
+  userController.updateProfile
 );
 
 // Export Router

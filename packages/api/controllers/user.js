@@ -47,6 +47,17 @@ exports.getUser = async (req, res) => {
   return res.status(200).json({ success: true, user });
 };
 
+exports.getAdmin = async (req, res) => {
+  const admin = await User.findOne({ role: 'admin' })
+    .select(['name', 'bio', 'image', '-_id'])
+    .exec();
+  if (!admin)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'Admin not found' } });
+  return res.status(200).json({ success: true, admin });
+};
+
 exports.getUsersPublishedPosts = async (req, res) => {
   const page = req.params.page || 1;
   const limit = 10;
@@ -197,7 +208,12 @@ exports.updateProfile = async (req, res) => {
   if (req.body.password) {
     req.body.password = await bcrypt.hash(req.body.password, 10);
   }
-
+  if (req.body.bio && req.body.bio.length > 200) {
+    return res.status(400).json({
+      success: false,
+      errors: { message: 'Bio cannot be lore than 200 word' },
+    });
+  }
   const updatedUser = await User.findByIdAndUpdate(
     req.params.userId,
     req.body,
@@ -210,6 +226,7 @@ exports.updateProfile = async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       role: updatedUser.role,
+      bio: updatedUser.bio,
       editorRequested: updatedUser.editorRequested,
     },
     process.env.APP_SECRET

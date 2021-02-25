@@ -25,8 +25,13 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    bio: {
+      type: String,
+      default: '',
+      maxlength: 200,
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = mongoose.model('User', UserSchema);

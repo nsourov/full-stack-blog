@@ -12,8 +12,12 @@ import withTitle from '../../components/TitleComponent';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-import { me } from '../../api';
-import { setCurrentUser, logOutUser } from '../../state/ducks/authentication';
+import { me, getAdmin } from '../../api';
+import {
+  setCurrentUser,
+  logOutUser,
+  setAdmin,
+} from '../../state/ducks/authentication';
 import 'react-notifications-component/dist/theme.css';
 
 import Post from '../Post';
@@ -30,6 +34,11 @@ const App = () => {
   useEffect(() => {
     async function checkAuth() {
       try {
+        const adminRes = await getAdmin();
+        if (adminRes.status === 200) {
+          dispatch(setAdmin(adminRes.data.admin));
+        }
+
         if (!localStorage.jwtToken) {
           return;
         }
@@ -47,9 +56,7 @@ const App = () => {
       }
     }
 
-    if (localStorage.jwtToken) {
-      checkAuth();
-    }
+    checkAuth();
   }, [dispatch]);
 
   return (

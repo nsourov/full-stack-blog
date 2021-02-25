@@ -55,6 +55,10 @@ export const me = (token) => {
   });
 };
 
+export const getAdmin = () => {
+  return axios.get(`${api}/users/admin-info`);
+};
+
 // API to post login
 export const login = (data) => {
   return axios.post(`${api}/auth/login`, data);
