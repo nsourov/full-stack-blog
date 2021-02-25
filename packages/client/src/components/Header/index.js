@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { logOutUser } from '../../state/ducks/authentication';
-import RequestEditor from './RequestEditor';
+// import RequestEditor from './RequestEditor';
 import Search from '../Search';
 
 import logo from '../../assets/img/logo.png';
@@ -89,26 +89,25 @@ const Header = () => {
                   Log Out
                 </Link>
               )}
-              {isAuthenticated &&
-                (data.role === 'editor' || data.role === 'admin') && (
-                  <a
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    href={process.env.REACT_APP_DASHBOARD_URL || '/'}
-                    className='btn btn-info'
-                  >
-                    Dashboard
-                  </a>
-                )}
+              {isAuthenticated && data.role === 'admin' && (
+                <a
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href={process.env.REACT_APP_DASHBOARD_URL || '/'}
+                  className='btn btn-info'
+                >
+                  Dashboard
+                </a>
+              )}
 
-              {isAuthenticated &&
+              {/* {isAuthenticated &&
                 data.role === 'visitor' &&
                 !data.editorRequested && (
                   <RequestEditor
                     data={data}
                     isAuthenticated={isAuthenticated}
                   />
-                )}
+                )} */}
             </ul>
           </div>
         </div>

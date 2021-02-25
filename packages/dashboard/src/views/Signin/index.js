@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Heading from '../../components/heading/heading';

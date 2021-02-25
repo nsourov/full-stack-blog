@@ -109,7 +109,7 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
               Users
             </NavLink>
           </Menu.Item>
-          <Menu.Item
+          {/* <Menu.Item
             icon={
               !topMenu && (
                 <NavLink className='menuItem-iocn' to='/request'>
@@ -122,7 +122,7 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
             <NavLink onClick={toggleCollapsed} to='/request'>
               Request
             </NavLink>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item
             icon={
               !topMenu && (

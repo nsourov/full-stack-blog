@@ -89,14 +89,14 @@ const App = () => {
               role={data?.role}
               isAuthenticated={isAuthenticated}
             />
-            <AdminRoute
+            {/* <AdminRoute
               exact
               path='/request'
               component={EditorRequest}
               role={data?.role}
               isAuthenticated={isAuthenticated}
               admin
-            />
+            /> */}
             <AdminRoute
               exact
               path='/category'
