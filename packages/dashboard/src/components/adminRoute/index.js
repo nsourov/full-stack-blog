@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { message } from 'antd';
 
 const AdminRoute = ({ component: AdminComponent, ...rest }) => {
   return (
@@ -20,6 +21,11 @@ const AdminRoute = ({ component: AdminComponent, ...rest }) => {
 
         if (admin) {
           return <AdminComponent {...props} />;
+        }
+
+        if (rest.role === 'visitor') {
+          message.error('You do not have permission');
+          return <Redirect to='/404' />;
         }
 
         return <Redirect to='/signin' />;

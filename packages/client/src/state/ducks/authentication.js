@@ -14,19 +14,21 @@ const authSlice = createSlice({
         const decoded = jwtDecode(token);
         localStorage.setItem('jwtToken', token);
         return {
+          ...state,
           isAuthenticated: true,
           data: decoded,
         };
       } else {
-        return { isAuthenticated: false, data: {} };
+        return { ...state, isAuthenticated: false, data: {} };
       }
     },
     setAdmin: (state, { payload }) => {
       state.admin = payload;
+      return state;
     },
-    logOutUser: () => {
+    logOutUser: (state) => {
       localStorage.removeItem('jwtToken');
-      return { isAuthenticated: false, data: {} };
+      return { ...state, isAuthenticated: false, data: {} };
     },
   },
 });

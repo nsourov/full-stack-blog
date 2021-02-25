@@ -15,6 +15,7 @@ const AuthInfo = () => {
   const dispatch = useDispatch();
   const SignOut = (e) => {
     e.preventDefault();
+    window.location = '/signin';
     dispatch(logOutUser());
   };
 

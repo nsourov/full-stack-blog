@@ -39,7 +39,7 @@ const SignUp = () => {
       reset();
       setLoading(false);
     } catch (error) {
-      setApiError(error.response.data.errors);
+      setApiError(error.response?.data.errors);
       setLoading(false);
     }
   };

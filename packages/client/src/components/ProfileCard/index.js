@@ -55,5 +55,6 @@ const WidgetSearch = () => {
       </div>
     );
   }
+  return '';
 };
 export default WidgetSearch;
