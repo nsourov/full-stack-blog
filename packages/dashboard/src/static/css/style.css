@@ -2721,3 +2721,24 @@ li.active > .display {
   color: #999 !important;
   font-size: 12px !important;
 }
+
+.ant-upload.ant-upload-select-picture-card,
+.profile-image {
+  width: 200px !important;
+  height: 195px !important;
+  border-radius: 50% !important;
+  border: 1px solid #d9d9d9 !important;
+}
+
+.ant-upload-picture-card-wrapper {
+  text-align: center !important;
+}
+.profile-image-uploader {
+  position: absolute;
+  margin-top: 29px;
+  color: aliceblue;
+  font-weight: 600;
+}
+.profile-image-uploader span svg{
+  color: aliceblue !important;
+}

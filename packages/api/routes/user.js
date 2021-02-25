@@ -24,7 +24,6 @@ router.get(
   userController.getUser
 );
 
-
 router.get(
   '/:userId/posts/published/page/:page',
   passport.authenticate('jwt', { session: false }),
@@ -70,6 +69,15 @@ router.put(
   '/profile/:userId',
   passport.authenticate('jwt', { session: false }),
   checkOwnProfile,
+  userController.updateProfile
+);
+
+router.post(
+  '/profile/:userId/upload-avatar',
+  passport.authenticate('jwt', { session: false }),
+  isAdmin,
+  userController.upload,
+  userController.resize,
   userController.updateProfile
 );
 

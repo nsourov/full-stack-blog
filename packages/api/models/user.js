@@ -30,6 +30,7 @@ const UserSchema = new Schema(
       default: '',
       maxlength: 200,
     },
+    image: String,
   },
   { timestamps: true }
 );

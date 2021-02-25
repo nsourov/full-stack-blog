@@ -37,6 +37,11 @@
   width: 100%;
 }
 
+.profile-card-4 .profile-overview .btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .profile-card-4 .profile-overview .btn:nth-child(1) {
   font-size: 0.8rem;
   border: 1px solid #eee;

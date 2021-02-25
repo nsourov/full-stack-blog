@@ -33,6 +33,7 @@ exports.register = async (req, res) => {
       email: newUser.email,
       role: newUser.role,
       bio: newUser.bio,
+      image: newUser.image,
       editorRequested: newUser.editorRequested,
     },
     process.env.APP_SECRET
@@ -66,6 +67,7 @@ exports.login = async (req, res) => {
       email: user.email,
       role: user.role,
       bio: user.bio,
+      image: user.image,
       editorRequested: user.editorRequested,
     },
     process.env.APP_SECRET,
@@ -84,6 +86,7 @@ exports.me = async (req, res) => {
       email: user.email,
       role: user.role,
       bio: user.bio,
+      image: user.image,
       editorRequested: user.editorRequested,
     },
     process.env.APP_SECRET,
