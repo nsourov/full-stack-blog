@@ -73,7 +73,7 @@ const App = () => {
                 render={(props) =>
                   withTitle({
                     component: Blog,
-                    title: '4Trollz',
+                    title: 'Trollz',
                     sidebar: true,
                     ...props,
                   })

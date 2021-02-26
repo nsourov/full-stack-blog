@@ -162,7 +162,6 @@ const Profile = () => {
                   </>
                 )}
               </Upload>
-              <h2 style={{ textAlign: 'center' }}>{user.name}</h2>
             </Col>
             <Col sm={8}>{profileForm}</Col>
           </>

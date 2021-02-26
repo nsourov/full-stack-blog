@@ -6,7 +6,7 @@ import Sidebar from '../Sidebar';
 const TitleComponent = ({ title }) => {
   return (
     <Helmet>
-      <title>{title ? `${title}` : '4Trollz'}</title>
+      <title>{title ? `${title}` : 'Trollz'}</title>
     </Helmet>
   );
 };

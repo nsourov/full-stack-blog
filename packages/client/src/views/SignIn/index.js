@@ -47,7 +47,6 @@ const SignIn = () => {
     >
       <div className='form-title mb-5'>
         <h1>Sign In </h1>
-        <h4>4trollz</h4>
       </div>
       <form onSubmit={handleSubmit(onsubmit)} className='text-left mb-5'>
         <div className='mb-3'>
