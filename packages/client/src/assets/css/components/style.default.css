@@ -2753,9 +2753,22 @@ a.text-dark:hover {
   z-index: 99999 !important;
 }
 
-.main-wraper {
+.main-wraper, .main-wraper .auth-row {
   min-height: calc(100vh - 151px);
 }
+
+.main-wraper .auth-row {
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .main-wraper .auth-row {
+    width: 100%;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+}
+
 .btn:focus {
   outline: none;
   box-shadow: none;
