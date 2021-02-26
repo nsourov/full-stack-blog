@@ -59,9 +59,6 @@ const SignUp = () => {
       style={{ padding: '50px 20px' }}
       className='text-center'
     >
-      <div className='form-title mb-5'>
-        <h1>Sign In </h1>
-      </div>
       <form onSubmit={handleSubmit(onsubmit)} className='text-left mb-5'>
         <div className='mb-3'>
           <label htmlFor='signUpName' className='form-label'>
