@@ -17,7 +17,7 @@ const PostSchema = new Schema(
       type: String,
       required: true,
     },
-    image: String,
+    images: [String],
     slug: String,
     published: {
       type: Boolean,

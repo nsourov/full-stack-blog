@@ -13,7 +13,6 @@ const Profile = lazy(() => import('../Profile'));
 const PostList = lazy(() => import('../PostList'));
 const CreatePost = lazy(() => import('../CreatePost'));
 const UpdatePost = lazy(() => import('../UpdatePost'));
-const EditorRequest = lazy(() => import('../EditorRequest'));
 const Category = lazy(() => import('../Category'));
 const Comments = lazy(() => import('../Comments'));
 const Users = lazy(() => import('../Users'));
@@ -89,14 +88,6 @@ const App = () => {
               role={data?.role}
               isAuthenticated={isAuthenticated}
             />
-            {/* <AdminRoute
-              exact
-              path='/request'
-              component={EditorRequest}
-              role={data?.role}
-              isAuthenticated={isAuthenticated}
-              admin
-            /> */}
             <AdminRoute
               exact
               path='/category'

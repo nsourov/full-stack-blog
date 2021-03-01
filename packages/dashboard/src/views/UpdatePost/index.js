@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Form, Input, Button, Upload, Alert, Select, message } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Upload,
+  Alert,
+  Select,
+  message,
+  Row,
+  Col,
+  Image,
+} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -19,7 +30,8 @@ const UpdatePost = () => {
   const { role } = useSelector((state) => state.user.data);
 
   const [form] = Form.useForm();
-  const [photo, setPhoto] = useState(null);
+  const [primaryPhoto, setPrimaryPhoto] = useState(null);
+  const [secondaryPhoto, setSecondaryPhoto] = useState(null);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [category, setCategory] = useState('');
@@ -28,7 +40,7 @@ const UpdatePost = () => {
   const [success, setSuccess] = useState(false);
   const [successPublished, setSuccessPublished] = useState(false);
   const [fetchLoad, setFetchLoad] = useState(false);
-  const [image, setImage] = useState(false);
+  const [images, setImages] = useState(false);
   const [post, setPost] = useState(false);
   const { slug } = useParams();
   const dispatch = useDispatch();
@@ -40,7 +52,7 @@ const UpdatePost = () => {
       setTitle(post.title);
       setBody(post.body);
       setCategory(post?.category?._id);
-      setImage(post.image);
+      setImages(post.images);
       setPost(post);
       setFetchLoad(true);
     };
@@ -62,8 +74,11 @@ const UpdatePost = () => {
     if (category && category.length > 0) {
       formData.append('category', category);
     }
-    if (photo) {
-      formData.append('photo', photo.originFileObj);
+    if (primaryPhoto) {
+      formData.append('primaryPhoto', primaryPhoto.originFileObj);
+    }
+    if (secondaryPhoto) {
+      formData.append('secondaryPhoto', secondaryPhoto.originFileObj);
     }
     let data = {
       title,
@@ -94,8 +109,11 @@ const UpdatePost = () => {
     if (category && category.length > 0) {
       formData.append('category', category);
     }
-    if (photo) {
-      formData.append('photo', photo.originFileObj);
+    if (primaryPhoto) {
+      formData.append('primaryPhoto', primaryPhoto.originFileObj);
+    }
+    if (secondaryPhoto) {
+      formData.append('secondaryPhoto', secondaryPhoto.originFileObj);
     }
 
     try {
@@ -114,10 +132,6 @@ const UpdatePost = () => {
       setErrors(err.response.data.errors);
       setLoad(false);
     }
-  };
-
-  const normFile = (e) => {
-    setPhoto(e.file);
   };
 
   if (!fetchLoad || loading) {
@@ -147,9 +161,6 @@ const UpdatePost = () => {
         </Form.Item>
         <Form.Item
           name='Category'
-          // value={title}
-
-          // validateStatus={errors?.title ? 'error' : ''}
           help={errors?.category ? errors.category : ''}
           rules={[{ required: true }]}
         >
@@ -176,32 +187,77 @@ const UpdatePost = () => {
         />
 
         <br />
-        <Form.Item
-          name='Image'
-          valuePropName='fileList'
-          getValueFromEvent={normFile}
-        >
-          <Upload.Dragger
-            name='logo'
-            listType='picture-card'
-            accept='image/png, image/jpeg'
-            beforeUpload={() => false}
-          >
-            <p className='ant-upload-drag-icon'>
-              <UploadOutlined />
-            </p>
-            <p className='ant-upload-text'>
-              Click or drag file to this area to upload
-            </p>
-            <p className='ant-upload-hint'>
-              Support for a single or bulk upload. Strictly prohibit from
-              uploading company data or other band files
-            </p>
-          </Upload.Dragger>
-        </Form.Item>
+        <Row gutter={6}>
+          <Col sm={12}>
+            <Form.Item
+              name='Image1'
+              valuePropName='fileList'
+              getValueFromEvent={(e) => setPrimaryPhoto(e.fileList[0])}
+              label='Primary image'
+            >
+              <Upload.Dragger
+                name='logo'
+                listType='picture-card'
+                accept='image/png, image/jpeg'
+                beforeUpload={() => false}
+              >
+                <p className='ant-upload-drag-icon'>
+                  <UploadOutlined />
+                </p>
+                <p className='ant-upload-text'>
+                  Click or drag file to this area to upload
+                </p>
+              </Upload.Dragger>
+            </Form.Item>
+          </Col>
 
-        {image && !photo && <img src={image} alt='cover' />}
-
+          <Col sm={12}>
+            <Form.Item
+              name='Image2'
+              valuePropName='fileList'
+              getValueFromEvent={(e) => setSecondaryPhoto(e.fileList[0])}
+              label='Secondary image'
+            >
+              <Upload.Dragger
+                name='logo'
+                listType='picture-card'
+                accept='image/png, image/jpeg'
+                beforeUpload={() => false}
+              >
+                <p className='ant-upload-drag-icon'>
+                  <UploadOutlined />
+                </p>
+                <p className='ant-upload-text'>
+                  Click or drag file to this area to upload
+                </p>
+              </Upload.Dragger>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={10}>
+          <Col sm={12}>
+            {images && images.length && !primaryPhoto ? (
+              <>
+              {images[0] && (
+                  <Image src={images[0]} alt='cover' width={300} height={300} />
+                )}
+              </>
+            ) : (
+              ''
+            )}
+          </Col>
+          <Col sm={12}>
+            {images && images.length && !secondaryPhoto ? (
+              <>
+                {images[1] && (
+                  <Image src={images[1]} alt='cover' width={300} height={300} />
+                )}
+              </>
+            ) : (
+              ''
+            )}
+          </Col>
+        </Row>
         <Form.Item style={{ marginTop: '25px' }}>
           <Button
             className='btn-signin'

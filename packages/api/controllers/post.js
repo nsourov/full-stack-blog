@@ -22,21 +22,39 @@ const multerOptions = {
   },
 };
 
-exports.upload = multer(multerOptions).single('photo');
+exports.upload = multer(multerOptions).fields([
+  {
+    name: 'primaryPhoto',
+    maxCount: 1,
+  },
+  {
+    name: 'secondaryPhoto',
+    maxCount: 1,
+  },
+]);
 
 exports.resize = async (req, res, next) => {
   // check if there is no new file to resize
-  if (!req.file) {
+  if (!req.files.primaryPhoto && !req.files.secondaryPhoto) {
     next(); // skip to the next middleware
     return;
   }
-  const extension = req.file.mimetype.split('/')[1];
-  req.body.image = `${uuid.v4()}.${extension}`;
-  // now we resize
-  const photo = await jimp.read(req.file.buffer);
-  await photo.resize(800, jimp.AUTO);
-  await photo.write(`./public/uploads/${req.body.image}`);
-  // once we have written the photo to our filesystem, keep going!
+  if (req.files.primaryPhoto) {
+    const extension1 = req.files.primaryPhoto[0].mimetype.split('/')[1];
+    req.body.primaryPhoto = `${uuid.v4()}.${extension1}`;
+
+    const photo1 = await jimp.read(req.files.primaryPhoto[0].buffer);
+    await photo1.resize(800, jimp.AUTO);
+    await photo1.write(`./public/uploads/${req.body.primaryPhoto}`);
+  }
+  if (req.files.secondaryPhoto) {
+    const extension2 = req.files.secondaryPhoto[0].mimetype.split('/')[1];
+    req.body.secondaryPhoto = `${uuid.v4()}.${extension2}`;
+
+    const photo1 = await jimp.read(req.files.secondaryPhoto[0].buffer);
+    await photo1.resize(800, jimp.AUTO);
+    await photo1.write(`./public/uploads/${req.body.secondaryPhoto}`);
+  }
   next();
 };
 
@@ -52,9 +70,10 @@ exports.getPost = async (req, res) => {
       .json({ success: false, errors: { message: 'Post not found' } });
   const commentCount = await Comment.count({ post: post.id, published: true });
 
-  return res
-    .status(200)
-    .json({ success: true, post: { ...JSON.parse(JSON.stringify(post)), commentCount } });
+  return res.status(200).json({
+    success: true,
+    post: { ...JSON.parse(JSON.stringify(post)), commentCount },
+  });
 };
 
 exports.getPostPublishedComments = async (req, res) => {
@@ -180,7 +199,10 @@ exports.getSearchPosts = async (req, res) => {
 
   const withCount = [];
   for (const post of posts) {
-    const count = await Comment.count({ post: post.id, published: true }).exec();
+    const count = await Comment.count({
+      post: post.id,
+      published: true,
+    }).exec();
     withCount.push({
       ...JSON.parse(JSON.stringify(post)),
       commentCount: count,
@@ -221,7 +243,10 @@ exports.getPublishedPosts = async (req, res) => {
 
   const withCount = [];
   for (const post of posts) {
-    const count = await Comment.count({ post: post.id, published: true }).exec();
+    const count = await Comment.count({
+      post: post.id,
+      published: true,
+    }).exec();
     withCount.push({
       ...JSON.parse(JSON.stringify(post)),
       commentCount: count,
@@ -263,7 +288,11 @@ exports.getUserPublishedPosts = async (req, res) => {
 
   const withCount = [];
   for (const post of posts) {
-    const count = await Comment.count({ post: post.id, user, published: true }).exec();
+    const count = await Comment.count({
+      post: post.id,
+      user,
+      published: true,
+    }).exec();
     withCount.push({
       ...JSON.parse(JSON.stringify(post)),
       commentCount: count,
@@ -354,11 +383,22 @@ exports.createPost = async (req, res) => {
     return res.status(400).json({ success: false, errors });
   }
 
+  const images = [];
+  if (req.body.primaryPhoto) {
+    images.push(
+      `${process.env.REACT_APP_API_URL}/uploads/${req.body.primaryPhoto}`
+    );
+  }
+  if (req.body.secondaryPhoto) {
+    images.push(
+      `${process.env.REACT_APP_API_URL}/uploads/${req.body.secondaryPhoto}`
+    );
+  }
+
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
-    image:
-      req.body.image && `${process.env.REACT_APP_API_URL}/uploads/${req.body.image}`,
+    images,
     user: req.user.id,
     category: req.body.categoryId,
   });
@@ -375,11 +415,22 @@ exports.createAndPublishPost = async (req, res) => {
     return res.status(400).json({ success: false, errors });
   }
 
+  const images = [];
+  if (req.body.primaryPhoto) {
+    images.push(
+      `${process.env.REACT_APP_API_URL}/uploads/${req.body.primaryPhoto}`
+    );
+  }
+  if (req.body.secondaryPhoto) {
+    images.push(
+      `${process.env.REACT_APP_API_URL}/uploads/${req.body.secondaryPhoto}`
+    );
+  }
+
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
-    image:
-      req.body.image && `${process.env.REACT_APP_API_URL}/uploads/${req.body.image}`,
+    images,
     user: req.user.id,
     category: req.body.categoryId,
     published: true,
@@ -402,15 +453,25 @@ exports.updatePost = async (req, res) => {
     return res.status(400).json({ success: false, errors });
   }
 
+  const post = await Post.findOne({ slug: req.params.slug });
+  let images = post.images || [];
+  if (req.body.primaryPhoto) {
+    images[0] = `${process.env.REACT_APP_API_URL}/uploads/${req.body.primaryPhoto}`;
+  }
+  if (req.body.secondaryPhoto) {
+    images[1] =
+      images[0] &&
+      `${process.env.REACT_APP_API_URL}/uploads/${req.body.secondaryPhoto}`;
+  }
+  if (!images[0]) {
+    images = [];
+  }
+
   const updatedPost = await Post.findOneAndUpdate(
     { slug: req.params.slug },
     {
       ...req.body,
-      ...(req.body.image && {
-        image:
-          req.body.image &&
-          `${process.env.REACT_APP_API_URL}/uploads/${req.body.image}`,
-      }),
+      images,
     },
     { new: true, runValidators: true }
   )

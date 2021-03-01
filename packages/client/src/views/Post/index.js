@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Skeleton from '../../components/Skeleton';
@@ -10,6 +10,7 @@ import AddComment from './AddComment';
 import PostBody from './PostBody';
 import PostFooter from './PostFooter';
 import PostMeta from './PostMeta';
+import Slider from './Slider';
 
 const Post = () => {
   const {
@@ -38,19 +39,21 @@ const Post = () => {
       <div className='container-fluid'>
         {!loading ? (
           <div className='post-single'>
-            {post?.image && (
-              <div className='post-thumbnail'>
-                <img src={post.image} alt='...' className='img-fluid' />
-              </div>
+            {post.images.length ? (
+              <Slider
+                items={post.images.map((p) => ({ src: p, altText: 'image' }))}
+              />
+            ) : (
+              ''
             )}
 
             <div className='post-details'>
               <PostMeta category={post?.category?.name} />
               <h1>
                 {post.title}
-                <Link to='#'>
+                {/* <Link to='#'>
                   <i className='fa fa-bookmark-o' />
-                </Link>
+                </Link> */}
               </h1>
 
               <PostFooter

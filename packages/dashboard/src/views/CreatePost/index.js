@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Upload, Alert, Select,message } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Upload,
+  Alert,
+  Select,
+  message,
+  Row,
+  Col,
+} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -18,7 +28,8 @@ const CreatePost = () => {
   const { role } = useSelector((state) => state.user.data);
 
   const [form] = Form.useForm();
-  const [photo, setPhoto] = useState(null);
+  const [primaryPhoto, setPrimaryPhoto] = useState(null);
+  const [secondaryPhoto, setSecondaryPhoto] = useState(null);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -33,22 +44,24 @@ const CreatePost = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(photo);
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', description);
-    if(category && category.length > 0) {
+    if (category && category.length > 0) {
       formData.append('category', category);
     }
-    if (photo) {
-      formData.append('photo', photo.originFileObj);
+    if (primaryPhoto) {
+      formData.append('primaryPhoto', primaryPhoto.originFileObj);
+    }
+    if (secondaryPhoto) {
+      formData.append('secondaryPhoto', secondaryPhoto.originFileObj);
     }
 
     try {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await createPost(formData, token);
-      message.success('Post create successfully')
+      message.success('Post create successfully');
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -65,26 +78,25 @@ const CreatePost = () => {
     dispatch(fatchCategories());
   }, [dispatch]);
 
-  const normFile = (e) => {
-    setPhoto(e.fileList[0]);
-  };
-
   const handlePublished = async () => {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('body', description);
-    if(category && category.length > 0) {
+    if (category && category.length > 0) {
       formData.append('category', category);
     }
-    if (photo) {
-      formData.append('photo', photo.originFileObj);
+    if (primaryPhoto) {
+      formData.append('primaryPhoto', primaryPhoto.originFileObj);
+    }
+    if (secondaryPhoto) {
+      formData.append('secondaryPhoto', secondaryPhoto.originFileObj);
     }
 
     try {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
       await createPublishPost(formData, token);
-      message.success('Post create and published successfully')
+      message.success('Post create and published successfully');
       setErrors({});
       setSuccess(true);
       setLoad(false);
@@ -97,11 +109,6 @@ const CreatePost = () => {
     }
   };
 
-  // if (!loading) {
-  //   return 'Loading';
-  // }
-
-  // console.log('categories', data,loading);
   return (
     <Main>
       <h2 className='mt4'>New Post </h2>
@@ -122,9 +129,6 @@ const CreatePost = () => {
         </Form.Item>
         <Form.Item
           name='Category'
-          // value={title}
-
-          // validateStatus={errors?.title ? 'error' : ''}
           help={errors?.category ? errors.category : ''}
           rules={[{ required: true }]}
         >
@@ -152,29 +156,54 @@ const CreatePost = () => {
         />
 
         <br />
-        <Form.Item
-          name='Image'
-          valuePropName='fileList'
-          getValueFromEvent={normFile}
-        >
-          <Upload.Dragger
-            name='logo'
-            listType='picture-card'
-            accept='image/png, image/jpeg'
-            beforeUpload={() => false}
-          >
-            <p className='ant-upload-drag-icon'>
-              <UploadOutlined />
-            </p>
-            <p className='ant-upload-text'>
-              Click or drag file to this area to upload
-            </p>
-            <p className='ant-upload-hint'>
-              Support for a single or bulk upload. Strictly prohibit from
-              uploading company data or other band files
-            </p>
-          </Upload.Dragger>
-        </Form.Item>
+        <Row gutter={6}>
+          <Col sm={12}>
+            <Form.Item
+              name='Image1'
+              valuePropName='fileList'
+              getValueFromEvent={(e) => setPrimaryPhoto(e.fileList[0])}
+              label='Primary image'
+            >
+              <Upload.Dragger
+                name='logo'
+                listType='picture-card'
+                accept='image/png, image/jpeg'
+                beforeUpload={() => false}
+              >
+                <p className='ant-upload-drag-icon'>
+                  <UploadOutlined />
+                </p>
+                <p className='ant-upload-text'>
+                  Click or drag file to this area to upload
+                </p>
+              </Upload.Dragger>
+            </Form.Item>
+          </Col>
+          {primaryPhoto && (
+            <Col sm={12}>
+              <Form.Item
+                name='Image2'
+                valuePropName='fileList'
+                getValueFromEvent={(e) => setSecondaryPhoto(e.fileList[0])}
+                label='Secondary image'
+              >
+                <Upload.Dragger
+                  name='logo'
+                  listType='picture-card'
+                  accept='image/png, image/jpeg'
+                  beforeUpload={() => false}
+                >
+                  <p className='ant-upload-drag-icon'>
+                    <UploadOutlined />
+                  </p>
+                  <p className='ant-upload-text'>
+                    Click or drag file to this area to upload
+                  </p>
+                </Upload.Dragger>
+              </Form.Item>
+            </Col>
+          )}
+        </Row>
 
         <Form.Item style={{ marginTop: '25px' }}>
           <Button
