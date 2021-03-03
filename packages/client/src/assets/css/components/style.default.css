@@ -1452,7 +1452,7 @@ main.posts-listing .post-footer {
 }
 
 .blog-post .post-comments {
-  margin-top: 50px;
+  margin-top: -100px;
 }
 
 .blog-post .post-comments span.no-of-comments {

@@ -5,7 +5,7 @@ import { store } from 'react-notifications-component';
 
 import './style.css';
 
-const WidgetSearch = () => {
+const ProfileCard = () => {
   const admin = useSelector((state) => state.user.admin);
 
   // https://i.stack.imgur.com/l60Hf.png
@@ -58,4 +58,4 @@ const WidgetSearch = () => {
   }
   return '';
 };
-export default WidgetSearch;
+export default ProfileCard;

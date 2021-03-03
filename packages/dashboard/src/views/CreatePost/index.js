@@ -226,7 +226,7 @@ const CreatePost = () => {
               style={{ marginLeft: '25px' }}
               disabled={load}
             >
-              {load ? 'Loading...' : 'Published'}
+              {load ? 'Loading...' : 'Publish'}
             </Button>
           )}
         </Form.Item>

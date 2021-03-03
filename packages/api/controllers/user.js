@@ -44,7 +44,7 @@ exports.getUsers = async (req, res) => {
   const limit = 10;
   const skip = page * limit - limit;
 
-  const usersPromise = User.find()
+  const usersPromise = User.find({ role: { $ne: 'admin' } })
     .select(['-password'])
     .skip(skip)
     .limit(limit)
