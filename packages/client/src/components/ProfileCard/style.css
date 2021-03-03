@@ -3,6 +3,9 @@
   overflow: hidden;
   position: relative;
 }
+.profile-card-4 img{
+  height: 250px !important;
+}
 
 .profile-card-4 .profile-content {
   position: relative;

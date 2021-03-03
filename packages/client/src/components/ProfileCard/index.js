@@ -8,12 +8,13 @@ import './style.css';
 const WidgetSearch = () => {
   const admin = useSelector((state) => state.user.admin);
 
+  // https://i.stack.imgur.com/l60Hf.png
   if (admin) {
     return (
       <div className='widget'>
         <div className='profile-card-4 text-center'>
           <img
-            src={admin.image || 'https://i.stack.imgur.com/l60Hf.png'}
+            src={admin.image || 'https://4trollz.com/api/uploads/1735bea2-2e82-41d8-94d2-0af3ab0175c5.jpeg'}
             className='img img-fluid'
             width='100%'
           ></img>
