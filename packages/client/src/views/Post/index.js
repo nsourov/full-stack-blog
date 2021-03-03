@@ -40,9 +40,20 @@ const Post = () => {
         {!loading ? (
           <div className='post-single'>
             {post.images.length ? (
-              <Slider
-                items={post.images.map((p) => ({ src: p, altText: 'image' }))}
-              />
+              <>
+                {post.images.length > 1 ? (
+                  <Slider
+                    items={post.images.map((p) => ({
+                      src: p,
+                      altText: 'image',
+                    }))}
+                  />
+                ) : (
+                  <div className='post-thumbnail'>
+                    <img src={post.images[0]} alt='...' className='img-fluid' />
+                  </div>
+                )}
+              </>
             ) : (
               ''
             )}
