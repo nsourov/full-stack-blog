@@ -13,7 +13,7 @@ const Comments = () => {
 
   const { postId, slug } = useParams();
 
-  const fatchComments = async () => {
+  const fetchComments = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('jwtToken');
@@ -26,7 +26,7 @@ const Comments = () => {
     }
   };
   React.useEffect(() => {
-    fatchComments();
+    fetchComments();
   }, [page, postId]);
 
   const handelPublished = async (id, body) => {
@@ -37,7 +37,7 @@ const Comments = () => {
       };
       const token = localStorage.getItem('jwtToken');
       await publishedComment(slug, id, data, token);
-      fatchComments();
+      fetchComments();
     } catch (error) {
       console.log(error);
     }

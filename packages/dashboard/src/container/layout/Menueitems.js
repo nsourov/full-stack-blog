@@ -87,6 +87,11 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
             Post List
           </NavLink>
         </Menu.Item>
+        <Menu.Item key='guest_posts'>
+          <NavLink onClick={toggleCollapsed} to='/post/guest/list'>
+            Guest Post List
+          </NavLink>
+        </Menu.Item>
         <Menu.Item key='PostCreate'>
           <NavLink onClick={toggleCollapsed} to='/post/create'>
             Create Post

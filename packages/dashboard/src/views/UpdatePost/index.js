@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Editor from '../../components/editor/Editor';
 import { Main } from '../../container/styled';
 import { getPost, updatePost, publishPost } from '../../api';
-import { fatchCategories } from '../../state/ducks/category';
+import { fetchCategories } from '../../state/ducks/category';
 
 const { Option } = Select;
 
@@ -60,7 +60,7 @@ const UpdatePost = () => {
   }, [slug]);
 
   useEffect(() => {
-    dispatch(fatchCategories());
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   const clearSuccess = () => {
@@ -81,10 +81,15 @@ const UpdatePost = () => {
       formData.append('secondaryPhoto', secondaryPhoto.originFileObj);
     }
 
+    const data = {
+      title,
+      body,
+    };
+
     try {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
-      await publishPost(slug, formData, token);
+      await publishPost(slug, data, token);
       message.success('Post published successfully');
       setErrors({});
       setSuccessPublished(true);
@@ -234,7 +239,7 @@ const UpdatePost = () => {
           <Col sm={12}>
             {images && images.length && !primaryPhoto ? (
               <>
-              {images[0] && (
+                {images[0] && (
                   <Image src={images[0]} alt='cover' width={300} height={300} />
                 )}
               </>

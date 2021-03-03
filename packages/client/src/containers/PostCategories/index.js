@@ -7,7 +7,7 @@ const PostCategories = () => {
   const [category, setCategory] = useState(null);
 
   useEffect(() => {
-    async function fatchCategory() {
+    async function fetchCategory() {
       try {
         const { data } = await getCategories();
         setCategory(data);
@@ -15,7 +15,7 @@ const PostCategories = () => {
         console.log(error);
       }
     }
-    fatchCategory();
+    fetchCategory();
   }, []);
 
 

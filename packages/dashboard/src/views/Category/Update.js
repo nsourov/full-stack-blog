@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, message } from 'antd';
 import { useDispatch } from 'react-redux';
 
-import { fatchCategories } from '../../state/ducks/category';
+import { fetchCategories } from '../../state/ducks/category';
 import { updateCategory } from '../../api';
 import { BasicFormWrapper } from '../../container/styled';
 import { Modal } from '../../components/modals/antd-modals';
@@ -23,7 +23,7 @@ const Update = ({ visible, onCancel, defaultValue }) => {
       const token = localStorage.getItem('jwtToken');
       await updateCategory(defaultValue?.slug, data, token);
       message.success('Category update successfully');
-      dispatch(fatchCategories());
+      dispatch(fetchCategories());
       onCancel(false);
       setLoading(false);
       form.resetFields();

@@ -4,6 +4,7 @@ const uuid = require('uuid');
 
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const Category = require('../models/category');
 const {
   validatePostInput,
   validateCommentInput,
@@ -262,6 +263,51 @@ exports.getPublishedPosts = async (req, res) => {
   });
 };
 
+exports.getPublishedGuestsPosts = async (req, res) => {
+  const page = req.params.page || 1;
+  const limit = 5;
+  const skip = page * limit - limit;
+
+  const postsPromise = Post.find({ published: true, guest_post: true })
+    .select(['-comments'])
+    .populate('category')
+    .populate('user', { password: 0, role: 0 })
+    .skip(skip)
+    .limit(limit)
+    .sort({ createdAt: 'desc' });
+
+  const countPromise = Post.count({ published: true, guest_post: true });
+
+  const [posts, count] = await Promise.all([postsPromise, countPromise]);
+  const pages = Math.ceil(count / limit);
+  if (!posts.length && skip) {
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: "Page doesn't exist" } });
+  }
+
+  const withCount = [];
+  for (const post of posts) {
+    const count = await Comment.count({
+      post: post.id,
+      published: true,
+      guest_post: true,
+    }).exec();
+    withCount.push({
+      ...JSON.parse(JSON.stringify(post)),
+      commentCount: count,
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    posts: withCount,
+    page,
+    pages,
+    count,
+  });
+};
+
 exports.getUserPublishedPosts = async (req, res) => {
   const page = req.params.page || 1;
   const user = req.params.userId;
@@ -341,6 +387,39 @@ exports.getUnPublishedPosts = async (req, res) => {
   });
 };
 
+exports.getUnPublishedGuestsPosts = async (req, res) => {
+  const page = req.params.page || 1;
+  const limit = 5;
+  const skip = page * limit - limit;
+
+  const postsPromise = Post.find({ published: false, guest_post: true })
+    .select(['-comments'])
+    .populate('category')
+    .populate('user', { password: 0, role: 0 })
+    .skip(skip)
+    .limit(limit)
+    .sort({ createdAt: 'desc' });
+
+  const countPromise = Post.count({ published: false, guest_post: true });
+
+  const [posts, count] = await Promise.all([postsPromise, countPromise]);
+  const pages = Math.ceil(count / limit);
+
+  if (!posts.length && skip) {
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: "Page doesn't exist" } });
+  }
+
+  return res.status(200).json({
+    success: true,
+    posts,
+    page,
+    pages,
+    count,
+  });
+};
+
 exports.getUserUnPublishedPosts = async (req, res) => {
   const page = req.params.page || 1;
   const user = req.params.userId;
@@ -395,13 +474,19 @@ exports.createPost = async (req, res) => {
     );
   }
 
+  const guest_post = req.user.role !== 'admin';
+  let guestCategory;
+  if (guest_post) {
+    guestCategory = await Category.findOne({ slug: 'guest' }).exec();
+  }
+
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
     images,
     user: req.user.id,
-    category: req.body.categoryId,
-    guest_post: req.user.role !== 'admin'
+    category: guest_post ? guestCategory.id : req.body.categoryId,
+    guest_post,
   });
 
   await newPost.save();
@@ -484,6 +569,7 @@ exports.updatePost = async (req, res) => {
 };
 
 exports.publishPost = async (req, res) => {
+  console.log(req.body);
   const { errors, isValid } = validatePostInput(req.body);
 
   // Check Validation

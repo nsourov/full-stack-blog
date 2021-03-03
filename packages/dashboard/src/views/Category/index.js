@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 
 import { PageHeader } from '../../components/page-headers/page-headers';
-import { fatchCategories } from '../../state/ducks/category';
+import { fetchCategories } from '../../state/ducks/category';
 import { Main, CardToolbox } from '../../container/styled';
 import { deleteCategory } from '../../api';
 import { ContactPageheaderStyle } from './style';
@@ -27,7 +27,7 @@ const Category = () => {
   };
 
   useEffect(() => {
-    dispatch(fatchCategories());
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   const handelDelete = async (slug) => {
@@ -35,7 +35,7 @@ const Category = () => {
       const token = localStorage.getItem('jwtToken');
       await deleteCategory(slug, token);
       message.success('Delete category successfully');
-      dispatch(fatchCategories());
+      dispatch(fetchCategories());
     } catch (error) {
       console.log(error);
     }

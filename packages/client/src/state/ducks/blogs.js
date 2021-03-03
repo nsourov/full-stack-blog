@@ -92,7 +92,7 @@ const searchSlice = createSlice({
 const guestPostSlice = createSlice({
   name: 'guestPost',
   initialState: {
-    modal: true,
+    modal: false,
   },
   reducers: {
     toggleGuestPostModal: (state, { payload }) => {
@@ -132,7 +132,7 @@ export default {
   guestPost: guestPostSlice.reducer,
 };
 
-export const fatchBlogs = (page) => async (dispatch) => {
+export const fetchBlogs = (page) => async (dispatch) => {
   try {
     dispatch(getBlogsStart());
 
@@ -144,7 +144,7 @@ export const fatchBlogs = (page) => async (dispatch) => {
   }
 };
 
-export const fatchBlog = (slug) => async (dispatch) => {
+export const fetchBlog = (slug) => async (dispatch) => {
   try {
     dispatch(getBlogStart());
 
@@ -156,7 +156,7 @@ export const fatchBlog = (slug) => async (dispatch) => {
   }
 };
 
-export const fatchComments = (id, page) => async (dispatch) => {
+export const fetchComments = (id, page) => async (dispatch) => {
   try {
     dispatch(getCommentsStart());
 

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Skeleton from '../../components/Skeleton';
-import { fatchBlog } from '../../state/ducks/blogs';
+import { fetchBlog } from '../../state/ducks/blogs';
 
 import PostComments from '../../containers/PostComments';
 import AddComment from './AddComment';
@@ -23,7 +23,7 @@ const Post = () => {
   const { slug } = useParams();
 
   useEffect(() => {
-    dispatch(fatchBlog(slug));
+    dispatch(fetchBlog(slug));
   }, [dispatch, slug]);
 
   useEffect(() => {

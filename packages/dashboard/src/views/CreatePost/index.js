@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Editor from '../../components/editor/Editor';
 import { Main } from '../../container/styled';
 import { createPost, createPublishPost } from '../../api';
-import { fatchCategories } from '../../state/ducks/category';
+import { fetchCategories } from '../../state/ducks/category';
 
 const { Option } = Select;
 
@@ -75,7 +75,7 @@ const CreatePost = () => {
   };
 
   React.useEffect(() => {
-    dispatch(fatchCategories());
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   const handlePublished = async () => {

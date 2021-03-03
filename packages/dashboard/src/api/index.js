@@ -22,6 +22,13 @@ export const getPublishedPost = (page, role, userId) => {
     return axios.get(`${api}/posts/${userId}/published/page/${page}`);
   }
 };
+export const getPublishedGuestPost = (page, role, token) => {
+  if (role === 'admin') {
+    return axios.get(`${api}/posts/published/guest/page/${page}`, {
+      headers: { Authorization: token },
+    });
+  }
+};
 
 // API to get me
 export const getUnpublishedPost = (page, token, role, userId) => {
@@ -31,6 +38,15 @@ export const getUnpublishedPost = (page, token, role, userId) => {
     });
   } else {
     return axios.get(`${api}/posts/${userId}/unpublished/page/${page}`, {
+      headers: { Authorization: token },
+    });
+  }
+};
+
+// API to get me
+export const getUnpublishedGuestPost = (page, token, role) => {
+  if (role === 'admin') {
+    return axios.get(`${api}/posts/unpublished/guest/page/${page}`, {
       headers: { Authorization: token },
     });
   }

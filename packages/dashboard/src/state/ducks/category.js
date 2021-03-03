@@ -43,7 +43,7 @@ export default {
   categories: categorySlice.reducer,
 };
 
-export const fatchCategories = () => async (dispatch) => {
+export const fetchCategories = () => async (dispatch) => {
   try {
     dispatch(getCategoryStart());
 

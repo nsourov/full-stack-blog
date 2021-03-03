@@ -13,7 +13,7 @@ const Search = () => {
   const searchString = useSelector((store) => store.search);
 
   useEffect(() => {
-    const fatchData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
         const { data } = await getSearchPost(searchString, page);
@@ -24,7 +24,7 @@ const Search = () => {
       }
     };
 
-    fatchData();
+    fetchData();
   }, [searchString, page]);
 
   return (

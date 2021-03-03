@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fatchComments } from '../../state/ducks/blogs';
+import { fetchComments } from '../../state/ducks/blogs';
 import PostComment from '../../components/PostComment';
 import Pagination from '../../components/Pagination';
 
@@ -12,7 +12,7 @@ const PostComments = ({ postId, slug }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fatchComments(postId, page));
+    dispatch(fetchComments(postId, page));
   }, [dispatch, page, postId]);
 
   if (loading) {
@@ -20,7 +20,7 @@ const PostComments = ({ postId, slug }) => {
   }
 
   const reFatch = () => {
-    dispatch(fatchComments(postId, page));
+    dispatch(fetchComments(postId, page));
   };
 
   return (

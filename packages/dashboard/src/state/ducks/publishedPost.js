@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getPublishedPost } from '../../api';
+import { getPublishedPost, getPublishedGuestPost } from '../../api';
 
 function startLoading(state) {
   state.loading = true;
@@ -20,6 +20,7 @@ const publishedPostSlice = createSlice({
   },
   reducers: {
     getPublishedPostStart: startLoading,
+    getPublishedGuestPostStart: startLoading,
 
     getPublishedPostSuccess: (state, { payload }) => {
       return {
@@ -29,7 +30,16 @@ const publishedPostSlice = createSlice({
       };
     },
 
+    getPublishedGuestPostSuccess: (state, { payload }) => {
+      return {
+        loading: false,
+        error: null,
+        data: payload,
+      };
+    },
+
     getPublishedPostFailure: loadingFailed,
+    getPublishedGuestPostFailure: loadingFailed,
   },
 });
 
@@ -37,13 +47,16 @@ export const {
   getPublishedPostStart,
   getPublishedPostSuccess,
   getPublishedPostFailure,
+  getPublishedGuestPostStart,
+  getPublishedGuestPostSuccess,
+  getPublishedGuestPostFailure,
 } = publishedPostSlice.actions;
 
 export default {
   publishedPost: publishedPostSlice.reducer,
 };
 
-export const fatchPublishedPost = (page, role, id) => async (dispatch) => {
+export const fetchPublishedPost = (page, role, id) => async (dispatch) => {
   try {
     dispatch(getPublishedPostStart());
 
@@ -52,5 +65,17 @@ export const fatchPublishedPost = (page, role, id) => async (dispatch) => {
     dispatch(getPublishedPostSuccess(data));
   } catch (error) {
     dispatch(getPublishedPostFailure(error.toString()));
+  }
+};
+
+export const fetchPublishedGuestPost = (page, role, token) => async (dispatch) => {
+  try {
+    dispatch(getPublishedGuestPostStart());
+
+    const { data } = await getPublishedGuestPost(page, role, token);
+
+    dispatch(getPublishedGuestPostSuccess(data));
+  } catch (error) {
+    dispatch(getPublishedGuestPostFailure(error.toString()));
   }
 };

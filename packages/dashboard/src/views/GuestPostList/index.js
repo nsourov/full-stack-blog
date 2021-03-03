@@ -7,13 +7,13 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { PageHeader } from '../../components/page-headers/page-headers';
-import { ProjectHeader, ProjectSorting, ProjectListTitle } from './style';
+import { ProjectHeader, ProjectSorting, ProjectListTitle } from '../PostList/style';
 import { Button } from '../../components/buttons/buttons';
 import Heading from '../../components/heading/heading';
 import { Dropdown } from '../../components/dropdown/dropdown';
 import { Main } from '../../container/styled';
-import { getUnpublishedPost, deletePost } from '../../api';
-import { fetchPublishedPost } from '../../state/ducks/publishedPost';
+import { getUnpublishedGuestPost, deletePost } from '../../api';
+import { fetchPublishedGuestPost } from '../../state/ducks/publishedPost';
 
 const PostList = () => {
   const { data: publishedPost, loading: publishedPostLoading } = useSelector(
@@ -40,7 +40,7 @@ const PostList = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('jwtToken');
-      const { data } = await getUnpublishedPost(page, token, role, id);
+      const { data } = await getUnpublishedGuestPost(page, token, role, id);
       setData(data);
       setLoading(false);
     } catch (error) {
@@ -51,7 +51,8 @@ const PostList = () => {
 
   useEffect(() => {
     if (postStatus === 'published') {
-      dispatch(fetchPublishedPost(page, role, id));
+      const token = localStorage.getItem('jwtToken');
+      dispatch(fetchPublishedGuestPost(page, role, token));
     }
     if (postStatus === 'unpublished') {
       fetchPost();
@@ -69,7 +70,7 @@ const PostList = () => {
       await deletePost(slug, token);
       message.success('Delete post successfully')
       if (postStatus === 'published') {
-        dispatch(fetchPublishedPost(page, role, id));
+        dispatch(fetchPublishedGuestPost(page, role, token));
       }
       if (postStatus === 'unpublished') {
         fetchPost();

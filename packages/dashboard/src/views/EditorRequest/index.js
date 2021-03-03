@@ -20,7 +20,7 @@ const EditorRequest = () => {
     setPage(pagination.current);
   };
 
-  const fatchRequest = async () => {
+  const fetchRequest = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('jwtToken');
@@ -34,7 +34,7 @@ const EditorRequest = () => {
   };
 
   useEffect(() => {
-    fatchRequest();
+    fetchRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
@@ -46,7 +46,7 @@ const EditorRequest = () => {
       const token = localStorage.getItem('jwtToken');
       await acceptEditorRequest(userId, body, token);
       message.success('Accept request successfully');
-      fatchRequest();
+      fetchRequest();
     } catch (error) {
       console.error(error);
     }
@@ -57,7 +57,7 @@ const EditorRequest = () => {
       const token = localStorage.getItem('jwtToken');
       await deleteEditorRequest(userId, token);
       message.success('Delete request successfully');
-      fatchRequest();
+      fetchRequest();
     } catch (error) {
       console.error(error);
     }

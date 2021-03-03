@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, message } from 'antd';
 import { useDispatch } from 'react-redux';
 
-import { fatchCategories } from '../../state/ducks/category';
+import { fetchCategories } from '../../state/ducks/category';
 import { createCategory } from '../../api';
 import { BasicFormWrapper } from '../../container/styled';
 import { Modal } from '../../components/modals/antd-modals';
@@ -23,7 +23,7 @@ const Create = ({ visible, onCancel }) => {
       const token = localStorage.getItem('jwtToken');
       await createCategory(data, token);
       message.success('Create category successfully');
-      dispatch(fatchCategories());
+      dispatch(fetchCategories());
       onCancel(false);
       setLoading(false);
     } catch (error) {

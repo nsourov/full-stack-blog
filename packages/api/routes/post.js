@@ -15,10 +15,26 @@ const {
 
 // Post Routes
 router.get('/published/page/:page', postController.getPublishedPosts);
-router.get('/:userId/published/page/:page', postController.getUserPublishedPosts);
+router.get(
+  '/:userId/published/page/:page',
+  postController.getUserPublishedPosts
+);
 
 router.get('/search/:searchString/page/:page', postController.getSearchPosts);
 
+router.get(
+  '/unpublished/guest/page/:page',
+  passport.authenticate('jwt', { session: false }),
+  isAdmin,
+  postController.getUnPublishedGuestsPosts
+);
+
+router.get(
+  '/published/guest/page/:page',
+  passport.authenticate('jwt', { session: false }),
+  isAdmin,
+  postController.getPublishedGuestsPosts
+);
 router.get(
   '/unpublished/page/:page',
   passport.authenticate('jwt', { session: false }),

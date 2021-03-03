@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import BlogLanding from '../../containers/BlogLanding';
 import Pagination from '../../components/Pagination';
-import { fatchBlogs } from '../../state/ducks/blogs';
+import { fetchBlogs } from '../../state/ducks/blogs';
 
 const Blog = () => {
   const [page, setPage] = useState(1);
@@ -13,11 +13,11 @@ const Blog = () => {
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
-    dispatch(fatchBlogs(pageNumber));
+    dispatch(fetchBlogs(pageNumber));
   };
 
   useEffect(() => {
-    dispatch(fatchBlogs(1));
+    dispatch(fetchBlogs(1));
   }, [dispatch]);
 
   return (

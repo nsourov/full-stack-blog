@@ -2761,3 +2761,7 @@ a.text-dark:hover {
   outline: none;
   box-shadow: none;
 }
+
+.fileContainer .chooseFileButton {
+  background: #343a40 !important
+}

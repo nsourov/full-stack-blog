@@ -11,6 +11,7 @@ import Layout from '../../container/layout';
 const Login = lazy(() => import('../Signin'));
 const Profile = lazy(() => import('../Profile'));
 const PostList = lazy(() => import('../PostList'));
+const GuestPostList = lazy(() => import('../GuestPostList'));
 const CreatePost = lazy(() => import('../CreatePost'));
 const UpdatePost = lazy(() => import('../UpdatePost'));
 const Category = lazy(() => import('../Category'));
@@ -71,6 +72,13 @@ const App = () => {
               exact
               path='/post/list'
               component={PostList}
+              role={data?.role}
+              isAuthenticated={isAuthenticated}
+            />
+            <AdminRoute
+              exact
+              path='/post/guest/list'
+              component={GuestPostList}
               role={data?.role}
               isAuthenticated={isAuthenticated}
             />
