@@ -58,7 +58,6 @@ router.delete(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRole,
   postController.upload,
   postController.resize,
   postController.createPost

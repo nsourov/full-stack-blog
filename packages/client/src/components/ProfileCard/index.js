@@ -1,12 +1,39 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { store } from 'react-notifications-component';
 
+import { toggleGuestPostModal } from '../../state/ducks/blogs';
+import GuestPostModal from '../GuestPost';
+
 import './style.css';
 
+const style = {
+  insert: 'top',
+  container: 'top-right',
+  animationIn: ['animate__animated', 'animate__fadeIn'],
+  animationOut: ['animate__animated', 'animate__fadeOut'],
+  dismiss: {
+    duration: 2000,
+    onScreen: true,
+  },
+};
+
 const ProfileCard = () => {
+  const dispatch = useDispatch();
   const admin = useSelector((state) => state.user.admin);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const toggle = () => {
+    if (isAuthenticated) {
+      dispatch(toggleGuestPostModal());
+    } else {
+      store.addNotification({
+        message: 'Please signin to create post as guest',
+        type: 'danger',
+        ...style,
+      });
+    }
+  };
 
   // https://i.stack.imgur.com/l60Hf.png
   if (admin) {
@@ -14,7 +41,7 @@ const ProfileCard = () => {
       <div className='widget'>
         <div className='profile-card-4 text-center'>
           <img
-            src={admin.image || 'https://4trollz.com/api/uploads/1735bea2-2e82-41d8-94d2-0af3ab0175c5.jpeg'}
+            src={admin.image || 'https://i.stack.imgur.com/l60Hf.png'}
             className='img img-fluid'
             width='100%'
           ></img>
@@ -24,7 +51,10 @@ const ProfileCard = () => {
             <div className='row'>
               <div className='col-sm-6'>
                 <div className='profile-overview'>
-                  <button className='btn'>GUEST POST</button>
+                  <GuestPostModal />
+                  <button className='btn' onClick={toggle}>
+                    GUEST POST
+                  </button>
                 </div>
               </div>
               <div className='col-sm-6'>
@@ -35,14 +65,7 @@ const ProfileCard = () => {
                       store.addNotification({
                         message: 'Email copied to clipboard',
                         type: 'info',
-                        insert: 'top',
-                        container: 'top-right',
-                        animationIn: ['animate__animated', 'animate__fadeIn'],
-                        animationOut: ['animate__animated', 'animate__fadeOut'],
-                        dismiss: {
-                          duration: 2000,
-                          onScreen: true,
-                        },
+                        ...style,
                       });
                     }}
                   >

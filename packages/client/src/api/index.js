@@ -79,3 +79,10 @@ export const requestEditor = (token) => {
 export const getCategories = () => {
   return axios.get(`${api}/categories`);
 };
+
+export const createGuestPost = (body, token) => {
+  console.log({body, token})
+  return axios.post(`${api}/posts`, body, {
+    headers: { Authorization: token },
+  });
+};

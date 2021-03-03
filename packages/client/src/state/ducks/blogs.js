@@ -89,6 +89,20 @@ const searchSlice = createSlice({
   },
 });
 
+const guestPostSlice = createSlice({
+  name: 'guestPost',
+  initialState: {
+    modal: true,
+  },
+  reducers: {
+    toggleGuestPostModal: (state, { payload }) => {
+      return {
+        modal: !state.modal,
+      };
+    },
+  },
+});
+
 export const {
   getBlogsStart,
   getBlogsSuccess,
@@ -108,12 +122,14 @@ export const {
 } = commentsSlice.actions;
 
 export const { setSearchString } = searchSlice.actions;
+export const { toggleGuestPostModal } = guestPostSlice.actions;
 
 export default {
   blogs: blogsSlice.reducer,
   blog: blogSlice.reducer,
   comments: commentsSlice.reducer,
   search: searchSlice.reducer,
+  guestPost: guestPostSlice.reducer,
 };
 
 export const fatchBlogs = (page) => async (dispatch) => {

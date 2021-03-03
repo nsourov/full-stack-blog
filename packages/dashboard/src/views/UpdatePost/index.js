@@ -80,15 +80,11 @@ const UpdatePost = () => {
     if (secondaryPhoto) {
       formData.append('secondaryPhoto', secondaryPhoto.originFileObj);
     }
-    let data = {
-      title,
-      body,
-    };
 
     try {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
-      await publishPost(slug, data, token);
+      await publishPost(slug, formData, token);
       message.success('Post published successfully');
       setErrors({});
       setSuccessPublished(true);

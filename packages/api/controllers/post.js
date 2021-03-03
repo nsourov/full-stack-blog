@@ -401,6 +401,7 @@ exports.createPost = async (req, res) => {
     images,
     user: req.user.id,
     category: req.body.categoryId,
+    guest_post: req.user.role !== 'admin'
   });
 
   await newPost.save();

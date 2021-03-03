@@ -41,6 +41,7 @@ const PostSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Category',
     },
+    guest_post: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
