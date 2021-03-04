@@ -12,6 +12,7 @@ import { logOutUser } from '../../../state/ducks/authentication';
 
 const AuthInfo = () => {
   const user = useSelector((state) => state.user.data);
+  console.log('🚀 ~ file: info.js ~ line 15 ~ AuthInfo ~ user', user);
   const dispatch = useDispatch();
   const SignOut = (e) => {
     e.preventDefault();
@@ -45,7 +46,8 @@ const AuthInfo = () => {
 
   return (
     <InfoWraper>
-      <Notification />
+      {user?.role === 'admin' && <Notification />}
+
       <div className='nav-author'>
         <Popover placement='bottomRight' content={userContent} action='click'>
           <Link to='#' className='head-example'>
