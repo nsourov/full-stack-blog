@@ -5,6 +5,7 @@ const uuid = require('uuid');
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 const Category = require('../models/category');
+const Notification = require('../models/notification');
 const {
   validatePostInput,
   validateCommentInput,
@@ -490,6 +491,17 @@ exports.createPost = async (req, res) => {
   });
 
   await newPost.save();
+
+  if (guest_post) {
+    const newNotification = new Notification({
+      post: newPost.id,
+      user: req.user.id,
+      action: 'post',
+      messagePrefix: 'submitted a',
+    });
+    await newNotification.save();
+  }
+
   return res.status(200).json({ success: true, post: newPost });
 };
 
@@ -613,6 +625,17 @@ exports.likePost = async (req, res) => {
     post.likes.unshift({ user: req.user.id });
   }
   await post.save();
+
+  const guest_post = req.user.role !== 'admin';
+  if (guest_post) {
+    const newNotification = new Notification({
+      post: post.id,
+      user: req.user.id,
+      action: 'like',
+      messagePrefix: 'liked on',
+    });
+    await newNotification.save();
+  }
   return res.status(200).json({ success: true });
 };
 
@@ -638,6 +661,17 @@ exports.addComment = async (req, res) => {
   await newComment.save();
   post.comments.unshift(newComment.id);
   await post.save();
+
+  const guest_post = req.user.role !== 'admin';
+  if (guest_post) {
+    const newNotification = new Notification({
+      post: post.id,
+      user: req.user.id,
+      action: 'comment',
+      messagePrefix: 'commented on',
+    });
+    await newNotification.save();
+  }
   return res.status(200).json({ success: true });
 };
 

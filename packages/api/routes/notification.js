@@ -16,7 +16,7 @@ router.get(
 );
 
 router.delete(
-  '/:slug',
+  '/',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
   notificationController.deleteNotifications
@@ -27,6 +27,13 @@ router.put(
   passport.authenticate('jwt', { session: false }),
   isAdmin,
   notificationController.markAsRead
+);
+
+router.put(
+  '/unread',
+  passport.authenticate('jwt', { session: false }),
+  isAdmin,
+  notificationController.unreadCount
 );
 
 // Export Router

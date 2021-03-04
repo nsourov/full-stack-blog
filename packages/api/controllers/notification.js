@@ -33,6 +33,14 @@ exports.getNotifications = async (req, res) => {
   });
 };
 
+exports.unreadCount = async (req, res) => {
+  const count = await Notification.count({ read: false });
+  return res.status(200).json({
+    success: true,
+    count,
+  });
+};
+
 exports.deleteNotifications = async (req, res) => {
   await Notification.deleteMany({ id: { $ne: null } }).exec();
   return res.status(200).json({ success: true });

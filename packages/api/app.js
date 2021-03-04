@@ -13,6 +13,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const categoryRoutes = require('./routes/category');
+const notificationRoutes = require('./routes/notification');
 const requestRoutes = require('./routes/request');
 
 mongoose
@@ -45,6 +46,7 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 app.use('/categories', categoryRoutes);
+app.use('/notifications', notificationRoutes);
 app.use('/requests', requestRoutes);
 
 function ignoreFavicon(req, res, next) {
