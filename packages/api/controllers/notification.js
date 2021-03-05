@@ -42,7 +42,7 @@ exports.unreadCount = async (req, res) => {
 };
 
 exports.deleteNotifications = async (req, res) => {
-  await Notification.deleteMany({ id: { $ne: null } }).exec();
+  await Notification.remove({}).exec();
   return res.status(200).json({ success: true });
 };
 

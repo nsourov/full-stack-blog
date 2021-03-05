@@ -4,7 +4,7 @@ const InfoWraper = Styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 16px 0;        
+    padding: 16px 0;
     .head-example{
         text-decoration: none;
         color: ${({ theme }) => theme['text-color-secondary']};
@@ -55,12 +55,15 @@ const InfoWraper = Styled.div`
             }
         }
     }
+
     .message, .notification, .settings, .support, .flag-select, .nav-author{
         display: flex;
         span, a{
             display: block;
             line-height: normal;
-            margin: 0 3px;
+            &.ant-badge{
+                margin: 6px 3px 0;
+            }
         }
     }
     .nav-author{
@@ -262,7 +265,8 @@ const UserDropDwon = Styled.div`
 `;
 
 const AtbdTopDropdwon = Styled.div`
-    .atbd-top-dropdwon__title .title-text {        
+
+    .atbd-top-dropdwon__title .title-text {
         ${({ theme }) => (!theme.rtl ? 'margin-right' : 'margin-left')}: 10px;
     }
     .atbd-top-dropdwon__content figcaption .atbd-top-dropdwonText {
@@ -295,7 +299,7 @@ const AtbdTopDropdwon = Styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
-    }  
+    }
 
     .atbd-top-dropdwon__content figcaption span {
         ${({ theme }) => (theme.rtl ? 'padding-right' : 'padding-left')}: 0;
