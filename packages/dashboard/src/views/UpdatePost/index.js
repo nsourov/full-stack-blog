@@ -12,12 +12,17 @@ import {
   Col,
   Image,
 } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import {
+  UploadOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  EyeOutlined,
+} from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Editor from '../../components/editor/Editor';
 import { Main } from '../../container/styled';
-import { getPost, updatePost, publishPost } from '../../api';
+import { getPost, updatePost, publishPost, deletePost } from '../../api';
 import { fetchCategories } from '../../state/ducks/category';
 
 const { Option } = Select;
@@ -66,6 +71,15 @@ const UpdatePost = () => {
   const clearSuccess = () => {
     setSuccess(false);
     setSuccessPublished(false);
+  };
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem('jwtToken');
+      await deletePost(slug, token);
+      window.location = '/post/list';
+    } catch (err) {
+      console.log(err.response.data);
+    }
   };
   const handlePublished = async () => {
     try {
@@ -248,9 +262,24 @@ const UpdatePost = () => {
             type='primary'
             size='large'
             disabled={load}
+            icon={<EditOutlined />}
           >
             {load ? 'Loading...' : 'Update'}
           </Button>
+          {role === 'admin' && (
+            <Button
+              className='btn-signin'
+              htmlType='button'
+              onClick={handleDelete}
+              type='danger'
+              size='large'
+              style={{ marginLeft: '25px' }}
+              disabled={load}
+              icon={<DeleteOutlined />}
+            >
+              {load ? 'Loading...' : 'Delete'}
+            </Button>
+          )}
           {role === 'admin' && !post.published && (
             <Button
               className='btn-signin'
@@ -260,6 +289,7 @@ const UpdatePost = () => {
               size='large'
               style={{ marginLeft: '25px' }}
               disabled={load}
+              icon={<EyeOutlined />}
             >
               {load ? 'Loading...' : 'Publish'}
             </Button>
