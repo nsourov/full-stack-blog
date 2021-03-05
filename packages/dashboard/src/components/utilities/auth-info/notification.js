@@ -29,6 +29,13 @@ const PostNotification = ({ notification }) => {
               <p>{moment(notification.createdAt).fromNow()}</p>
             </div>
           </div>
+          {!notification.read ? (
+            <div style={{ float: 'right', marginTop: '20px' }}>
+              <FeatherIcon icon='mail' style={{ color: '#5a5f7d' }} size='15' />
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </Link>
     </li>
@@ -134,7 +141,7 @@ const NotificationBox = () => {
     <AtbdTopDropdwon className='atbd-top-dropdwon'>
       <Heading as='h5' className='atbd-top-dropdwon__title'>
         <span className='title-text'>Unread Notifications</span>
-        <Badge className='badge-success' count={unread} showZero/>
+        <Badge className='badge-success' count={unread} showZero />
       </Heading>
       <Scrollbars
         autoHeight
