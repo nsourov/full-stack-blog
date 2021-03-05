@@ -132,10 +132,10 @@ const NotificationBox = () => {
 
   const content = (
     <AtbdTopDropdwon className='atbd-top-dropdwon'>
-      {/* <Heading as='h5' className='atbd-top-dropdwon__title'>
-        <span className='title-text'>Notifications</span>
-        <Badge className='badge-success' count={3} />
-      </Heading> */}
+      <Heading as='h5' className='atbd-top-dropdwon__title'>
+        <span className='title-text'>Unread Notifications</span>
+        <Badge className='badge-success' count={unread} showZero/>
+      </Heading>
       <Scrollbars
         autoHeight
         autoHide
@@ -146,7 +146,6 @@ const NotificationBox = () => {
         <ul className='atbd-top-dropdwon__nav notification-list'>
           {notification &&
             notification.map((item, i) => {
-              console.log(item);
               if (item.action === 'post') {
                 return <PostNotification notification={item} />;
               }
@@ -168,11 +167,10 @@ const NotificationBox = () => {
       </Link>
     </AtbdTopDropdwon>
   );
-
   return (
     <div className='notification'>
       <Popover placement='bottomLeft' content={content} action='click'>
-        <Badge offset={[-8, -5]} count={unread > 9 ? '9+' : unread}>
+        <Badge dot={unread > 0 ? true : false}>
           <Link to='#' className='head-example'>
             <FeatherIcon icon='bell' size={20} />
           </Link>
