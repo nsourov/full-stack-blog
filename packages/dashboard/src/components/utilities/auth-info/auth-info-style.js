@@ -61,7 +61,9 @@ const InfoWraper = Styled.div`
         span, a{
             display: block;
             line-height: normal;
-            margin: 0 3px;
+            &.ant-badge{
+                margin: 6px 3px 0;
+            }
         }
     }
     .nav-author{
