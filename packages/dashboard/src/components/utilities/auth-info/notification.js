@@ -10,18 +10,19 @@ import Heading from '../../heading/heading';
 
 import { getNotifications, getNotificationunreadCount } from '../../../api';
 
-const PostNotification = ({ name, slug }) => {
+const PostNotification = ({ notification }) => {
   return (
     <li>
-      <Link to={`/post/update/${slug}`}>
+      <Link to={`/post/update/${notification.post.slug}`}>
         <div className='atbd-top-dropdwon__content notifications'>
           <div className='notification-icon bg-primary'>
-            <FeatherIcon icon='hard-drive' />
+            <FeatherIcon icon='hard-drive' style={{color: '#f368e0'}}/>
           </div>
           <div className='notification-content d-flex'>
             <div className='notification-text'>
               <Heading as='h5'>
-                <span>{name}</span> created a post
+                {notification.user.name} {notification.messagePrefix}{' '}
+                <span>guest post</span>
               </Heading>
               <p>5 hours ago</p>
             </div>
@@ -32,18 +33,21 @@ const PostNotification = ({ name, slug }) => {
   );
 };
 
-const CommentNotification = ({ name, slug, postId }) => {
+const CommentNotification = ({ notification }) => {
   return (
     <li>
-      <Link to={`/post/comments/${slug}/${postId}`}>
+      <Link
+        to={`/post/comments/${notification.post.slug}/${notification.post._id}`}
+      >
         <div className='atbd-top-dropdwon__content notifications'>
           <div className='notification-icon bg-primary'>
-            <FeatherIcon icon='message-square' />
+            <FeatherIcon icon='message-square' style={{ color: 'black' }} />
           </div>
           <div className='notification-content d-flex'>
             <div className='notification-text'>
               <Heading as='h5'>
-                <span>{name}</span> post a comment
+                {notification.user.name} {notification.messagePrefix}{' '}
+                <span>post</span>
               </Heading>
               <p>5 hours ago</p>
             </div>
@@ -123,7 +127,6 @@ const NotificationBox = () => {
       console.log(error);
     }
   };
-  console.log(unread);
 
   const content = (
     <AtbdTopDropdwon className='atbd-top-dropdwon'>
@@ -141,22 +144,12 @@ const NotificationBox = () => {
         <ul className='atbd-top-dropdwon__nav notification-list'>
           {notification &&
             notification.map((item, i) => {
+              console.log(item);
               if (item.action === 'post') {
-                return (
-                  <PostNotification
-                    name={item?.user?.name}
-                    slug={item?.post?.slug}
-                  />
-                );
+                return <PostNotification notification={item} />;
               }
               if (item.action === 'comment') {
-                return (
-                  <CommentNotification
-                    name={item?.user?.name}
-                    slug={item?.post?.slug}
-                    postId={item?.post?._id}
-                  />
-                );
+                return <CommentNotification notification={item} />;
               }
             })}
           {page !== pages && (
