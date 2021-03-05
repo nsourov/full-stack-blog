@@ -4,6 +4,8 @@ import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
+import moment from 'moment';
+
 import { AtbdTopDropdwon } from './auth-info-style';
 import { Popover } from '../../popup/popup';
 import Heading from '../../heading/heading';
@@ -16,7 +18,7 @@ const PostNotification = ({ notification }) => {
       <Link to={`/post/update/${notification.post.slug}`}>
         <div className='atbd-top-dropdwon__content notifications'>
           <div className='notification-icon bg-primary'>
-            <FeatherIcon icon='hard-drive' style={{color: '#f368e0'}}/>
+            <FeatherIcon icon='hard-drive' style={{ color: '#f368e0' }} />
           </div>
           <div className='notification-content d-flex'>
             <div className='notification-text'>
@@ -24,7 +26,7 @@ const PostNotification = ({ notification }) => {
                 {notification.user.name} {notification.messagePrefix}{' '}
                 <span>guest post</span>
               </Heading>
-              <p>5 hours ago</p>
+              <p>{moment(notification.createdAt).fromNow()}</p>
             </div>
           </div>
         </div>
@@ -49,7 +51,7 @@ const CommentNotification = ({ notification }) => {
                 {notification.user.name} {notification.messagePrefix}{' '}
                 <span>post</span>
               </Heading>
-              <p>5 hours ago</p>
+              <p>{moment(notification.createdAt).fromNow()}</p>
             </div>
           </div>
         </div>
