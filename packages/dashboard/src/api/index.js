@@ -121,9 +121,13 @@ export const updatePost = (slug, body, token) => {
 };
 
 export const publishPost = (slug, token) => {
-  return axios.put(`${api}/posts/${slug}/publish`, {}, {
-    headers: { Authorization: token },
-  });
+  return axios.put(
+    `${api}/posts/${slug}/publish`,
+    {},
+    {
+      headers: { Authorization: token },
+    }
+  );
 };
 
 export const createPublishPost = (body, token) => {
@@ -158,6 +162,18 @@ export const updateUser = (userId, body, token) => {
 
 export const deleteUser = (userId, token) => {
   return axios.delete(`${api}/users/${userId}`, {
+    headers: { Authorization: token },
+  });
+};
+
+export const getNotifications = (page, token) => {
+  return axios.get(`${api}/notifications/page/${page}`, {
+    headers: { Authorization: token },
+  });
+};
+
+export const getNotificationunreadCount = (token) => {
+  return axios.get(`${api}/notifications/unread/`, {
     headers: { Authorization: token },
   });
 };

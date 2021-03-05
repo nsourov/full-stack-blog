@@ -29,7 +29,7 @@ router.put(
   notificationController.markAsRead
 );
 
-router.put(
+router.get(
   '/unread',
   passport.authenticate('jwt', { session: false }),
   isAdmin,
