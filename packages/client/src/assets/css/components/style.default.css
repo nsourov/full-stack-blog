@@ -2741,7 +2741,8 @@ a.text-dark:hover {
   z-index: 99999 !important;
 }
 
-.main-wraper, .main-wraper .auth-row {
+.main-wraper,
+.main-wraper .auth-row {
   min-height: calc(100vh - 151px);
 }
 
@@ -2763,5 +2764,38 @@ a.text-dark:hover {
 }
 
 .fileContainer .chooseFileButton {
-  background: #343a40 !important
+  background: #343a40 !important;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  filter: invert(1);
+}
+
+.carousel-indicators li {
+  background-color: black;
+  height: 6px;
+}
+
+.carousel-control-next:hover,
+.carousel-control-prev:hover {
+  transition-delay: 1s; /* delays for 1 second */
+  -webkit-transition-delay: 1s; /* for Safari & Chrome */
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+}
+
+.carousel-control-next:after, .carousel-control-prev:after {
+  content: '\A';
+  position: absolute;
+  width: 100%; height:100%;
+  top:0; left:0;
+  background:rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+}
+
+.carousel-control-next:hover:after, .carousel-control-prev:hover:after {
+  opacity: 1;
 }
