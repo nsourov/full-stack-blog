@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Badge } from 'antd';
+import { Badge, Empty } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -8,7 +8,11 @@ import { AtbdTopDropdwon } from './auth-info-style';
 import { Popover } from '../../popup/popup';
 import Heading from '../../heading/heading';
 
-import { getNotifications, getNotificationunreadCount } from '../../../api';
+import {
+  getNotifications,
+  getNotificationunreadCount,
+  clearNotification,
+} from '../../../api';
 
 const PostNotification = ({ name, slug }) => {
   return (
@@ -58,7 +62,7 @@ const NotificationBox = () => {
   const [unread, setUnread] = useState(0);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(0);
-  const [notification, setNotification] = useState(null);
+  const [notification, setNotification] = useState([]);
 
   const renderThumb = ({ style, ...props }) => {
     const thumbStyle = {
@@ -123,7 +127,17 @@ const NotificationBox = () => {
       console.log(error);
     }
   };
-  console.log(unread);
+
+  const deleteNotification = async () => {
+    try {
+      const token = localStorage.getItem('jwtToken');
+      await clearNotification(token);
+      setNotification([]);
+      setUnread(0);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const content = (
     <AtbdTopDropdwon className='atbd-top-dropdwon'>
@@ -131,46 +145,51 @@ const NotificationBox = () => {
         <span className='title-text'>Notifications</span>
         <Badge className='badge-success' count={3} />
       </Heading> */}
-      <Scrollbars
-        autoHeight
-        autoHide
-        renderThumbVertical={renderThumb}
-        renderView={renderView}
-        renderTrackVertical={renderTrackVertical}
-      >
-        <ul className='atbd-top-dropdwon__nav notification-list'>
-          {notification &&
-            notification.map((item, i) => {
-              if (item.action === 'post') {
-                return (
-                  <PostNotification
-                    name={item?.user?.name}
-                    slug={item?.post?.slug}
-                  />
-                );
-              }
-              if (item.action === 'comment') {
-                return (
-                  <CommentNotification
-                    name={item?.user?.name}
-                    slug={item?.post?.slug}
-                    postId={item?.post?._id}
-                  />
-                );
-              }
-            })}
-          {page !== pages && (
-            <li>
-              <Link onClick={loadMore} className='btn-seeAll' to='#'>
-                Load more
-              </Link>
-            </li>
-          )}
-        </ul>
-      </Scrollbars>
-      <Link className='btn-seeAll' to='#'>
-        Clear all notification
-      </Link>
+      {notification.length > 0 ? (
+        <>
+          <Scrollbars
+            autoHeight
+            autoHide
+            renderThumbVertical={renderThumb}
+            renderView={renderView}
+            renderTrackVertical={renderTrackVertical}
+          >
+            <ul className='atbd-top-dropdwon__nav notification-list'>
+              {notification.map((item, i) => {
+                if (item.action === 'post') {
+                  return (
+                    <PostNotification
+                      name={item?.user?.name}
+                      slug={item?.post?.slug}
+                    />
+                  );
+                }
+                if (item.action === 'comment') {
+                  return (
+                    <CommentNotification
+                      name={item?.user?.name}
+                      slug={item?.post?.slug}
+                      postId={item?.post?._id}
+                    />
+                  );
+                }
+              })}
+              {page !== pages && (
+                <li>
+                  <Link onClick={loadMore} className='btn-seeAll' to='#'>
+                    Load more
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </Scrollbars>
+          <Link onClick={deleteNotification} className='btn-seeAll' to='#'>
+            Clear all notification
+          </Link>
+        </>
+      ) : (
+        <Empty description='No notification' />
+      )}
     </AtbdTopDropdwon>
   );
 

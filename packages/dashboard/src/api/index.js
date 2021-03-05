@@ -177,3 +177,9 @@ export const getNotificationunreadCount = (token) => {
     headers: { Authorization: token },
   });
 };
+
+export const clearNotification = (token) => {
+  return axios.delete(`${api}/notifications`, {
+    headers: { Authorization: token },
+  });
+};
