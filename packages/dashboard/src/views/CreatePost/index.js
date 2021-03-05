@@ -10,7 +10,7 @@ import {
   Row,
   Col,
 } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Editor from '../../components/editor/Editor';
@@ -213,6 +213,7 @@ const CreatePost = () => {
             type='primary'
             size='large'
             disabled={load}
+            icon={<EditOutlined />}
           >
             {load ? 'Loading...' : 'Create'}
           </Button>
@@ -225,6 +226,7 @@ const CreatePost = () => {
               size='large'
               style={{ marginLeft: '25px' }}
               disabled={load}
+              icon={<EyeOutlined />}
             >
               {load ? 'Loading...' : 'Publish'}
             </Button>
