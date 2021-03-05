@@ -48,7 +48,7 @@ const CreatePost = () => {
     formData.append('title', title);
     formData.append('body', description);
     if (category && category.length > 0) {
-      formData.append('category', category);
+      formData.append('categoryId', category);
     }
     if (primaryPhoto) {
       formData.append('primaryPhoto', primaryPhoto.originFileObj);
@@ -83,7 +83,7 @@ const CreatePost = () => {
     formData.append('title', title);
     formData.append('body', description);
     if (category && category.length > 0) {
-      formData.append('category', category);
+      formData.append('categoryId', category);
     }
     if (primaryPhoto) {
       formData.append('primaryPhoto', primaryPhoto.originFileObj);

@@ -68,28 +68,10 @@ const UpdatePost = () => {
     setSuccessPublished(false);
   };
   const handlePublished = async () => {
-    let formData = new FormData();
-    formData.append('title', title);
-    formData.append('body', body);
-    if (category && category.length > 0) {
-      formData.append('category', category);
-    }
-    if (primaryPhoto) {
-      formData.append('primaryPhoto', primaryPhoto.originFileObj);
-    }
-    if (secondaryPhoto) {
-      formData.append('secondaryPhoto', secondaryPhoto.originFileObj);
-    }
-
-    const data = {
-      title,
-      body,
-    };
-
     try {
       setLoad(true);
       const token = localStorage.getItem('jwtToken');
-      await publishPost(slug, data, token);
+      await publishPost(slug, token);
       message.success('Post published successfully');
       setErrors({});
       setSuccessPublished(true);
@@ -171,7 +153,6 @@ const UpdatePost = () => {
             onChange={(e) => {
               setCategory(e);
             }}
-            allowClear
           >
             {categories.map((item) => (
               <Option key={item._id} value={item._id}>

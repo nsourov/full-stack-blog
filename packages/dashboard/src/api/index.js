@@ -120,8 +120,8 @@ export const updatePost = (slug, body, token) => {
   });
 };
 
-export const publishPost = (slug, body, token) => {
-  return axios.put(`${api}/posts/${slug}/publish`, body, {
+export const publishPost = (slug, token) => {
+  return axios.put(`${api}/posts/${slug}/publish`, {}, {
     headers: { Authorization: token },
   });
 };

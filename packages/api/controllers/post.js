@@ -581,14 +581,6 @@ exports.updatePost = async (req, res) => {
 };
 
 exports.publishPost = async (req, res) => {
-  console.log(req.body);
-  const { errors, isValid } = validatePostInput(req.body);
-
-  // Check Validation
-  if (!isValid) {
-    return res.status(400).json({ success: false, errors });
-  }
-
   const updatedPost = await Post.findOneAndUpdate(
     { slug: req.params.slug },
     { published: true },
