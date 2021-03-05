@@ -14,12 +14,17 @@ import {
   getNotifications,
   getNotificationunreadCount,
   clearNotification,
+  readNotification,
 } from '../../../api';
 
-const PostNotification = ({ notification }) => {
+const PostNotification = ({ notification, onClick }) => {
   return (
     <li>
-      <Link to={`/post/update/${notification.post.slug}`}>
+      <Link
+        target='__blank'
+        onClick={() => !notification.read && onClick(notification._id)}
+        to={`/post/update/${notification.post.slug}`}
+      >
         <div className='atbd-top-dropdwon__content notifications'>
           <div className='notification-icon bg-primary'>
             <FeatherIcon icon='hard-drive' style={{ color: '#f368e0' }} />
@@ -46,10 +51,12 @@ const PostNotification = ({ notification }) => {
   );
 };
 
-const CommentNotification = ({ notification }) => {
+const CommentNotification = ({ notification, onClick }) => {
   return (
     <li>
       <Link
+        target='__blank'
+        onClick={() => !notification.read && onClick(notification._id)}
         to={`/post/comments/${notification.post.slug}/${notification.post._id}`}
       >
         <div className='atbd-top-dropdwon__content notifications'>
@@ -148,6 +155,15 @@ const NotificationBox = () => {
     }
   };
 
+  const readnotification = async (notificationId) => {
+    try {
+      const token = localStorage.getItem('jwtToken');
+      await readNotification(notificationId, token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const deleteNotification = async () => {
     try {
       const token = localStorage.getItem('jwtToken');
@@ -177,10 +193,22 @@ const NotificationBox = () => {
             <ul className='atbd-top-dropdwon__nav notification-list'>
               {notification.map((item, i) => {
                 if (item.action === 'post') {
-                  return <PostNotification notification={item} />;
+                  return (
+                    <PostNotification
+                      key={i}
+                      notification={item}
+                      onClick={readnotification}
+                    />
+                  );
                 }
                 if (item.action === 'comment') {
-                  return <CommentNotification notification={item} />;
+                  return (
+                    <CommentNotification
+                      key={i}
+                      notification={item}
+                      onClick={readnotification}
+                    />
+                  );
                 }
               })}
               {page !== pages && (

@@ -183,3 +183,13 @@ export const clearNotification = (token) => {
     headers: { Authorization: token },
   });
 };
+
+export const readNotification = (notificationId, token) => {
+  return axios.put(
+    `${api}/notifications/read/${notificationId}`,
+    {},
+    {
+      headers: { Authorization: token },
+    }
+  );
+};
