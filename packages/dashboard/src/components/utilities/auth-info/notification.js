@@ -31,7 +31,7 @@ const PostNotification = ({ notification }) => {
           </div>
           {!notification.read ? (
             <div style={{ float: 'right', marginTop: '20px' }}>
-              <FeatherIcon icon='mail' style={{ color: '#5a5f7d' }} size='15' />
+              <FeatherIcon icon='mail' style={{ color: '#7f8c8d' }} size='15' />
             </div>
           ) : (
             ''
@@ -61,6 +61,13 @@ const CommentNotification = ({ notification }) => {
               <p>{moment(notification.createdAt).fromNow()}</p>
             </div>
           </div>
+          {!notification.read ? (
+            <div style={{ float: 'right', marginTop: '20px' }}>
+              <FeatherIcon icon='mail' style={{ color: '#7f8c8d' }} size='15' />
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </Link>
     </li>
