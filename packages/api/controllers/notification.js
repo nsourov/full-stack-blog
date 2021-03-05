@@ -12,7 +12,7 @@ exports.getNotifications = async (req, res) => {
     .limit(limit)
     .sort({ createdAt: 'desc' });
 
-  const countPromise = Notification.count(args);
+  const countPromise = Notification.count({});
 
   const [notifications, count] = await Promise.all([
     notificationsPromise,
