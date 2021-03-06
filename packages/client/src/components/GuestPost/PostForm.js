@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 import { store } from 'react-notifications-component';
 import ImageUploader from 'react-images-upload';
+import { useDispatch } from 'react-redux';
+
 import { createGuestPost } from '../../api';
+import { toggleGuestPostModal } from '../../state/ducks/blogs';
 
 const style = {
   insert: 'top',
@@ -21,6 +24,7 @@ const PostForm = () => {
   const [body, setBody] = useState(null);
   const [agree, setAgree] = useState(null);
   const [image, setImage] = useState(null);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +39,7 @@ const PostForm = () => {
       const token = localStorage.getItem('jwtToken');
 
       await createGuestPost(formData, token).catch(e => console.log(e));
+      dispatch(toggleGuestPostModal())
       await store.addNotification({
         message: 'Your post is submitted successfully',
         type: 'info',
