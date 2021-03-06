@@ -539,7 +539,10 @@ exports.createAndPublishPost = async (req, res) => {
 };
 
 exports.deletePost = async (req, res) => {
-  await Post.findOneAndDelete({ slug: req.params.slug }).exec();
+  const post = await Post.findOneAndDelete({ slug: req.params.slug }).exec();
+  await Notification.findOneAndDelete({
+    post: post.id,
+  });
   return res.status(200).json({ success: true });
 };
 
@@ -658,6 +661,7 @@ exports.addComment = async (req, res) => {
   if (guest_post) {
     const newNotification = new Notification({
       post: post.id,
+      comment: newComment.id,
       user: req.user.id,
       action: 'comment',
       messagePrefix: 'commented on',
@@ -675,6 +679,7 @@ exports.deleteComment = async (req, res) => {
       .json({ success: false, errors: { message: 'Post not found' } });
 
   await Comment.findByIdAndDelete(req.params.commentId);
+  await Notification.findOneAndDelete({ comment: req.params.commentId });
   return res.status(200).json({ success: true });
 };
 

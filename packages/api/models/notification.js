@@ -8,6 +8,10 @@ const NotificationSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Post',
     },
+    comment: {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment',
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
