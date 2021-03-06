@@ -142,6 +142,11 @@ export const publishedComment = (slug, commentId, body, token) => {
   });
 };
 
+export const deleteComment = (slug, commentId, token) => {
+  return axios.delete(`${api}/posts/${slug}/comment/${commentId}`, {
+    headers: { Authorization: token },
+  });
+};
 export const deletePost = (slug, token) => {
   return axios.delete(`${api}/posts/${slug}`, {
     headers: { Authorization: token },

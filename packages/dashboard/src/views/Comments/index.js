@@ -4,7 +4,11 @@ import { Row, Col, Table, Button } from 'antd';
 import { useParams } from 'react-router-dom';
 
 import { Main } from '../../container/styled';
-import { getUnPublishedComments, publishedComment } from '../../api';
+import {
+  getUnPublishedComments,
+  publishedComment,
+  deleteComment,
+} from '../../api';
 
 const Comments = () => {
   const [page, setPage] = useState(1);
@@ -43,6 +47,16 @@ const Comments = () => {
     }
   };
 
+  const handleDeleteComment = async (id) => {
+    try {
+      const token = localStorage.getItem('jwtToken');
+      await deleteComment(slug, id, token);
+      fetchComments();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const columns = [
     {
       title: 'Name',
@@ -62,15 +76,23 @@ const Comments = () => {
     {
       title: 'Action',
       dataInedex: '_id',
-      align: 'right',
+      align: 'center',
       render: (item) => {
         return (
-          <Button
-            onClick={() => handelPublished(item._id, item)}
-            type='primary'
-          >
-            Publish
-          </Button>
+          <>
+            <Button
+              onClick={() => handelPublished(item._id, item)}
+              type='primary'
+            >
+              Publish
+            </Button>{' '}
+            <Button
+              onClick={() => handleDeleteComment(item._id)}
+              type='danger'
+            >
+              Delete
+            </Button>
+          </>
         );
       },
     },
