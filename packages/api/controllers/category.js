@@ -16,8 +16,14 @@ exports.getCategories = async (req, res) => {
 
   const withCount = [];
   for (const category of categories) {
-    const count = await Post.count({ category: category.id }).exec();
-    withCount.push({...JSON.parse(JSON.stringify(category)), postCount: count});
+    const count = await Post.count({
+      category: category.id,
+      published: true,
+    }).exec();
+    withCount.push({
+      ...JSON.parse(JSON.stringify(category)),
+      postCount: count,
+    });
   }
   return res.status(200).json({
     success: true,
