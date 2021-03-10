@@ -25,6 +25,7 @@ const Blog = () => {
     <main className='posts-listing'>
       <div className='container-fluid'>
         <div className='row justify-content-center'>
+          {data?.posts?.length === 0 ? <h2>No post found</h2> : ''}
           <BlogLanding data={data} loading={loading} />
           {!loading && data.count > 5 && (
             <div className='col-md-12'>
