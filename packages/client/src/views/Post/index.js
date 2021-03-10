@@ -32,8 +32,6 @@ const Post = () => {
     }
   }, [post]);
 
-  console.log('post', post);
-
   return (
     <main className='post blog-post'>
       <div className='container-fluid'>

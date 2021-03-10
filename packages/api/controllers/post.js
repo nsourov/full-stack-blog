@@ -264,6 +264,67 @@ exports.getPublishedPosts = async (req, res) => {
   });
 };
 
+exports.getPublishedCategoryPosts = async (req, res) => {
+  const page = req.params.page || 1;
+  const limit = 5;
+  const skip = page * limit - limit;
+
+  const category = await Category.findOne({ slug: req.params.slug });
+  if (!category) {
+    return res.status(200).json({
+      success: true,
+      posts: [],
+      page,
+      pages: 0,
+      count: 0,
+    });
+  }
+
+  const postsPromise = Post.find({
+    published: true,
+    category: category.id,
+  })
+    .select(['-comments'])
+    .populate('category')
+    .populate('user', { password: 0, role: 0 })
+    .skip(skip)
+    .limit(limit)
+    .sort({ createdAt: 'desc' });
+
+  const countPromise = Post.count({
+    published: true,
+    category: category.id,
+  });
+
+  const [posts, count] = await Promise.all([postsPromise, countPromise]);
+  const pages = Math.ceil(count / limit);
+  if (!posts.length && skip) {
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: "Page doesn't exist" } });
+  }
+
+  const withCount = [];
+  for (const post of posts) {
+    const count = await Comment.count({
+      post: post.id,
+      published: true,
+    }).exec();
+    withCount.push({
+      ...JSON.parse(JSON.stringify(post)),
+      commentCount: count,
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    posts: withCount,
+    page,
+    pages,
+    count,
+  });
+};
+
 exports.getPublishedGuestsPosts = async (req, res) => {
   const page = req.params.page || 1;
   const limit = 5;

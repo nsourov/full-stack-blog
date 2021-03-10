@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getPublishedPosts, getPost, getPostComments } from '../../api';
+import {
+  getPublishedPosts,
+  getPost,
+  getPostComments,
+  getPublishedCategoryPosts,
+} from '../../api';
 
 function startLoading(state) {
   state.loading = true;
@@ -137,6 +142,18 @@ export const fetchBlogs = (page) => async (dispatch) => {
     dispatch(getBlogsStart());
 
     const { data } = await getPublishedPosts(page);
+
+    dispatch(getBlogsSuccess(data));
+  } catch (error) {
+    dispatch(getBlogsFailure(error.toString()));
+  }
+};
+
+export const fetchCategoryPosts = (slug, page) => async (dispatch) => {
+  try {
+    dispatch(getBlogsStart());
+
+    const { data } = await getPublishedCategoryPosts(slug, page);
 
     dispatch(getBlogsSuccess(data));
   } catch (error) {

@@ -7,6 +7,10 @@ export const getPublishedPosts = (page) => {
   return axios.get(`${api}/posts/published/page/${page}`);
 };
 
+export const getPublishedCategoryPosts = (slug, page) => {
+  return axios.get(`${api}/posts/published/category/${slug}/page/${page}`);
+};
+
 // API to get post
 export const getPost = (slug) => {
   return axios.get(`${api}/posts/${slug}`);

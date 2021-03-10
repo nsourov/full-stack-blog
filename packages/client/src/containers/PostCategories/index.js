@@ -28,6 +28,7 @@ const PostCategories = () => {
         category?.categories.map((item) => (
           <PostCategory
             name={item.name}
+            slug={item.slug}
             count={item.postCount}
             key={item._id}
           />

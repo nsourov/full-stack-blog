@@ -27,6 +27,7 @@ import Search from '../Search';
 const SignIn = lazy(() => import('../SignIn'));
 const SignUp = lazy(() => import('../SignUp'));
 const Blog = lazy(() => import('../Blog'));
+const CategoryBlog = lazy(() => import('../CategoryBlog'));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -73,6 +74,18 @@ const App = () => {
                 render={(props) =>
                   withTitle({
                     component: Blog,
+                    title: 'Trollz',
+                    sidebar: true,
+                    ...props,
+                  })
+                }
+              />
+              <Route
+                exact
+                path='/category/:slug'
+                render={(props) =>
+                  withTitle({
+                    component: CategoryBlog,
                     title: 'Trollz',
                     sidebar: true,
                     ...props,

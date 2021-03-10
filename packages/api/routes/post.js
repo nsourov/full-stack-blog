@@ -15,6 +15,7 @@ const {
 
 // Post Routes
 router.get('/published/page/:page', postController.getPublishedPosts);
+router.get('/published/category/:slug/page/:page', postController.getPublishedCategoryPosts);
 router.get(
   '/:userId/published/page/:page',
   postController.getUserPublishedPosts
