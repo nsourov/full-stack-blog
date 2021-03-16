@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useLayoutEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Skeleton from '../../components/Skeleton';
@@ -17,6 +17,7 @@ const Post = () => {
     data: { post },
     loading,
   } = useSelector((state) => state.blog);
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -31,6 +32,11 @@ const Post = () => {
       document.title = post.title;
     }
   }, [post]);
+
+    // Scroll to top if path changes
+    useLayoutEffect(() => {
+      window.scrollTo(0, 0);
+    }, [location.pathname]);
 
   return (
     <main className='post blog-post'>
