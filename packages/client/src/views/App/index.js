@@ -1,5 +1,10 @@
-import React, { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect, useLayoutEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useLocation,
+} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Container, Row } from 'reactstrap';
 import ReactNotification from 'react-notifications-component';
@@ -31,6 +36,11 @@ const CategoryBlog = lazy(() => import('../CategoryBlog'));
 
 const App = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  // Scroll to top if path changes
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   useEffect(() => {
     async function checkAuth() {

@@ -37,43 +37,53 @@ const Post = () => {
       <div className='container-fluid'>
         {!loading ? (
           <div className='post-single'>
-            {post.images.length ? (
+            {post ? (
               <>
-                {post.images.length > 1 ? (
-                  <Slider
-                    items={post.images.map((p) => ({
-                      src: p,
-                      altText: 'image',
-                    }))}
-                  />
+                {post.images.length ? (
+                  <>
+                    {post.images.length > 1 ? (
+                      <Slider
+                        items={post.images.map((p) => ({
+                          src: p,
+                          altText: 'image',
+                        }))}
+                      />
+                    ) : (
+                      <div className='post-thumbnail'>
+                        <img
+                          src={post.images[0]}
+                          alt='...'
+                          className='img-fluid'
+                        />
+                      </div>
+                    )}
+                  </>
                 ) : (
-                  <div className='post-thumbnail'>
-                    <img src={post.images[0]} alt='...' className='img-fluid' />
-                  </div>
+                  ''
                 )}
-              </>
-            ) : (
-              ''
-            )}
 
-            <div className='post-details'>
-              <PostMeta category={post?.category?.name} />
-              <h1>
-                {post.title}
-                {/* <Link to='#'>
+                <div className='post-details'>
+                  <PostMeta category={post?.category?.name} />
+                  <h1>
+                    {post.title}
+                    {/* <Link to='#'>
                   <i className='fa fa-bookmark-o' />
                 </Link> */}
-              </h1>
+                  </h1>
 
-              <PostFooter
-                name={post.user.name || 'John doe'}
-                updatedAt={post.updatedAt}
-                comment={post.commentCount || 0}
-              />
-              <PostBody body={post.body} />
-              <PostComments postId={post._id} slug={post.slug} />
-              <AddComment slug={post.slug} />
-            </div>
+                  <PostFooter
+                    name={post.user.name || 'John doe'}
+                    updatedAt={post.updatedAt}
+                    comment={post.commentCount || 0}
+                  />
+                  <PostBody body={post.body} />
+                  <PostComments postId={post._id} slug={post.slug} />
+                  <AddComment slug={post.slug} />
+                </div>
+              </>
+            ) : (
+              <h1>No post found!</h1>
+            )}
           </div>
         ) : (
           <div className='post-single'>
