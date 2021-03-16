@@ -102,11 +102,11 @@ const PostForm = () => {
             required
           />{' '}
           I agree to the{' '}
-          <a href='#' className='text-blue'>
+          <a href='/privacy-statement' className='text-blue'>
             Privacy
           </a>{' '}
           and{' '}
-          <a href='#' className='text-blue'>
+          <a href='/terms-of-use' className='text-blue'>
             Terms of Use
           </a>
         </Label>
