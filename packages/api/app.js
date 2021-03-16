@@ -15,6 +15,8 @@ const postRoutes = require('./routes/post');
 const categoryRoutes = require('./routes/category');
 const notificationRoutes = require('./routes/notification');
 const requestRoutes = require('./routes/request');
+const privacyRoutes = require('./routes/privacy');
+const termsRoutes = require('./routes/terms');
 
 mongoose
   .connect(process.env.DATABASE_URL, {
@@ -48,6 +50,8 @@ app.use('/posts', postRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/notifications', notificationRoutes);
 app.use('/requests', requestRoutes);
+app.use('/privacy', privacyRoutes);
+app.use('/terms', termsRoutes);
 
 function ignoreFavicon(req, res, next) {
   if (req.originalUrl.includes('favicon.ico')) {

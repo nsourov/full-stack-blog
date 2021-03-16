@@ -29,6 +29,8 @@ import Post from '../Post';
 import Search from '../Search';
 
 // Pages
+const Privacy = lazy(() => import('../Privacy'));
+const Terms = lazy(() => import('../Terms'));
 const SignIn = lazy(() => import('../SignIn'));
 const SignUp = lazy(() => import('../SignUp'));
 const Blog = lazy(() => import('../Blog'));
@@ -145,6 +147,30 @@ const App = () => {
                   withTitle({
                     component: SignUp,
                     title: 'Sign Up',
+                    ...props,
+                  })
+                }
+              />
+
+              <Route
+                exact
+                path='/privacy-statement'
+                render={(props) =>
+                  withTitle({
+                    component: Privacy,
+                    title: 'Privacy and Policy',
+                    ...props,
+                  })
+                }
+              />
+
+              <Route
+                exact
+                path='/terms-of-use'
+                render={(props) =>
+                  withTitle({
+                    component: Terms,
+                    title: 'Terms of use',
                     ...props,
                   })
                 }

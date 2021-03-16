@@ -90,3 +90,11 @@ export const createGuestPost = (body, token) => {
     headers: { Authorization: token },
   });
 };
+
+export const getPrivacyData = () => {
+  return axios.get(`${api}/privacy`);
+};
+
+export const getTermsData = () => {
+  return axios.get(`${api}/terms`);
+};

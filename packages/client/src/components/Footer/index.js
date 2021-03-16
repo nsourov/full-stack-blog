@@ -13,10 +13,10 @@ const Footer = () => {
             <div className='col-md-6 col-sm-12 text-sm-center text-md-right'>
               <ul className='footer-nav'>
                 <li>
-                  <Link to='#'>Privacy</Link>
+                  <Link to='/privacy-statement'>Privacy</Link>
                 </li>
                 <li>
-                  <Link to='#'>Terms of Use</Link>
+                  <Link to='/terms-of-use'>Terms of Use</Link>
                 </li>
               </ul>
             </div>

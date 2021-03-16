@@ -99,6 +99,24 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
         </Menu.Item>
       </SubMenu>
       {user.role === 'admin' && (
+        <SubMenu
+          key='pages'
+          icon={!topMenu && <FeatherIcon icon='book' />}
+          title='Pages'
+        >
+          <Menu.Item key='privacy'>
+            <NavLink onClick={toggleCollapsed} to='/pages/privacy'>
+              Privacy
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key='terms'>
+            <NavLink onClick={toggleCollapsed} to='/pages/terms'>
+              Terms
+            </NavLink>
+          </Menu.Item>
+        </SubMenu>
+      )}
+      {user.role === 'admin' && (
         <>
           <Menu.Item
             icon={

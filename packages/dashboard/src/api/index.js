@@ -198,3 +198,25 @@ export const readNotification = (notificationId, token) => {
     }
   );
 };
+
+export const getPrivacyData = () => {
+  return axios.get(`${api}/privacy`);
+};
+
+
+export const updatePrivacyData = (body, token) => {
+  return axios.put(`${api}/privacy`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const getTermsData = () => {
+  return axios.get(`${api}/terms`);
+};
+
+
+export const updateTermsData = (body, token) => {
+  return axios.put(`${api}/terms`, body, {
+    headers: { Authorization: token },
+  });
+};
