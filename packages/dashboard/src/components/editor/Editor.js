@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RichTextEditor from 'react-rte';
 import 'react-tagsinput/react-tagsinput.css';
 import propTypes from 'prop-types';
@@ -10,19 +10,26 @@ const Editor = ({ onChange, defaultTag, value }) => {
     tags: defaultTag ? [defaultTag] : [],
   });
 
-  const onChanges = value => {
+  const onChanges = (value) => {
     setState({ ...state, value });
     if (onChange) {
       onChange(value.toString('html'));
     }
   };
 
+  useEffect(() => {
+    setState({
+      value: RichTextEditor.createValueFromString(value, 'html'),
+      tags: defaultTag ? [defaultTag] : [],
+    });
+  }, [value, defaultTag]);
+
   return (
     <MailBox>
-      <div className="body">
-        <div className="group">
+      <div className='body'>
+        <div className='group'>
           <RichTextEditor
-            placeholder="Type your message..."
+            placeholder='Type your message...'
             value={state.value}
             onChange={onChanges}
             defaultValue={state.value || value}
