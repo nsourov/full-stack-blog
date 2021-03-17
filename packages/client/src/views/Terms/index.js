@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Col, Row } from 'reactstrap';
 import ReactMarkdown from 'react-markdown';
+import { useLocation } from 'react-router-dom';
 
 import { getTermsData } from '../../api';
 import Skeleton from '../../components/Skeleton';
@@ -8,6 +9,7 @@ import Skeleton from '../../components/Skeleton';
 const Terms = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchData() {
@@ -24,6 +26,11 @@ const Terms = () => {
     }
     fetchData();
   }, []);
+
+  // Scroll to top if path changes
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <Row>

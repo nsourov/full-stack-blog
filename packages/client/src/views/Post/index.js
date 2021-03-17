@@ -33,10 +33,10 @@ const Post = () => {
     }
   }, [post]);
 
-    // Scroll to top if path changes
-    useLayoutEffect(() => {
-      window.scrollTo(0, 0);
-    }, [location.pathname]);
+  // Scroll to top if path changes
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <main className='post blog-post'>
