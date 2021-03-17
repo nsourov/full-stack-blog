@@ -158,7 +158,7 @@ const App = () => {
                 render={(props) =>
                   withTitle({
                     component: Privacy,
-                    title: 'Privacy and Policy',
+                    title: 'Privacy Policy',
                     ...props,
                   })
                 }

@@ -35,7 +35,7 @@ const Privacy = () => {
   return (
     <Row>
       <Col style={{ padding: '50px 20px' }}>
-        <h1>Privacy and Policy</h1>
+        <h1>Privacy Policy</h1>
         <br />
         <div className='post-body'>
           <ReactMarkdown allowDangerousHtml children={data} />

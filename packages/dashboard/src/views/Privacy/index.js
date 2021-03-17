@@ -43,8 +43,8 @@ const UpdatePrivacy = () => {
 
   return (
     <Main>
-      <h2 className='mt4'>Privacy and Policy</h2>
-      {success && <Alert message='Privacy and Policy updated' type='success' />}
+      <h2 className='mt4'>Privacy Policy</h2>
+      {success && <Alert message='Privacy Policy updated' type='success' />}
       <br />
       <Form name='login' form={form} onFinish={handleSubmit} layout='vertical'>
         <Editor
