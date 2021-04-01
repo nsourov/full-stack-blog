@@ -72,9 +72,21 @@ exports.getPost = async (req, res) => {
       .json({ success: false, errors: { message: 'Post not found' } });
   const commentCount = await Comment.count({ post: post.id, published: true });
 
-  return res.status(200).json({
+  const [nextPost] = await Post.find({ _id: { $gt: post.id } })
+    .sort({ _id: 1 })
+    .limit(1)
+    .select(['slug', 'title']);
+
+  const [prevPost] = await Post.find({ _id: { $lt: post.id } })
+    .sort({ _id: -1 })
+    .limit(1)
+    .select(['slug', 'title']);
+
+    return res.status(200).json({
     success: true,
     post: { ...JSON.parse(JSON.stringify(post)), commentCount },
+    ...(nextPost && { nextPost }),
+    ...(prevPost && { prevPost }),
   });
 };
 

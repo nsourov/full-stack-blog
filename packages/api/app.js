@@ -29,7 +29,7 @@ mongoose
   .catch((error) => {
     console.log('Connection to mongodb was not successful!', error);
   });
-
+mongoose.set('useCreateIndex', true);
 // parse application/x-www-form-urlencoded
 // parse application/json
 app.use(bodyParser.json({ limit: '20mb' }));
