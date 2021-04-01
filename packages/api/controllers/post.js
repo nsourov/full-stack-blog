@@ -82,11 +82,14 @@ exports.getPost = async (req, res) => {
     .limit(1)
     .select(['slug', 'title']);
 
-    return res.status(200).json({
+  return res.status(200).json({
     success: true,
-    post: { ...JSON.parse(JSON.stringify(post)), commentCount },
-    ...(nextPost && { nextPost }),
-    ...(prevPost && { prevPost }),
+    post: {
+      ...JSON.parse(JSON.stringify(post)),
+      commentCount,
+      ...(nextPost && { nextPost }),
+      ...(prevPost && { prevPost }),
+    },
   });
 };
 

@@ -7,6 +7,7 @@ import { fetchBlog } from '../../state/ducks/blogs';
 
 import PostComments from '../../containers/PostComments';
 import AddComment from './AddComment';
+import PostNav from './PostNav';
 import PostBody from './PostBody';
 import PostFooter from './PostFooter';
 import PostMeta from './PostMeta';
@@ -83,6 +84,7 @@ const Post = () => {
                     comment={post.commentCount || 0}
                   />
                   <PostBody body={post.body} />
+                  <PostNav post={post} />
                   <PostComments postId={post._id} slug={post.slug} />
                   <AddComment slug={post.slug} />
                 </div>
