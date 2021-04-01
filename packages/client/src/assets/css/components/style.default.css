@@ -2800,3 +2800,6 @@ a.text-dark:hover {
 .carousel-control-next:hover:after, .carousel-control-prev:hover:after {
   opacity: 1;
 }
+.post-body a{
+  color: #007bff;
+}
