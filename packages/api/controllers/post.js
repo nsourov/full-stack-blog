@@ -560,6 +560,7 @@ exports.createPost = async (req, res) => {
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
+    displayShop: req.body.displayShop,
     images,
     user: req.user.id,
     category: guest_post ? guestCategory.id : req.body.categoryId,
@@ -604,6 +605,7 @@ exports.createAndPublishPost = async (req, res) => {
   const newPost = new Post({
     title: req.body.title,
     body: req.body.body,
+    displayShop: req.body.displayShop,
     images,
     user: req.user.id,
     category: req.body.categoryId,

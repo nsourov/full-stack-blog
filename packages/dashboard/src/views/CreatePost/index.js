@@ -32,6 +32,7 @@ const CreatePost = () => {
   const [secondaryPhoto, setSecondaryPhoto] = useState(null);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
+  const [displayShop, setDisplayShop] = useState(false);
   const [description, setDescription] = useState('');
   const [load, setLoad] = useState(false);
   const [errors, setErrors] = useState({});
@@ -49,6 +50,9 @@ const CreatePost = () => {
     formData.append('body', description);
     if (category && category.length > 0) {
       formData.append('categoryId', category);
+    }
+    if (displayShop) {
+      formData.append('displayShop', displayShop);
     }
     if (primaryPhoto) {
       formData.append('primaryPhoto', primaryPhoto.originFileObj);
@@ -84,6 +88,9 @@ const CreatePost = () => {
     formData.append('body', description);
     if (category && category.length > 0) {
       formData.append('categoryId', category);
+    }
+    if (displayShop) {
+      formData.append('displayShop', displayShop);
     }
     if (primaryPhoto) {
       formData.append('primaryPhoto', primaryPhoto.originFileObj);
@@ -141,11 +148,26 @@ const CreatePost = () => {
           >
             {!loading
               ? categories.map((item) => (
-                  <Option key={item._id} value={item._id}>
-                    {item.name}
-                  </Option>
-                ))
+                <Option key={item._id} value={item._id}>
+                  {item.name}
+                </Option>
+              ))
               : 'Loading...'}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name='displayShop'
+          help={errors?.displayShop ? errors.displayShop : ''}
+        >
+          <Select
+            placeholder='Display shop image'
+            onChange={(e) => {
+              setDisplayShop(e);
+            }}
+            allowClear
+          >
+            <Option key="true" value={true}>Yes</Option>
+            <Option key="false" value={false}>No</Option>
           </Select>
         </Form.Item>
         <Editor

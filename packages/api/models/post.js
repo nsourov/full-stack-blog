@@ -23,6 +23,10 @@ const PostSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    displayShop: {
+      type: Boolean,
+      default: false,
+    },
     likes: [
       {
         user: {

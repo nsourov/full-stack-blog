@@ -40,6 +40,7 @@ const UpdatePost = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [category, setCategory] = useState('');
+  const [displayShop, setDisplayShop] = useState(false);
   const [load, setLoad] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
@@ -57,6 +58,7 @@ const UpdatePost = () => {
       setTitle(post.title);
       setBody(post.body);
       setCategory(post?.category?._id);
+      setDisplayShop(post?.displayShop);
       setImages(post.images);
       setPost(post);
       setFetchLoad(true);
@@ -105,6 +107,9 @@ const UpdatePost = () => {
     formData.append('body', body);
     if (category && category.length > 0) {
       formData.append('category', category);
+    }
+    if (displayShop) {
+      formData.append('displayShop', displayShop);
     }
     if (primaryPhoto) {
       formData.append('primaryPhoto', primaryPhoto.originFileObj);
@@ -173,6 +178,22 @@ const UpdatePost = () => {
                 {item.name}
               </Option>
             ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name='displayShop'
+          help={errors?.displayShop ? errors.displayShop : ''}
+        >
+          <Select
+            placeholder='Display shop image'
+            onChange={(e) => {
+              setDisplayShop(e);
+            }}
+            defaultValue={displayShop}
+            allowClear
+          >
+            <Option key="true" value={true}>Yes</Option>
+            <Option key="false" value={false}>No</Option>
           </Select>
         </Form.Item>
         <Editor
