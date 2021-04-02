@@ -104,6 +104,11 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
           icon={!topMenu && <FeatherIcon icon='book' />}
           title='Pages'
         >
+          <Menu.Item key='about'>
+            <NavLink onClick={toggleCollapsed} to='/pages/about'>
+              About
+            </NavLink>
+          </Menu.Item>
           <Menu.Item key='privacy'>
             <NavLink onClick={toggleCollapsed} to='/pages/privacy'>
               Privacy

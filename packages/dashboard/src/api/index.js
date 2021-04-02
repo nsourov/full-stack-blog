@@ -203,9 +203,18 @@ export const getPrivacyData = () => {
   return axios.get(`${api}/privacy`);
 };
 
+export const getAboutData = () => {
+  return axios.get(`${api}/about`);
+};
 
 export const updatePrivacyData = (body, token) => {
   return axios.put(`${api}/privacy`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const updateAboutData = (body, token) => {
+  return axios.put(`${api}/about`, body, {
     headers: { Authorization: token },
   });
 };

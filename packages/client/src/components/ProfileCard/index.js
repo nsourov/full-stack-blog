@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { store } from 'react-notifications-component';
 
@@ -49,15 +50,14 @@ const ProfileCard = () => {
             <div className='profile-name'>{admin.name}</div>
             <div className='profile-description'>{admin.bio}</div>
             <div className='row'>
-              <div className='col-sm-6'>
+              <div className='col-sm-4'>
                 <div className='profile-overview'>
-                  <GuestPostModal />
-                  <button className='btn' onClick={toggle}>
-                    GUEST POST
-                  </button>
+                  <Link to="/about" className="btn">
+                    ABOUT
+                  </Link>
                 </div>
               </div>
-              <div className='col-sm-6'>
+              <div className='col-sm-4'>
                 <div className='profile-overview'>
                   <CopyToClipboard
                     text={admin.email}
@@ -71,6 +71,14 @@ const ProfileCard = () => {
                   >
                     <button className='btn btn-block'>CONTACT ME</button>
                   </CopyToClipboard>
+                </div>
+              </div>
+              <div className='col-sm-4'>
+                <div className='profile-overview'>
+                  <GuestPostModal />
+                  <button className='btn' onClick={toggle}>
+                    GUEST POST
+                  </button>
                 </div>
               </div>
             </div>

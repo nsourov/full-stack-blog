@@ -29,6 +29,7 @@ import Post from '../Post';
 import Search from '../Search';
 
 // Pages
+const About = lazy(() => import('../About'));
 const Privacy = lazy(() => import('../Privacy'));
 const Terms = lazy(() => import('../Terms'));
 const SignIn = lazy(() => import('../SignIn'));
@@ -147,6 +148,18 @@ const App = () => {
                   withTitle({
                     component: SignUp,
                     title: 'Sign Up',
+                    ...props,
+                  })
+                }
+              />
+
+              <Route
+                exact
+                path='/about'
+                render={(props) =>
+                  withTitle({
+                    component: About,
+                    title: 'About',
                     ...props,
                   })
                 }

@@ -16,6 +16,7 @@ const categoryRoutes = require('./routes/category');
 const notificationRoutes = require('./routes/notification');
 const requestRoutes = require('./routes/request');
 const privacyRoutes = require('./routes/privacy');
+const aboutRoutes = require('./routes/about');
 const termsRoutes = require('./routes/terms');
 
 mongoose
@@ -50,6 +51,7 @@ app.use('/posts', postRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/notifications', notificationRoutes);
 app.use('/requests', requestRoutes);
+app.use('/about', aboutRoutes);
 app.use('/privacy', privacyRoutes);
 app.use('/terms', termsRoutes);
 

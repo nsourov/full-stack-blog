@@ -14,6 +14,7 @@ const PostList = lazy(() => import('../PostList'));
 const GuestPostList = lazy(() => import('../GuestPostList'));
 const CreatePost = lazy(() => import('../CreatePost'));
 const Privacy = lazy(() => import('../Privacy'));
+const About = lazy(() => import('../About'));
 const Terms = lazy(() => import('../Terms'));
 const UpdatePost = lazy(() => import('../UpdatePost'));
 const Category = lazy(() => import('../Category'));
@@ -95,6 +96,13 @@ const App = () => {
               exact
               path='/post/update/:slug'
               component={UpdatePost}
+              role={data?.role}
+              isAuthenticated={isAuthenticated}
+            />
+            <AdminRoute
+              exact
+              path='/pages/about'
+              component={About}
               role={data?.role}
               isAuthenticated={isAuthenticated}
             />

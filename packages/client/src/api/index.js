@@ -91,6 +91,10 @@ export const createGuestPost = (body, token) => {
   });
 };
 
+export const getAboutData = () => {
+  return axios.get(`${api}/about`);
+};
+
 export const getPrivacyData = () => {
   return axios.get(`${api}/privacy`);
 };
