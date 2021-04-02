@@ -43,7 +43,7 @@ const SignIn = () => {
         md={{ size: 6, offset: 3 }}
         sm={12}
         xs={12}
-        style={{ padding: '50px 20px' }}
+        style={{ padding: '50px 20px', marginTop: ' -70px' }}
         className='text-center'
       >
         <form onSubmit={handleSubmit(onsubmit)} className='text-left mb-5'>

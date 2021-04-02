@@ -57,7 +57,7 @@ const SignUp = () => {
         md={{ size: 6, offset: 3 }}
         sm={12}
         xs={12}
-        style={{ padding: '50px 20px' }}
+        style={{ padding: '50px 20px', marginTop: ' -70px' }}
         className='text-center'
       >
         <form onSubmit={handleSubmit(onsubmit)} className='text-left mb-5'>
@@ -146,6 +146,33 @@ const SignUp = () => {
               <span className='text-danger'>{apiError.confirmPassword}</span>
             )}
           </div>
+          <div className='form-check'>
+            <input
+              name='agree'
+              ref={register({
+                required: true,
+              })}
+              type='checkbox'
+              className='form-check-input'
+              id='agree'
+            />
+            <label htmlFor='agree' className='form-check-label'>
+              I agree to the <a href='/privacy-statement' className='text-blue'>
+                Privacy
+          </a>{' '}
+          and{' '}
+              <a href='/terms-of-use' className='text-blue'>
+                Terms of Use
+          </a>
+            </label>
+            {errors.confirmPassword &&
+              errors.confirmPassword.type === 'required' && (
+                <span className='text-danger'>Please check all the fields.</span>
+              )}
+            {apiError?.confirmPassword && (
+              <span className='text-danger'>{apiError.confirmPassword}</span>
+            )}
+          </div>
           <button
             type='submit'
             disabled={loading}
@@ -156,7 +183,7 @@ const SignUp = () => {
           </button>
         </form>
       </Col>
-    </Row>
+    </Row >
   );
 };
 
