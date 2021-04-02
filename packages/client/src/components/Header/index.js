@@ -55,12 +55,11 @@ const Header = () => {
 
           <div
             id='navbarcollapse'
-            className={`navbar-collapse ${
-              collapse ? 'collapse show' : 'collapse'
-            }`}
+            className={`navbar-collapse ${collapse ? 'collapse show' : 'collapse'
+              }`}
           >
             <ul className='navbar-nav ml-auto' />
-            <div className='navbar-text'>
+            <ul className='langs navbar-text'>
               <Link
                 onClick={() => setSearchBox(!searchBox)}
                 to='#'
@@ -68,8 +67,6 @@ const Header = () => {
               >
                 <i className='icon-search-1' />
               </Link>
-            </div>
-            <ul className='langs navbar-text'>
               {!isAuthenticated && (
                 <>
                   <Link to='/signin' className='btn btn-link text-light'>
