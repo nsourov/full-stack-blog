@@ -2807,3 +2807,7 @@ a.text-dark:hover {
 .buy a{
   color: #333 !important;
 }
+
+.shop-section {
+  margin-top: 20px;
+}

@@ -13,11 +13,14 @@ import PostFooter from './PostFooter';
 import PostMeta from './PostMeta';
 import Slider from './Slider';
 
+import Shop from './Shop';
+
 const Post = () => {
   const {
     data: { post },
     loading,
   } = useSelector((state) => state.blog);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const location = useLocation();
 
   const dispatch = useDispatch();
@@ -56,21 +59,21 @@ const Post = () => {
                         }))}
                       />
                     ) : (
-                      <div className='post-thumbnail'>
-                        <img
-                          src={post.images[0]}
-                          alt='...'
-                          className='img-fluid'
-                        />
-                      </div>
-                    )}
+                        <div className='post-thumbnail'>
+                          <img
+                            src={post.images[0]}
+                            alt='...'
+                            className='img-fluid'
+                          />
+                        </div>
+                      )}
                   </>
                 ) : (
-                  ''
-                )}
+                    ''
+                  )}
 
                 <div className='post-details'>
-                  <PostMeta category={post?.category?.name} wouldBuy={post?.wouldBuy || []}/>
+                  <PostMeta category={post?.category?.name} wouldBuy={post?.wouldBuy || []} />
                   <h1>
                     {post.title}
                     {/* <Link to='#'>
@@ -87,26 +90,27 @@ const Post = () => {
                   <PostNav post={post} />
                   <PostComments postId={post._id} slug={post.slug} />
                   <AddComment slug={post.slug} />
+                  {isAuthenticated && post.displayShop && <Shop />}
                 </div>
               </>
             ) : (
-              <h1>No post found!</h1>
-            )}
+                <h1>No post found!</h1>
+              )}
           </div>
         ) : (
-          <div className='post-single'>
-            <div className='post-thumbnail'>
-              <Skeleton width='100%' height={200} bottom={10} />
+            <div className='post-single'>
+              <div className='post-thumbnail'>
+                <Skeleton width='100%' height={200} bottom={10} />
+              </div>
+              <div className='post-details'>
+                <h3 className='h4'>
+                  <Skeleton width='60%' height={10} />
+                </h3>
+                <Skeleton width='50%' height={10} />
+                <Skeleton width='45%' height={10} />
+              </div>
             </div>
-            <div className='post-details'>
-              <h3 className='h4'>
-                <Skeleton width='60%' height={10} />
-              </h3>
-              <Skeleton width='50%' height={10} />
-              <Skeleton width='45%' height={10} />
-            </div>
-          </div>
-        )}
+          )}
       </div>
     </main>
   );
