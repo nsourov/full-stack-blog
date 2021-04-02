@@ -43,8 +43,8 @@ const PostNotification = ({ notification, onClick }) => {
               <FeatherIcon icon='mail' style={{ color: '#7f8c8d' }} size='15' />
             </div>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </div>
       </Link>
     </li>
@@ -77,8 +77,41 @@ const CommentNotification = ({ notification, onClick }) => {
               <FeatherIcon icon='mail' style={{ color: '#7f8c8d' }} size='15' />
             </div>
           ) : (
-            ''
-          )}
+              ''
+            )}
+        </div>
+      </Link>
+    </li>
+  );
+};
+const WouldBuyNotification = ({ notification, onClick }) => {
+  return (
+    <li>
+      <Link
+        target='__blank'
+        onClick={() => !notification.read && onClick(notification._id)}
+        to={`/post/update/${notification.post.slug}`}
+      >
+        <div className='atbd-top-dropdwon__content notifications'>
+          <div className='notification-icon bg-primary'>
+            <FeatherIcon icon='shopping-bag' style={{ color: '#68b9f3' }} />
+          </div>
+          <div className='notification-content d-flex'>
+            <div className='notification-text'>
+              <Heading as='h5'>
+                {notification.user.name} {notification.messagePrefix}{' '}
+                <span>this item.</span>
+              </Heading>
+              <p>{moment(notification.createdAt).fromNow()}</p>
+            </div>
+          </div>
+          {!notification.read ? (
+            <div style={{ float: 'right', marginTop: '20px' }}>
+              <FeatherIcon icon='mail' style={{ color: '#7f8c8d' }} size='15' />
+            </div>
+          ) : (
+              ''
+            )}
         </div>
       </Link>
     </li>
@@ -210,6 +243,15 @@ const NotificationBox = () => {
                     />
                   );
                 }
+                if (item.action === 'wouldBuy') {
+                  return (
+                    <WouldBuyNotification
+                      key={i}
+                      notification={item}
+                      onClick={readnotification}
+                    />
+                  );
+                }
               })}
               {page !== pages && (
                 <li>
@@ -225,8 +267,8 @@ const NotificationBox = () => {
           </Link>
         </>
       ) : (
-        <Empty description='No notification' />
-      )}
+          <Empty description='No notification' />
+        )}
     </AtbdTopDropdwon>
   );
   return (

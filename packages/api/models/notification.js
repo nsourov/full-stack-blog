@@ -18,7 +18,7 @@ const NotificationSchema = new Schema(
     },
     action: {
       type: String,
-      enum: ['comment', 'post', 'like'],
+      enum: ['comment', 'post', 'like', 'wouldBuy'],
     },
     messagePrefix: String,
     read: {

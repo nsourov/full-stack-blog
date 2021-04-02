@@ -672,6 +672,40 @@ exports.publishPost = async (req, res) => {
   return res.status(200).json({ success: true, post: updatedPost });
 };
 
+exports.wouldBuy = async (req, res) => {
+  const post = await Post.findOne({ slug: req.params.slug });
+  if (!post)
+    return res
+      .status(400)
+      .json({ success: false, errors: { message: 'Post not found' } });
+
+  const alreadyWouldBuy = post.wouldBuy.filter(
+    (b) => b.user.toString() === req.user.id
+  );
+  if (alreadyWouldBuy.length > 0) {
+    return res
+      .status(200)
+      .json({ success: true });
+  } else {
+    // like
+    post.wouldBuy.unshift({ user: req.user.id });
+  }
+  await post.save();
+
+  const user = req.user.role !== 'admin';
+  console.log({ user })
+  if (user) {
+    const newNotification = new Notification({
+      post: post.id,
+      user: req.user.id,
+      action: 'wouldBuy',
+      messagePrefix: 'wanted to buy',
+    });
+    await newNotification.save();
+  }
+  return res.status(200).json({ success: true });
+};
+
 exports.likePost = async (req, res) => {
   const post = await Post.findOne({ slug: req.params.slug });
   if (!post)

@@ -70,7 +70,7 @@ const Post = () => {
                 )}
 
                 <div className='post-details'>
-                  <PostMeta category={post?.category?.name} />
+                  <PostMeta category={post?.category?.name} wouldBuy={post?.wouldBuy || []}/>
                   <h1>
                     {post.title}
                     {/* <Link to='#'>

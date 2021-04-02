@@ -104,6 +104,11 @@ router.put(
   postController.publishPost
 );
 router.post(
+  '/:slug/wouldBuy',
+  passport.authenticate('jwt', { session: false }),
+  postController.wouldBuy
+);
+router.post(
   '/:slug/like',
   passport.authenticate('jwt', { session: false }),
   postController.likePost

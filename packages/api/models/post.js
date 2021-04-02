@@ -31,6 +31,14 @@ const PostSchema = new Schema(
         },
       },
     ],
+    wouldBuy: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      },
+    ],
     comments: [
       {
         type: Schema.Types.ObjectId,

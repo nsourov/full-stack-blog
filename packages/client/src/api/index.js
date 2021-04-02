@@ -85,7 +85,7 @@ export const getCategories = () => {
 };
 
 export const createGuestPost = (body, token) => {
-  console.log({body, token})
+  console.log({ body, token })
   return axios.post(`${api}/posts`, body, {
     headers: { Authorization: token },
   });
@@ -97,4 +97,10 @@ export const getPrivacyData = () => {
 
 export const getTermsData = () => {
   return axios.get(`${api}/terms`);
+};
+
+
+// API to get post
+export const wouldBuy = (slug, token) => {
+  return axios.post(`${api}/posts/${slug}/wouldBuy`, {}, { headers: { Authorization: token } });
 };

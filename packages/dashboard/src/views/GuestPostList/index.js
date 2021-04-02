@@ -121,6 +121,11 @@ const PostList = () => {
       ),
     },
     {
+      title: 'Would buy',
+      dataIndex: 'wouldBuy',
+      render: (d) => d.length || 0,
+    },
+    {
       title: 'Action',
       dataIndex: 'slug',
       render: (slug, record) => (
