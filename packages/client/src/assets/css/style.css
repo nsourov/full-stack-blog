@@ -2,3 +2,8 @@
 @import './components/font-awesome/css/font-awesome.min.css';
 @import './components/fontastic.css';
 @import './components/style.default.css';
+
+@font-face {
+  font-family: 'Chiller';
+  src: url('./fonts/chiller.TTF');
+}
