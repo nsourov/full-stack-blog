@@ -40,7 +40,7 @@ const UpdatePost = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [category, setCategory] = useState('');
-  const [displayShop, setDisplayShop] = useState(false);
+  const [displayShop, setDisplayShop] = useState('');
   const [load, setLoad] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
@@ -109,7 +109,7 @@ const UpdatePost = () => {
       formData.append('category', category);
     }
     if (displayShop) {
-      formData.append('displayShop', displayShop);
+      formData.append('displayShop', displayShop === 'yes' ? true : false);
     }
     if (primaryPhoto) {
       formData.append('primaryPhoto', primaryPhoto.originFileObj);
@@ -189,11 +189,11 @@ const UpdatePost = () => {
             onChange={(e) => {
               setDisplayShop(e);
             }}
-            defaultValue={displayShop}
+            defaultValue={displayShop ? 'yes' : 'no'}
             allowClear
           >
-            <Option key="true" value={true}>Yes</Option>
-            <Option key="false" value={false}>No</Option>
+            <Option key="true" value="yes">Yes</Option>
+            <Option key="false" value="no">No</Option>
           </Select>
         </Form.Item>
         <Editor
@@ -260,8 +260,8 @@ const UpdatePost = () => {
                 )}
               </>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Col>
           <Col sm={12}>
             {images && images.length && !secondaryPhoto ? (
@@ -271,8 +271,8 @@ const UpdatePost = () => {
                 )}
               </>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Col>
         </Row>
         <Form.Item style={{ marginTop: '25px' }}>

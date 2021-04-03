@@ -32,7 +32,7 @@ const CreatePost = () => {
   const [secondaryPhoto, setSecondaryPhoto] = useState(null);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
-  const [displayShop, setDisplayShop] = useState(false);
+  const [displayShop, setDisplayShop] = useState('');
   const [description, setDescription] = useState('');
   const [load, setLoad] = useState(false);
   const [errors, setErrors] = useState({});
@@ -52,7 +52,7 @@ const CreatePost = () => {
       formData.append('categoryId', category);
     }
     if (displayShop) {
-      formData.append('displayShop', displayShop);
+      formData.append('displayShop', displayShop === 'yes' ? true : false);
     }
     if (primaryPhoto) {
       formData.append('primaryPhoto', primaryPhoto.originFileObj);
@@ -90,7 +90,7 @@ const CreatePost = () => {
       formData.append('categoryId', category);
     }
     if (displayShop) {
-      formData.append('displayShop', displayShop);
+      formData.append('displayShop', displayShop === 'yes' ? true : false);
     }
     if (primaryPhoto) {
       formData.append('primaryPhoto', primaryPhoto.originFileObj);
@@ -166,8 +166,8 @@ const CreatePost = () => {
             }}
             allowClear
           >
-            <Option key="true" value={true}>Yes</Option>
-            <Option key="false" value={false}>No</Option>
+            <Option key="true" value="yes">Yes</Option>
+            <Option key="false" value="no">No</Option>
           </Select>
         </Form.Item>
         <Editor
