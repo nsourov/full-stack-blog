@@ -27,9 +27,11 @@ import 'react-notifications-component/dist/theme.css';
 
 import Post from '../Post';
 import Search from '../Search';
+import Disclaimer from '../Disclaimer';
 
 // Pages
 const About = lazy(() => import('../About'));
+const CookiePolicy = lazy(() => import('../CookiePolicy'));
 const Privacy = lazy(() => import('../Privacy'));
 const Terms = lazy(() => import('../Terms'));
 const SignIn = lazy(() => import('../SignIn'));
@@ -172,6 +174,30 @@ const App = () => {
                   withTitle({
                     component: Privacy,
                     title: 'Privacy Policy',
+                    ...props,
+                  })
+                }
+              />
+
+              <Route
+                exact
+                path='/cookie-policy'
+                render={(props) =>
+                  withTitle({
+                    component: CookiePolicy,
+                    title: 'Cookie Policy',
+                    ...props,
+                  })
+                }
+              />
+
+              <Route
+                exact
+                path='/disclaimer'
+                render={(props) =>
+                  withTitle({
+                    component: Disclaimer,
+                    title: 'Disclaimer',
                     ...props,
                   })
                 }

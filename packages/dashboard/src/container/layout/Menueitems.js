@@ -119,6 +119,16 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
               Terms
             </NavLink>
           </Menu.Item>
+          <Menu.Item key='cookie-policy'>
+            <NavLink onClick={toggleCollapsed} to='/pages/cookie-policy'>
+              Cookie policy
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key='disclaimer'>
+            <NavLink onClick={toggleCollapsed} to='/pages/disclaimer'>
+              Disclaimer
+            </NavLink>
+          </Menu.Item>
         </SubMenu>
       )}
       {user.role === 'admin' && (

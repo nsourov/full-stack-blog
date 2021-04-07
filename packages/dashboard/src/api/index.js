@@ -203,12 +203,32 @@ export const getPrivacyData = () => {
   return axios.get(`${api}/privacy`);
 };
 
+export const getCookiePolicyData = () => {
+  return axios.get(`${api}/cookie-policy`);
+};
+
+export const getDisclaimerData = () => {
+  return axios.get(`${api}/disclaimer`);
+};
+
 export const getAboutData = () => {
   return axios.get(`${api}/about`);
 };
 
 export const updatePrivacyData = (body, token) => {
   return axios.put(`${api}/privacy`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const updateCookiePolicyData = (body, token) => {
+  return axios.put(`${api}/cookie-policy`, body, {
+    headers: { Authorization: token },
+  });
+};
+
+export const updateDisclaimerData = (body, token) => {
+  return axios.put(`${api}/disclaimer`, body, {
     headers: { Authorization: token },
   });
 };

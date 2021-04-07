@@ -16,6 +16,8 @@ const CreatePost = lazy(() => import('../CreatePost'));
 const Privacy = lazy(() => import('../Privacy'));
 const About = lazy(() => import('../About'));
 const Terms = lazy(() => import('../Terms'));
+const CookiePolicy = lazy(() => import('../CookiePolicy'));
+const Disclaimer = lazy(() => import('../Disclaimer'));
 const UpdatePost = lazy(() => import('../UpdatePost'));
 const Category = lazy(() => import('../Category'));
 const Comments = lazy(() => import('../Comments'));
@@ -117,6 +119,20 @@ const App = () => {
               exact
               path='/pages/terms'
               component={Terms}
+              role={data?.role}
+              isAuthenticated={isAuthenticated}
+            />
+            <AdminRoute
+              exact
+              path='/pages/cookie-policy'
+              component={CookiePolicy}
+              role={data?.role}
+              isAuthenticated={isAuthenticated}
+            />
+            <AdminRoute
+              exact
+              path='/pages/disclaimer'
+              component={Disclaimer}
               role={data?.role}
               isAuthenticated={isAuthenticated}
             />

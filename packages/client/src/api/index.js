@@ -99,6 +99,14 @@ export const getPrivacyData = () => {
   return axios.get(`${api}/privacy`);
 };
 
+export const getCookiePolicyData = () => {
+  return axios.get(`${api}/cookie-policy`);
+};
+
+export const getDisclaimerData = () => {
+  return axios.get(`${api}/disclaimer`);
+};
+
 export const getTermsData = () => {
   return axios.get(`${api}/terms`);
 };
