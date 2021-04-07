@@ -1,9 +1,11 @@
 import React, { Suspense, lazy, useEffect, useLayoutEffect } from 'react';
+import CookieConsent from "react-cookie-consent";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   useLocation,
+  Link,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Container, Row } from 'reactstrap';
@@ -77,6 +79,19 @@ const App = () => {
 
   return (
     <Router>
+      <CookieConsent
+        location="top"
+        buttonText="Close and accept"
+        cookieName="4trollzCookie"
+        style={{ background: "#ffff", color: '#333' }}
+        buttonStyle={{ color: "#333", fontSize: "15px", background: '#eff0ed', fontWeight: '600', padding: '20px' }}
+        expires={150}
+        overlay
+      >
+        <p>
+          <Link to="/cookie-policy">Cookie Policy</Link> This site uses cookies. By continuing to use this website, you agree to their use and have read our <Link to="/disclaimer">Disclaimer</Link>.
+      </p>
+      </CookieConsent>
       <ReactNotification />
       <Header />
       <Container className='main-wraper'>
