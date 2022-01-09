@@ -47,7 +47,7 @@ const CreatePost = () => {
   const handleSubmit = async () => {
     let formData = new FormData();
     formData.append('title', title);
-    formData.append('body', description);
+    formData.append('body', description.toString('html'));
     if (category && category.length > 0) {
       formData.append('categoryId', category);
     }
@@ -85,7 +85,7 @@ const CreatePost = () => {
   const handlePublished = async () => {
     let formData = new FormData();
     formData.append('title', title);
-    formData.append('body', description);
+    formData.append('body', description.toString('html'));
     if (category && category.length > 0) {
       formData.append('categoryId', category);
     }

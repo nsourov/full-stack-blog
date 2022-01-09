@@ -5,34 +5,30 @@ import propTypes from 'prop-types';
 import { MailBox } from './style';
 
 const Editor = ({ onChange, defaultTag, value }) => {
-  const [state, setState] = useState({
-    value: RichTextEditor.createValueFromString(value, 'html'),
-    tags: defaultTag ? [defaultTag] : [],
-  });
+  const [state, setState] = useState(RichTextEditor.createEmptyValue());
 
   const onChanges = (value) => {
-    setState({ ...state, value });
+    setState(value);
     if (onChange) {
-      onChange(value.toString('html'));
+      onChange(value);
     }
   };
 
   useEffect(() => {
-    setState({
-      value: RichTextEditor.createValueFromString(value, 'html'),
-      tags: defaultTag ? [defaultTag] : [],
-    });
+    if (value.length > 0) {
+      setState(RichTextEditor.createValueFromString(value, "html"));
+    }
   }, [value, defaultTag]);
 
   return (
     <MailBox>
-      <div className='body'>
-        <div className='group'>
+      <div className="body">
+        <div className="group">
           <RichTextEditor
-            placeholder='Type your message...'
-            value={state.value}
+            placeholder="Type your message..."
+            value={state}
             onChange={onChanges}
-            defaultValue={state.value || value}
+            defaultValue={value}
           />
         </div>
       </div>

@@ -104,7 +104,7 @@ const UpdatePost = () => {
   const handleSubmit = async () => {
     let formData = new FormData();
     formData.append('title', title);
-    formData.append('body', body);
+    formData.append('body', body.toString('html'));
     if (category && category.length > 0) {
       formData.append('category', category);
     }
