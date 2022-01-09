@@ -80,7 +80,7 @@ const App = () => {
   return (
     <Router>
       <CookieConsent
-        location="top"
+        location="bottom"
         buttonText="Close and accept"
         cookieName="4trollzCookie"
         style={{ background: "#ffff", color: '#333' }}
